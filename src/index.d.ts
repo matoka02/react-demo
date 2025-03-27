@@ -8,37 +8,19 @@ declare module '*.png';
 declare type TODO = any;
 
 declare module '@emotion/styled' {
-  // import { CreateStyled } from '@emotion/styled';
-  import { Theme } from '@emotion/react';
-  import { JSX } from 'react';
+  // import styled from '@emotion/styled';
+  import { Theme } from '@mui/material';
 
-  // import { MyTheme } from './myTheme';
-  interface MyTheme extends Theme {
-    [key: string]: unknown;
+  export interface MyTheme extends Theme {
+    customStyles?: {
+      [key: string]: any;
+    };
   }
-
   // export * from '@emotion/styled';
-  // const customStyled: CreateStyled<MyTheme>;
+  // const customStyled: typeof styled;
   // export default customStyled;
-
-  type StyledOptions = {
-    shouldForwardProp?: (prop: string) => boolean;
-    label?: string;
-    target?: string;
-  };
-
-  interface CustomStyled {
-    <C extends keyof JSX.IntrinsicElements | React.ComponentType<any>, P = object>(
-      component: C,
-      options?: StyledOptions
-    ): React.ComponentType<
-      JSX.LibraryManagedAttributes<C, React.ComponentPropsWithRef<C> & P & { theme?: MyTheme }>
-    >;
-  }
-
-  const styled: CustomStyled;
-  export default styled;
-  export * from '@emotion/styled';
+  // export const customStyled: typeof styled;
+  // export default styled;
 }
 
 declare type Customer = {

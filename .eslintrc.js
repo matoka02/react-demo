@@ -73,7 +73,13 @@ module.exports = {
 
         'import/no-extraneous-dependencies': [
           'error',
-          { devDependencies: ['src/components/**/index.ts', 'src/routes/**/**/index.ts'] },
+          {
+            devDependencies: [
+              'src/components/**/index.ts',
+              'src/routes/**/index.ts',
+              'src/theme/**/index.ts',
+            ],
+          },
         ],
 
         'import/order': [
