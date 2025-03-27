@@ -1,8 +1,11 @@
 import '../styles/globals.css';
+import { Provider } from 'react-redux';
 import React, { useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 import i18n from '../i18n';
 import 'dotenv/config';
+
+import { store } from '@/stores/store';
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN_KEY,
@@ -20,7 +23,12 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <Component {...pageProps} />;
+  return (
+    <Provider store={store}>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Component {...pageProps} />
+    </Provider>
+  );
 }
 
 export default MyApp;
