@@ -6,7 +6,10 @@ import type SvgColorProps from './types';
 
 // ----------------------------------------------------------------------
 
-function SvgColor(props: SvgColorProps, ref: React.Ref<HTMLSpanElement>): React.ReactElement {
+function SvgColorComponent(
+  props: SvgColorProps,
+  ref: React.Ref<HTMLSpanElement>
+): React.ReactElement {
   const { src, width = 24, height, className = '', sx = {}, ...other } = props;
   return (
     <Box
@@ -29,4 +32,6 @@ function SvgColor(props: SvgColorProps, ref: React.Ref<HTMLSpanElement>): React.
   );
 }
 
-export default React.forwardRef(SvgColor);
+SvgColorComponent.displayName = 'SvgColor';
+
+export default React.forwardRef(SvgColorComponent);
