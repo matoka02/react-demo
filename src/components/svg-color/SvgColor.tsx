@@ -1,15 +1,12 @@
 import { Box } from '@mui/material';
 import React from 'react';
 
-import { svgColorClasses } from './classes';
-import type { SvgColorProps } from './types';
+import svgColorClasses from './classes';
+import type SvgColorProps from './types';
 
 // ----------------------------------------------------------------------
 
-function SvgColorComponent(
-  props: SvgColorProps,
-  ref: React.Ref<HTMLSpanElement>
-): React.ReactElement {
+function SvgColor(props: SvgColorProps, ref: React.Ref<HTMLSpanElement>): React.ReactElement {
   const { src, width = 24, height, className = '', sx = {}, ...other } = props;
   return (
     <Box
@@ -32,6 +29,4 @@ function SvgColorComponent(
   );
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export const SvgColor = React.forwardRef(SvgColorComponent);
-SvgColor.displayName = 'SvgColor';
+export default React.forwardRef(SvgColor);

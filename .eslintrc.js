@@ -71,6 +71,11 @@ module.exports = {
           },
         ],
 
+        'import/no-extraneous-dependencies': [
+          'error',
+          { devDependencies: ['src/components/**/index.ts'] },
+        ],
+
         'import/order': [
           'error',
           {

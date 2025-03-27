@@ -1,5 +1,5 @@
-export * from './classes';
+export { default as svgColorClasses } from './classes';
 
-export * from './SvgColor';
+export { default as SvgColor } from './SvgColor';
 
-export type * from './types';
+export type { default as SvgColorProps } from './types';
