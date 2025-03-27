@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
-import DB from '@/lib/demo-db';
-import { DBType } from '@/types/DBModel';
+// import DB from '@/lib/demo-db';
+// import { DBType } from '@/types/DBModel';
 
 import { mock_customers, mock_orders, mock_products } from './_mock';
 
@@ -16,7 +16,7 @@ export function getData<T extends keyof typeof mockDB>(
   model: T,
   filters?: Record<string, (prop: string, row: any) => boolean>
 ): (typeof mockDB)[T] | null {
-  let data = mockDB[model] ?? null;
+  const data = mockDB[model] ?? null;
 
   if (filters && data) {
     return data.filter((row) =>

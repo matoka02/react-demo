@@ -11,8 +11,6 @@ import {
 
 import { ICustomer, INewCustomer } from '@/stores/types/modelTypes';
 
-
-
 interface CustomerState {
   customers: ICustomer[];
   customer: INewCustomer | null;
