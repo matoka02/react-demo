@@ -10,7 +10,7 @@ import 'dotenv/config';
 
 import { store } from '@/stores/store';
 
-import logoMidPng from './assets/it-logo-mid.png';
+import logoMidPng from '../src/assets/it-logo-mid.png';
 
 const logo = <Image src={logoMidPng} className="logo" alt="" />;
 const BRANDING = {
