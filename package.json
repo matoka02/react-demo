@@ -50,6 +50,7 @@
     "react-redux": "^9.2.0",
     "reflect-metadata": "^0.2.2",
     "require-from-string": "^2.0.2",
+    "simplebar-react": "^3.3.0",
     "storybook": "^8.6.9",
     "terser-webpack-plugin": "^5.3.14",
     "tsyringe": "^4.8.0",
