@@ -30,7 +30,7 @@ module.exports = {
         react: { version: 'detect' },
         'import/resolver': {
           node: {
-            extensions: ['.ts', '.tsx', '.js', ',jsx'],
+            extensions: ['.ts', '.tsx', '.js', '.jsx'],
           },
           typescript: {},
         },
@@ -61,6 +61,26 @@ module.exports = {
         ],
         'linebreak-style': ['error', 'unix'],
         'react/prop-types': 'off',
+
+        'import/extensions': [
+          'error',
+          'ignorePackages',
+          {
+            tsx: 'never',
+            ts: 'never',
+          },
+        ],
+
+        'import/no-extraneous-dependencies': [
+          'error',
+          {
+            devDependencies: [
+              'src/components/**/index.ts',
+              'src/routes/**/index.ts',
+              'src/theme/**/index.ts',
+            ],
+          },
+        ],
 
         'import/order': [
           'error',
