@@ -1,4 +1,4 @@
-import { BoxProps, InputLabel, useTheme } from '@mui/material';
+import { InputLabel, useTheme } from '@mui/material';
 import React, { useId } from 'react';
 
 import { RouterLink } from '@/routes/components';
@@ -13,14 +13,9 @@ import {
   singleLogoD12,
   singleLogoD13,
 } from './svg';
+import type LogoProps from './types';
 
 // ----------------------------------------------------------------------
-
-export type LogoProps = BoxProps & {
-  href?: string;
-  isSingle?: boolean;
-  disableLink?: boolean;
-};
 
 function LogoComponent(props: LogoProps, ref: React.Ref<HTMLDivElement>): React.ReactElement {
   const {
