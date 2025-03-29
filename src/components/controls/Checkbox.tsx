@@ -7,8 +7,7 @@ const checkedToValue = (evt: React.SyntheticEvent & TODO) => ({
   },
 });
 
-function CheckboxGenerator(props: any): React.ReactElement {
-  const { name, label, value, onChange } = props;
+function CheckboxGenerator({ name, label, value, onChange }: any): React.ReactElement {
   return (
     <FormControl>
       <FormControlLabel

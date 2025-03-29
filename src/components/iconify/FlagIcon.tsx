@@ -9,16 +9,14 @@ import { FlagIconProps } from './types';
 // ----------------------------------------------------------------------
 
 function FlagIconComponent(
-  props: FlagIconProps,
-  ref: React.Ref<HTMLSpanElement>
-): React.ReactElement | null {
-  const {
+  {
     code,
     className,
     sx,
     // ...other
-  } = props;
-
+  }: FlagIconProps,
+  ref: React.Ref<HTMLSpanElement>
+): React.ReactElement | null {
   const baseStyles: SxProps<Theme> = {
     width: 26,
     height: 20,

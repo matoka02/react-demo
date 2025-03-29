@@ -8,16 +8,15 @@ import type ScrollbarProps from './types';
 // ----------------------------------------------------------------------
 
 function ScrollbarComponent(
-  props: ScrollbarProps,
-  ref: React.Ref<HTMLDivElement>
-): React.ReactElement {
-  const {
+  {
     // slotProps,
     children,
     // fillContent,
     sx,
     ...other
-  } = props;
+  }: ScrollbarProps,
+  ref: React.Ref<HTMLDivElement>
+): React.ReactElement {
   return (
     <Box
       scrollableNodeProps={{ ref }}

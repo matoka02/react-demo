@@ -5,8 +5,7 @@ function RadioItem(props: any): React.ReactElement {
   return <FormControlLabel value={value} control={<Radio />} label={label} />;
 }
 
-function RadioGroupGenerator(props: any) {
-  const { name, label, value, onChange, items } = props;
+function RadioGroupGenerator({ name, label, value, onChange, items }: any) {
   return (
     <FormControl>
       <FormLabel>{label}</FormLabel>

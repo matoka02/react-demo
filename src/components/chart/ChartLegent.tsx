@@ -36,9 +36,7 @@ type Props = BoxProps & {
   icons?: React.ReactNode[];
 };
 
-function ChartLegends(props: Props) {
-  const { icons, values, sublabels, labels = [], colors = [], ...other } = props;
-
+function ChartLegends({ icons, values, sublabels, labels = [], colors = [], ...other }: Props) {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <Box gap={2} display="flex" flexWrap="wrap" {...other}>

@@ -7,9 +7,16 @@ import type { ChartProps } from './types';
 
 // ----------------------------------------------------------------------
 
-function Chart(props: BoxProps & ChartProps): React.ReactElement {
-  const { sx, type, series, height, options, className, width = '100%', ...other } = props;
-
+function Chart({
+  sx,
+  type,
+  series,
+  height,
+  options,
+  className,
+  width = '100%',
+  ...other
+}: BoxProps & ChartProps): React.ReactElement {
   return (
     <Box
       dir="ltr"

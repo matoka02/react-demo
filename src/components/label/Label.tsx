@@ -13,8 +13,8 @@ function sentenceCase(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function LabelComponent(props: LabelProps, ref: React.Ref<HTMLSpanElement>): React.ReactElement {
-  const {
+function LabelComponent(
+  {
     children,
     color = 'default',
     variant = 'soft',
@@ -23,8 +23,9 @@ function LabelComponent(props: LabelProps, ref: React.Ref<HTMLSpanElement>): Rea
     sx,
     className,
     // ...other
-  } = props;
-
+  }: LabelProps,
+  ref: React.Ref<HTMLSpanElement>
+): React.ReactElement {
   const theme = useTheme();
 
   const iconStyles = {

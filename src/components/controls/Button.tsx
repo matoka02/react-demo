@@ -9,9 +9,14 @@ const getStyles = (theme: TODO) => ({
   },
 });
 
-function ButtonGenerator(props: TODO): React.ReactElement {
-  const { text, size, color, variant, onClick, ...other } = props;
-
+function ButtonGenerator({
+  text,
+  size,
+  color,
+  variant,
+  onClick,
+  ...other
+}: TODO): React.ReactElement {
   const theme = useTheme();
   const classes = getStyles(theme);
 

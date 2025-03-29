@@ -1,7 +1,14 @@
 import { TextField } from '@mui/material';
 
-function Input(props: any): React.ReactElement {
-  const { name, label, variant, value, error = null, onChange, ...others } = props;
+function Input({
+  name,
+  label,
+  variant,
+  value,
+  error = null,
+  onChange,
+  ...others
+}: any): React.ReactElement {
   // console.log(JSON.stringify(others))
   return (
     <TextField

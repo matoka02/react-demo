@@ -10,11 +10,9 @@ import type { ColorPreviewProps } from './types';
 // ----------------------------------------------------------------------
 
 function ColorPreviewComponent(
-  props: BoxProps & ColorPreviewProps,
+  { colors, limit = 3, sx, ...other }: BoxProps & ColorPreviewProps,
   ref: React.Ref<HTMLDivElement>
 ): React.ReactElement {
-  const { colors, limit = 3, sx, ...other } = props;
-
   const colorsRange = colors.slice(0, limit);
   const restColors = colors.length - limit;
 
