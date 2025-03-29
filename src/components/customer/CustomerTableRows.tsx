@@ -49,7 +49,7 @@ function CustomerTableRow({
     // console.log(` openPopover id: ${customerId}`);
     setOpenPopover(null);
     router.push(`/edit-customer/${customerId}`);
-  }, [customerId,setOpenPopover, router]);
+  }, [customerId, setOpenPopover, router]);
 
   const handleDelete = useCallback(async () => {
     // console.log(` openPopover id: ${customerId}`);
@@ -108,7 +108,7 @@ function CustomerTableRow({
         </TableCell>
       </TableRow>
 
-{/** Delete dialog */}
+      {/** Delete dialog */}
       <Popover
         open={!!openPopover}
         anchorEl={openPopover}
