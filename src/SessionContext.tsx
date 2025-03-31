@@ -1,5 +1,5 @@
 import type { Session } from '@toolpad/core';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 
 export interface SessionContextValue {
   session: Session | null;
@@ -27,14 +27,16 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   //   setSession(null);
   // };
 
+  const contextValue=useMemo(()=>({
+    session,
+    setSession,
+    // signIn,
+    // signOut
+  }),[session])
+
   return (
     <SessionContext.Provider
-      value={{
-        session,
-        setSession,
-        // signIn,
-        // signOut
-      }}
+      value={contextValue}
     >
       {children}
     </SessionContext.Provider>
