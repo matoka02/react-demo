@@ -33,7 +33,7 @@ function CustomerTableRow({
   toggleNotice,
   onDialogConfirm,
 }: CustomerTableRowProps): React.ReactElement {
-  const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>;
+  const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
   const [customerId, setCustomerId] = useState('');
   const router = useRouter();
 
