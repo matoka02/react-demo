@@ -19,8 +19,8 @@ function ScrollbarComponent(
 ): React.ReactElement {
   return (
     <Box
-      scrollableNodeProps={{ ref }}
-      clickOnTrack={false}
+      ref={ref}
+      // clickOnTrack={false}
       className={scrollbarClasses.root}
       sx={{
         minWidth: 0,
@@ -40,6 +40,7 @@ function ScrollbarComponent(
   );
 }
 
-ScrollbarComponent.displayName = 'Scrollbar';
+const Scrollbar = React.forwardRef(ScrollbarComponent)
+Scrollbar.displayName = 'Scrollbar';
 
-export default React.forwardRef(ScrollbarComponent);
+export default Scrollbar;
