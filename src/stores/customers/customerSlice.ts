@@ -63,11 +63,11 @@ const handleFetchAllCustomersFulfilled = (
 const handleFetchAllCustomersRejected = (state: CustomerState, action: PayloadAction<any>) => ({
   ...state,
   isLoading: false,
-  error: action.payload,
+  // error: action.payload,
   snackbar: {
     open: true,
     message: action.payload,
-    severity: 'error',
+    severity: 'error' as const,
   },
 });
 
@@ -129,7 +129,7 @@ const handleDeleteCustomerFulfilled = (state: CustomerState, action: PayloadActi
   snackbar: {
     open: true,
     message: `Customer id:${action.payload} deleted successfully!`,
-    severity: 'success',
+    severity: 'success' as const,
   },
 });
 const handleDeleteCustomerRejected = (
@@ -141,7 +141,7 @@ const handleDeleteCustomerRejected = (
   snackbar: {
     open: true,
     message: `Error: ${action.payload}`,
-    severity: 'error',
+    severity: 'error' as const,
   },
 });
 
@@ -153,7 +153,7 @@ const handleAddCustomerFulfilled = (state: CustomerState, action: PayloadAction<
   snackbar: {
     open: true,
     message: `Customer added successfully!`,
-    severity: 'success',
+    severity: 'success' as const,
   },
 });
 const handleAddCustomerRejected = (
@@ -165,7 +165,7 @@ const handleAddCustomerRejected = (
   snackbar: {
     open: true,
     message: `${action.payload}`,
-    severity: 'error',
+    severity: 'error' as const,
   },
 });
 
@@ -179,7 +179,7 @@ const handleUpdateCustomerFulfilled = (state: CustomerState, action: PayloadActi
   snackbar: {
     open: true,
     message: `Customer id:${action.payload.id} updated successfully!`,
-    severity: 'success',
+    severity: 'success' as const,
   },
 });
 const handleUpdateCustomerRejected = (
@@ -191,7 +191,7 @@ const handleUpdateCustomerRejected = (
   snackbar: {
     open: true,
     message: `${action.payload}`,
-    severity: 'error',
+    severity: 'error' as const,
   },
 });
 
@@ -199,20 +199,6 @@ const customerSlice = createSlice({
   name: 'customer',
   initialState,
   reducers: {
-    // // error & snackbar
-    // clearError(state) {
-    //   return { ...state, error: undefined, snackbarOpen: false };
-    // },
-    // // searchbar
-    // setSearchOpen(state: CustomerState, action: PayloadAction<boolean>) {
-    //   return { ...state, searchOpen: action.payload };
-    // },
-    // setSearch(
-    //   state: CustomerState,
-    //   action: PayloadAction<{ firstName: string; lastName: string }>
-    // ) {
-    //   return { ...state, search: action.payload };
-    // },
     showSnackbar: (
       state,
       action: PayloadAction<{
