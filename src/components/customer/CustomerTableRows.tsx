@@ -38,7 +38,7 @@ function CustomerTableRow({
   const router = useRouter();
 
   const handleOpenPopover = useCallback(
-    (evt: React.MouseEvent<HTMLButtonElement> & TODO) => {
+    (evt: React.MouseEvent<HTMLButtonElement>) => {
       setOpenPopover(evt.currentTarget);
       setCustomerId(evt.currentTarget.value);
     },
@@ -55,7 +55,7 @@ function CustomerTableRow({
     // console.log(` openPopover id: ${customerId}`);
     const deleteConfirmed = await onDialogConfirm();
     if (deleteConfirmed) {
-      deleteCustomer(customerId as TODO);
+      deleteCustomer(Number(customerId));
 
       toggleNotice(true);
       setTimeout(() => {
@@ -64,7 +64,7 @@ function CustomerTableRow({
       }, CUSTOMER_DURATION);
     }
     setOpenPopover(null);
-  }, [customerId, router]);
+  }, [customerId, router, onDialogConfirm, toggleNotice]);
 
   return (
     <>

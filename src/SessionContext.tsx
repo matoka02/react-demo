@@ -27,20 +27,17 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   //   setSession(null);
   // };
 
-  const contextValue=useMemo(()=>({
-    session,
-    setSession,
-    // signIn,
-    // signOut
-  }),[session])
-
-  return (
-    <SessionContext.Provider
-      value={contextValue}
-    >
-      {children}
-    </SessionContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      session,
+      setSession,
+      // signIn,
+      // signOut
+    }),
+    [session]
   );
+
+  return <SessionContext.Provider value={contextValue}>{children}</SessionContext.Provider>;
 }
 
 export const useSession = () => useContext(SessionContext);

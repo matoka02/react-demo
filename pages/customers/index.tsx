@@ -65,7 +65,7 @@ function CustomerView(): React.ReactElement {
 
   const dispatch = useAppDispatch();
   const { customers, isLoading } = useAppSelector((state: RootState) => state.customers);
-
+  // console.table(customers);
   const [filterName, setFilterName] = useState('');
   const table = useTable();
 
@@ -73,15 +73,22 @@ function CustomerView(): React.ReactElement {
     dispatch(fetchAllCustomers());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (filterName) {
-      dispatch(setSearch({ firstName: filterName, lastName: '' }));
-    } else {
-      dispatch(fetchAllCustomers());
-    }
-  }, [dispatch, filterName]);
+  // useEffect(() => {
+  //   if (filterName) {
+  //     dispatch(setSearch({ firstName: filterName, lastName: '' }));
+  //   } else {
+  //     dispatch(fetchAllCustomers());
+  //   }
+  // }, [dispatch, filterName]);
 
-  const notFound = !customers.length && !!filterName;
+  const dataFiltered: TODO = applyFilter({
+    inputData: customers,
+    comparator: getComparator(table.order, table.orderBy),
+    filterName,
+  });
+
+  const notFound = !dataFiltered.length && !!filterName;
+
   const toggleNotice = () => {};
 
   return (
@@ -141,8 +148,8 @@ function CustomerView(): React.ReactElement {
                 ]}
               />
               <TableBody>
-                {/* {dataFiltered */}
-                {customers
+                {dataFiltered
+                  // {customers
                   .slice(
                     table.page * table.rowsPerPage,
                     table.page * table.rowsPerPage + table.rowsPerPage
