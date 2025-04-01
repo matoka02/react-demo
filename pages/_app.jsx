@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 import { createTheme } from '@mui/material';
 import { AppProvider } from '@toolpad/core';
-import { Image } from 'next/image';
+import Image from 'next/image';
 import i18n from '../i18n';
 import 'dotenv/config';
 
