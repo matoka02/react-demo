@@ -90,7 +90,7 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
 export type useTableProps = {
   postDeleteRoute: string | undefined;
   // service: TODO;
-  toggleNotice: TODO;
+  // toggleNotice: TODO;
 };
 
 export function useTable(props?: useTableProps) {
@@ -102,7 +102,10 @@ export function useTable(props?: useTableProps) {
 
   const dialogs = useDialogs();
   const router = useRouter();
-  const { postDeleteRoute, toggleNotice } = props || {};
+  const {
+    postDeleteRoute,
+    // toggleNotice
+  } = props || {};
   // const { handleDialogOpen } = props;
   const dispatch = useAppDispatch();
 
@@ -171,14 +174,21 @@ export function useTable(props?: useTableProps) {
           // selected.forEach((s) => service.deleteItemById(s));
           dispatch(deleteCustomer(Number(selected)));
         }
-        toggleNotice(true);
+        // toggleNotice(true);
         setTimeout(() => {
           router.push(postDeleteRoute || '/');
-          toggleNotice(false);
+          // toggleNotice(false);
         }, 1000);
       }
     },
-    [selected, router, postDeleteRoute, toggleNotice, dispatch, onDialogConfirm]
+    [
+      selected,
+      router,
+      postDeleteRoute,
+      // toggleNotice,
+      dispatch,
+      onDialogConfirm,
+    ]
   );
 
   return {

@@ -5,7 +5,7 @@ import {
   deleteCustomer,
   fetchAllCustomers,
   fetchCustomerById,
-  fetchFilteredCustomers,
+  // fetchFilteredCustomers,
   updateCustomer,
 } from './customerThunk';
 
@@ -16,28 +16,32 @@ interface CustomerState {
   customer: INewCustomer | null;
   isLoading: boolean;
   error?: string;
-  snackbarOpen: boolean;
-  snackbarMessage: string;
-  snackbarSeverity: 'success' | 'error' | 'warning' | 'info';
-  searchOpen: boolean;
-  search: {
-    firstName: string;
-    lastName: string;
+  snackbar: {
+    open: boolean;
+    message: string;
+    severity: 'success' | 'error' | 'warning' | 'info';
   };
+  // searchOpen: boolean;
+  // search: {
+  //   firstName: string;
+  //   lastName: string;
+  // };
 }
 
 const initialState: CustomerState = {
   customers: [],
   customer: null,
   isLoading: false,
-  snackbarOpen: false,
-  snackbarMessage: '',
-  snackbarSeverity: 'info',
-  searchOpen: false,
-  search: {
-    firstName: '',
-    lastName: '',
+  snackbar: {
+    open: false,
+    message: '',
+    severity: 'info',
   },
+  // searchOpen: false,
+  // search: {
+  //   firstName: '',
+  //   lastName: '',
+  // },
 };
 
 // pending
@@ -60,9 +64,11 @@ const handleFetchAllCustomersRejected = (state: CustomerState, action: PayloadAc
   ...state,
   isLoading: false,
   error: action.payload,
-  snackbarOpen: true,
-  snackbarMessage: action.payload,
-  snackbarSeverity: 'error' as const,
+  snackbar: {
+    open: true,
+    message: action.payload,
+    severity: 'error',
+  },
 });
 
 // Customer by ID
@@ -80,44 +86,51 @@ const handleFetchCustomerByIdRejected = (
 ) => ({
   ...state,
   isLoading: false,
-  snackbarOpen: true,
-  snackbarMessage: `${action.payload}`,
-  snackbarSeverity: 'warning' as const,
+  snackbar: {
+    open: true,
+    message: `${action.payload}`,
+    severity: 'warning' as const,
+  },
 });
 
-// Find customers
-const handleFilteredCustomersFulfilled = (
-  state: CustomerState,
-  action: PayloadAction<ICustomer[]>
-) => ({
-  ...state,
-  isLoading: false,
-  customers: action.payload,
-  snackbarOpen: action.payload.length === 0 ? true : state.snackbarOpen,
-  snackbarMessage: action.payload.length === 0 ? 'No customers found' : state.snackbarMessage,
-  snackbarSeverity: action.payload.length === 0 ? ('warning' as const) : state.snackbarSeverity,
-});
-const handleFilteredCustomersRejected = (
-  state: CustomerState,
-  action: PayloadAction<string | undefined>
-) => ({
-  ...state,
-  isLoading: false,
-  error: action.payload,
-  snackbarOpen: true,
-  snackbarMessage: action.payload ?? 'Unknown error',
-  snackbarSeverity:
-    action.payload === 'No customers found' ? ('warning' as const) : ('error' as const),
-});
+// // Find customers
+// const handleFilteredCustomersFulfilled = (
+//   state: CustomerState,
+//   action: PayloadAction<ICustomer[]>
+// ) => ({
+//   ...state,
+//   isLoading: false,
+//   customers: action.payload,
+//   snackbar:{
+//     open: action.payload.length === 0 ? true : state.snackbar.open,
+//     message: action.payload.length === 0 ? 'No customers found' : state.snackbar.message,
+//     severity: action.payload.length === 0 ? ('warning' as const) : state.snackbar.severity,
+//   }
+// });
+// const handleFilteredCustomersRejected = (
+//   state: CustomerState,
+//   action: PayloadAction<string | undefined>
+// ) => ({
+//   ...state,
+//   isLoading: false,
+//   error: action.payload,
+//   snackbar:{
+//     open: true ,
+//     message: action.payload ?? 'Unknown error',
+//     severity: action.payload === 'No customers found' ? ('warning' as const) : ('error' as const),
+//   }
+// });
 
 // Delete customer
 const handleDeleteCustomerFulfilled = (state: CustomerState, action: PayloadAction<number>) => ({
   ...state,
   isLoading: false,
   customers: state.customers.filter((customer) => customer.id !== String(action.payload)),
-  snackbarOpen: true,
-  snackbarMessage: `Customer id:${action.payload} deleted successfully!`,
-  snackbarSeverity: 'success' as const,
+  snackbar: {
+    open: true,
+    message: `Customer id:${action.payload} deleted successfully!`,
+    severity: 'success',
+  },
 });
 const handleDeleteCustomerRejected = (
   state: CustomerState,
@@ -125,9 +138,11 @@ const handleDeleteCustomerRejected = (
 ) => ({
   ...state,
   isLoading: false,
-  snackbarOpen: true,
-  snackbarMessage: `Error: ${action.payload}`,
-  snackbarSeverity: 'error' as const,
+  snackbar: {
+    open: true,
+    message: `Error: ${action.payload}`,
+    severity: 'error',
+  },
 });
 
 // Add customer
@@ -135,9 +150,11 @@ const handleAddCustomerFulfilled = (state: CustomerState, action: PayloadAction<
   ...state,
   isLoading: false,
   customers: [...state.customers, action.payload],
-  snackbarOpen: true,
-  snackbarMessage: 'Customer added successfully!',
-  snackbarSeverity: 'success' as const,
+  snackbar: {
+    open: true,
+    message: `Customer added successfully!`,
+    severity: 'success',
+  },
 });
 const handleAddCustomerRejected = (
   state: CustomerState,
@@ -145,9 +162,11 @@ const handleAddCustomerRejected = (
 ) => ({
   ...state,
   isLoading: false,
-  snackbarOpen: true,
-  snackbarMessage: `${action.payload}`,
-  snackbarSeverity: 'error' as const,
+  snackbar: {
+    open: true,
+    message: `${action.payload}`,
+    severity: 'error',
+  },
 });
 
 // Update customer
@@ -157,9 +176,11 @@ const handleUpdateCustomerFulfilled = (state: CustomerState, action: PayloadActi
   customers: state.customers.map((customer) =>
     customer.id === action.payload.id ? action.payload : customer
   ),
-  snackbarOpen: true,
-  snackbarMessage: `Customer id:${action.payload.id} updated successfully!`,
-  snackbarSeverity: 'success' as const,
+  snackbar: {
+    open: true,
+    message: `Customer id:${action.payload.id} updated successfully!`,
+    severity: 'success',
+  },
 });
 const handleUpdateCustomerRejected = (
   state: CustomerState,
@@ -167,28 +188,46 @@ const handleUpdateCustomerRejected = (
 ) => ({
   ...state,
   isLoading: false,
-  snackbarOpen: true,
-  snackbarMessage: `${action.payload}`,
-  snackbarSeverity: 'error' as const,
+  snackbar: {
+    open: true,
+    message: `${action.payload}`,
+    severity: 'error',
+  },
 });
 
 const customerSlice = createSlice({
   name: 'customer',
   initialState,
   reducers: {
-    // error & snackbar
-    clearError(state) {
-      return { ...state, error: undefined, snackbarOpen: false };
+    // // error & snackbar
+    // clearError(state) {
+    //   return { ...state, error: undefined, snackbarOpen: false };
+    // },
+    // // searchbar
+    // setSearchOpen(state: CustomerState, action: PayloadAction<boolean>) {
+    //   return { ...state, searchOpen: action.payload };
+    // },
+    // setSearch(
+    //   state: CustomerState,
+    //   action: PayloadAction<{ firstName: string; lastName: string }>
+    // ) {
+    //   return { ...state, search: action.payload };
+    // },
+    showSnackbar: (
+      state,
+      action: PayloadAction<{
+        message: string;
+        severity?: 'success' | 'error' | 'warning' | 'info';
+      }>
+    ) => {
+      state.snackbar = {
+        open: true,
+        message: action.payload.message,
+        severity: action.payload.severity || 'info',
+      };
     },
-    // searchbar
-    setSearchOpen(state: CustomerState, action: PayloadAction<boolean>) {
-      return { ...state, searchOpen: action.payload };
-    },
-    setSearch(
-      state: CustomerState,
-      action: PayloadAction<{ firstName: string; lastName: string }>
-    ) {
-      return { ...state, search: action.payload };
+    hideSnackbar: (state) => {
+      state.snackbar.open = false;
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<CustomerState>) => {
@@ -199,9 +238,9 @@ const customerSlice = createSlice({
       // Customer by ID
       .addCase(fetchCustomerById.fulfilled, handleFetchCustomerByIdFulfilled)
       .addCase(fetchCustomerById.rejected, handleFetchCustomerByIdRejected)
-      // Find customers
-      .addCase(fetchFilteredCustomers.fulfilled, handleFilteredCustomersFulfilled)
-      .addCase(fetchFilteredCustomers.rejected, handleFilteredCustomersRejected)
+      // // Find customers
+      // .addCase(fetchFilteredCustomers.fulfilled, handleFilteredCustomersFulfilled)
+      // .addCase(fetchFilteredCustomers.rejected, handleFilteredCustomersRejected)
       // Delete customer
       .addCase(deleteCustomer.fulfilled, handleDeleteCustomerFulfilled)
       .addCase(deleteCustomer.rejected, handleDeleteCustomerRejected)
@@ -217,5 +256,11 @@ const customerSlice = createSlice({
 });
 
 export const CUSTOMER_DURATION = 3000;
-export const { clearError, setSearchOpen, setSearch } = customerSlice.actions;
+export const {
+  // clearError,
+  // setSearchOpen,
+  // setSearch,
+  showSnackbar,
+  hideSnackbar,
+} = customerSlice.actions;
 export default customerSlice.reducer;

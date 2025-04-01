@@ -6,7 +6,6 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-import { TransitionProps } from '@mui/material/transitions';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 
@@ -23,63 +22,31 @@ import { RouterLink } from '@/routes/components';
 import { useAppDispatch, useAppSelector } from '@/stores/hooks';
 import { RootState } from '@/stores/store';
 import { fetchAllCustomers } from '@/stores/customers/customerThunk';
-import { setSearch } from '@/stores/customers/customerSlice';
+import {
+  showSnackbar,
+  hideSnackbar,
+  CUSTOMER_DURATION,
+} from '@/stores/customers/customerSlice';
 
 // ----------------------------------------------------------------------
 
 function CustomerView(): React.ReactElement {
-  // const [notice, setNotice] = useState<{
-  //   open: boolean;
-  //   transition: React.ComponentType<
-  //     TransitionProps & {
-  //       children: React.ReactElement<any, any>;
-  //     }
-  //   >;
-  // }>({ open: false, transition: Fade });
-
-  // const toggleNotice = (open: boolean) => {
-  //   setNotice({ ...notice, open });
-  // };
-
-  // const table = useTable({
-  //   postDeleteRoute: '/customers',
-  //   service,
-  //   toggleNotice,
-  // });
-
-  // const mock_customers = service.getAllItems();
-
-  // const [filterName, setFilterName] = useState('');
-
-  // const dataFiltered: TODO = applyFilter({
-  //   inputData: mock_customers as TODO,
-  //   comparator: getComparator(table.order, table.orderBy),
-  //   filterName,
-  // });
-
-  // const notFound = !dataFiltered.length && !!filterName;
-
-  // const handleClose = () => {
-  //   setNotice({ ...notice, open: false });
-  // };
-
   const dispatch = useAppDispatch();
-  const { customers, isLoading } = useAppSelector((state: RootState) => state.customers);
+  const { customers, isLoading, snackbar } = useAppSelector((state: RootState) => state.customers);
   // console.table(customers);
   const [filterName, setFilterName] = useState('');
-  const table = useTable();
 
   useEffect(() => {
     dispatch(fetchAllCustomers());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (filterName) {
-  //     dispatch(setSearch({ firstName: filterName, lastName: '' }));
-  //   } else {
-  //     dispatch(fetchAllCustomers());
-  //   }
-  // }, [dispatch, filterName]);
+  const table = useTable({
+    postDeleteRoute: '/customers',
+  });
+
+  const handleClose = () => {
+    dispatch(hideSnackbar());
+  };
 
   const dataFiltered: TODO = applyFilter({
     inputData: customers,
@@ -89,7 +56,16 @@ function CustomerView(): React.ReactElement {
 
   const notFound = !dataFiltered.length && !!filterName;
 
-  const toggleNotice = () => {};
+  const headCustomerLabel=[
+    { id: 'name', label: 'Name' },
+    { id: 'email', label: 'Email' },
+    { id: 'mobile', label: 'Mobile' },
+    { id: 'phone', label: 'Phone' },
+    // { id: 'billingAddress', label: 'Billing Address' },
+    { id: 'hasItemInShoppingCart', label: 'Cart Has Item', align: 'center' },
+    { id: 'membership', label: 'Membership' },
+    { id: '' },
+  ]
 
   return (
     <>
@@ -125,27 +101,16 @@ function CustomerView(): React.ReactElement {
               <CustomerTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                // rowCount={mock_customers.length}
                 rowCount={customers.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    // mock_customers.map((customer: TODO) => customer.id)
                     customers.map((customer) => customer.id)
                   )
                 }
-                headLabel={[
-                  { id: 'name', label: 'Name' },
-                  { id: 'email', label: 'Email' },
-                  { id: 'mobile', label: 'Mobile' },
-                  { id: 'phone', label: 'Phone' },
-                  // { id: 'billingAddress', label: 'Billing Address' },
-                  { id: 'hasItemInShoppingCart', label: 'Cart Has Item', align: 'center' },
-                  { id: 'membership', label: 'Membership' },
-                  { id: '' },
-                ]}
+                headLabel={headCustomerLabel}
               />
               <TableBody>
                 {dataFiltered
@@ -160,7 +125,7 @@ function CustomerView(): React.ReactElement {
                       row={row}
                       selected={table.selected.includes(row.id)}
                       onSelectRow={() => table.onSelectRow(row.id)}
-                      toggleNotice={toggleNotice}
+                      // toggleNotice={toggleNotice}
                       onDialogConfirm={table.onDialogConfirm}
                     />
                   ))}
@@ -186,7 +151,16 @@ function CustomerView(): React.ReactElement {
           onRowsPerPageChange={table.onChangeRowsPerPage}
         />
       </Card>
-      {/* <SnapNotice open={notice.open} transition={notice.transition} handleClose={handleClose} /> */}
+      <SnapNotice
+        // open={notice.open}
+        // transition={notice.transition}
+        // handleClose={handleClose}
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        autoHideDuration={CUSTOMER_DURATION}
+        onClose={handleClose}
+      />
     </>
   );
 }

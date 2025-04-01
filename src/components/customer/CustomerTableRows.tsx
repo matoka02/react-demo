@@ -22,7 +22,7 @@ type CustomerTableRowProps = {
   row: Customer;
   selected: boolean;
   onSelectRow: () => void;
-  toggleNotice: (open: boolean) => void;
+  // toggleNotice: (open: boolean) => void;
   onDialogConfirm: (message?: string) => Promise<boolean>;
 };
 
@@ -30,7 +30,7 @@ function CustomerTableRow({
   row,
   selected,
   onSelectRow,
-  toggleNotice,
+  // toggleNotice,
   onDialogConfirm,
 }: CustomerTableRowProps): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
@@ -57,14 +57,19 @@ function CustomerTableRow({
     if (deleteConfirmed) {
       deleteCustomer(Number(customerId));
 
-      toggleNotice(true);
+      // toggleNotice(true);
       setTimeout(() => {
         router.push('/customers');
-        toggleNotice(false);
+        // toggleNotice(false);
       }, CUSTOMER_DURATION);
     }
     setOpenPopover(null);
-  }, [customerId, router, onDialogConfirm, toggleNotice]);
+  }, [
+    customerId,
+    router,
+    onDialogConfirm,
+    // toggleNotice
+  ]);
 
   return (
     <>
