@@ -12,6 +12,7 @@ import { useState, useCallback } from 'react';
 import { useRouter } from '@/routes/hooks';
 import { CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
 import { deleteCustomer } from '@/stores/customers/customerThunk';
+import { useAppDispatch } from '@/stores/hooks';
 
 import { Iconify } from '../iconify';
 import { Label } from '../label';
@@ -33,6 +34,7 @@ function CustomerTableRow({
   // toggleNotice,
   onDialogConfirm,
 }: CustomerTableRowProps): React.ReactElement {
+  const dispatch = useAppDispatch();
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
   const [customerId, setCustomerId] = useState('');
   const router = useRouter();
@@ -46,30 +48,21 @@ function CustomerTableRow({
   );
 
   const handleEditing = useCallback(() => {
-    // console.log(` openPopover id: ${customerId}`);
     setOpenPopover(null);
     router.push(`/edit-customer/${customerId}`);
   }, [customerId, setOpenPopover, router]);
 
   const handleDelete = useCallback(async () => {
-    // console.log(` openPopover id: ${customerId}`);
     const deleteConfirmed = await onDialogConfirm();
     if (deleteConfirmed) {
-      deleteCustomer(Number(customerId));
+      dispatch(deleteCustomer(customerId));
 
-      // toggleNotice(true);
       setTimeout(() => {
         router.push('/customers');
-        // toggleNotice(false);
       }, CUSTOMER_DURATION);
     }
     setOpenPopover(null);
-  }, [
-    customerId,
-    router,
-    onDialogConfirm,
-    // toggleNotice
-  ]);
+  }, [customerId, dispatch, router, onDialogConfirm]);
 
   return (
     <>

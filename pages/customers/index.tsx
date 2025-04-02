@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import Fade from '@mui/material/Fade';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
@@ -19,16 +18,16 @@ import TableEmptyRows from '@/components/table/TableEmptyRows';
 import TableNoData from '@/components/table/TableNoData';
 import { applyFilter, emptyRows, getComparator, useTable } from '@/components/table/utils';
 import { RouterLink } from '@/routes/components';
+import { hideSnackbar, CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
+import { fetchAllCustomers } from '@/stores/customers/customerThunk';
 import { useAppDispatch, useAppSelector } from '@/stores/hooks';
 import { RootState } from '@/stores/store';
-import { fetchAllCustomers } from '@/stores/customers/customerThunk';
-import { showSnackbar, hideSnackbar, CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
 
 // ----------------------------------------------------------------------
 
 function CustomerView(): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { customers, isLoading, snackbar } = useAppSelector((state: RootState) => state.customers);
+  const { customers, snackbar } = useAppSelector((state: RootState) => state.customers);
   // console.table(customers);
   const [filterName, setFilterName] = useState('');
 
@@ -120,7 +119,6 @@ function CustomerView(): React.ReactElement {
                       row={row}
                       selected={table.selected.includes(row.id)}
                       onSelectRow={() => table.onSelectRow(row.id)}
-                      // toggleNotice={toggleNotice}
                       onDialogConfirm={table.onDialogConfirm}
                     />
                   ))}
@@ -147,9 +145,6 @@ function CustomerView(): React.ReactElement {
         />
       </Card>
       <SnapNotice
-        // open={notice.open}
-        // transition={notice.transition}
-        // handleClose={handleClose}
         open={snackbar.open}
         message={snackbar.message}
         severity={snackbar.severity}

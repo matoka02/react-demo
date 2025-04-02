@@ -122,13 +122,13 @@ const handleFetchCustomerByIdRejected = (
 // });
 
 // Delete customer
-const handleDeleteCustomerFulfilled = (state: CustomerState, action: PayloadAction<number>) => ({
+const handleDeleteCustomerFulfilled = (state: CustomerState, action: PayloadAction<string>) => ({
   ...state,
   isLoading: false,
   customers: state.customers.filter((customer) => customer.id !== String(action.payload)),
   snackbar: {
     open: true,
-    message: `Customer id:${action.payload} deleted successfully!`,
+    message: `Customer deleted successfully!`,
     severity: 'success' as const,
   },
 });
@@ -140,7 +140,7 @@ const handleDeleteCustomerRejected = (
   isLoading: false,
   snackbar: {
     open: true,
-    message: `Error: ${action.payload}`,
+    message: `${action.payload}`,
     severity: 'error' as const,
   },
 });
@@ -205,16 +205,22 @@ const customerSlice = createSlice({
         message: string;
         severity?: 'success' | 'error' | 'warning' | 'info';
       }>
-    ) => {
-      state.snackbar = {
+    ) => ({
+      ...state,
+      snackbar: {
         open: true,
         message: action.payload.message,
         severity: action.payload.severity || 'info',
-      };
-    },
-    hideSnackbar: (state) => {
-      state.snackbar.open = false;
-    },
+      },
+    }),
+    hideSnackbar: (state) => ({
+      ...state,
+      snackbar: {
+        open: false,
+        message: '',
+        severity: 'info',
+      },
+    }),
   },
   extraReducers: (builder: ActionReducerMapBuilder<CustomerState>) => {
     builder

@@ -2,6 +2,7 @@ import { useDialogs } from '@toolpad/core';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 
+import { CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
 import { deleteCustomer } from '@/stores/customers/customerThunk';
 import { useAppDispatch } from '@/stores/hooks';
 
@@ -72,8 +73,6 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
     return a[1] - b[1];
   });
 
-  // inputData = stabilizedThis.map((el) => el[0]) as TODO;
-  // let filteredData = stabilizedThis.map((el) => el[0]) as typeof inputData;
   let filteredData = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
@@ -89,8 +88,6 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
 
 export type useTableProps = {
   postDeleteRoute: string | undefined;
-  // service: TODO;
-  // toggleNotice: TODO;
 };
 
 export function useTable(props?: useTableProps) {
@@ -102,11 +99,7 @@ export function useTable(props?: useTableProps) {
 
   const dialogs = useDialogs();
   const router = useRouter();
-  const {
-    postDeleteRoute,
-    // toggleNotice
-  } = props || {};
-  // const { handleDialogOpen } = props;
+  const { postDeleteRoute } = props || {};
   const dispatch = useAppDispatch();
 
   const onSort = useCallback(
@@ -168,27 +161,17 @@ export function useTable(props?: useTableProps) {
   const onMultipleDelete = useCallback(
     async (event: React.MouseEvent<HTMLInputElement>) => {
       const deleteConfirmed = await onDialogConfirm();
-      // console.log(' deleteConfirmed ' + deleteConfirmed)
       if (deleteConfirmed) {
         if (selected.length > 0) {
-          // selected.forEach((s) => service.deleteItemById(s));
-          dispatch(deleteCustomer(Number(selected)));
+          selected.forEach((id) => dispatch(deleteCustomer(id)));
         }
-        // toggleNotice(true);
+        setSelected([]);
         setTimeout(() => {
           router.push(postDeleteRoute || '/');
-          // toggleNotice(false);
-        }, 1000);
+        }, CUSTOMER_DURATION);
       }
     },
-    [
-      selected,
-      router,
-      postDeleteRoute,
-      // toggleNotice,
-      dispatch,
-      onDialogConfirm,
-    ]
+    [dispatch, onDialogConfirm, selected, router, postDeleteRoute]
   );
 
   return {

@@ -64,9 +64,9 @@ export const fetchFilteredCustomers = createAsyncThunk<
   }
 );
 
-export const deleteCustomer = createAsyncThunk<number, number, { rejectValue: string }>(
+export const deleteCustomer = createAsyncThunk<string, string, { rejectValue: string }>(
   'customer/deleteCustomer',
-  async (customerId: number, { rejectWithValue }: any) => {
+  async (customerId: string, { rejectWithValue }: any) => {
     try {
       const response = await fetch(`/api/customers`, {
         method: HttpMethod.DELETE,
@@ -74,7 +74,7 @@ export const deleteCustomer = createAsyncThunk<number, number, { rejectValue: st
         body: JSON.stringify({ id: customerId }),
       });
 
-      if (!response.ok) throw new Error('Error deleting customer');
+      if (!response.ok) throw new Error('Error deleting customer. Please, try again');
 
       const data = await response.json();
       return data.id;
