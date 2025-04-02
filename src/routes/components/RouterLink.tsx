@@ -1,25 +1,24 @@
-import Link, { LinkProps } from 'next/link';
+import { Link as MuiLink, LinkProps as MuiLinkProps } from '@mui/material';
+import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import React from 'react';
 
 // ----------------------------------------------------------------------
 
-interface RouterLinkProps extends Omit<LinkProps, 'href'> {
+interface RouterLinkProps extends MuiLinkProps, Omit<NextLinkProps, 'href'> {
   href: string;
-  children: React.ReactNode;
 }
 
 function RouterLinkComponent(
-  props: RouterLinkProps,
+  { href, children, ...other }: RouterLinkProps,
   ref: React.Ref<HTMLAnchorElement>
 ): React.ReactElement {
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  const { href, children, ...other } = props;
-
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <Link ref={ref} href={href} passHref legacyBehavior {...other}>
-      <a aria-label={typeof children === 'string' ? children : undefined}>{children}</a>
-    </Link>
+    <NextLink href={href} passHref legacyBehavior>
+      <MuiLink ref={ref} {...other}>
+        {children}
+      </MuiLink>
+    </NextLink>
   );
 }
 
