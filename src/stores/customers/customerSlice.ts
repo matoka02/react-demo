@@ -63,7 +63,7 @@ const handleFetchAllCustomersFulfilled = (
 const handleFetchAllCustomersRejected = (state: CustomerState, action: PayloadAction<any>) => ({
   ...state,
   isLoading: false,
-  // error: action.payload,
+  error: action.payload,
   snackbar: {
     open: true,
     message: action.payload,

@@ -19,6 +19,7 @@ function SnapNotice({
   return (
     <Snackbar
       open={open}
+      onClose={onClose}
       autoHideDuration={autoHideDuration}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
     >

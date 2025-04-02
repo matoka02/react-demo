@@ -40,7 +40,7 @@ function ScrollbarComponent(
   );
 }
 
-const Scrollbar = React.forwardRef(ScrollbarComponent)
+const Scrollbar = React.forwardRef(ScrollbarComponent);
 Scrollbar.displayName = 'Scrollbar';
 
 export default Scrollbar;

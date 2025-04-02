@@ -22,11 +22,7 @@ import { RouterLink } from '@/routes/components';
 import { useAppDispatch, useAppSelector } from '@/stores/hooks';
 import { RootState } from '@/stores/store';
 import { fetchAllCustomers } from '@/stores/customers/customerThunk';
-import {
-  showSnackbar,
-  hideSnackbar,
-  CUSTOMER_DURATION,
-} from '@/stores/customers/customerSlice';
+import { showSnackbar, hideSnackbar, CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
 
 // ----------------------------------------------------------------------
 
@@ -56,7 +52,7 @@ function CustomerView(): React.ReactElement {
 
   const notFound = !dataFiltered.length && !!filterName;
 
-  const headCustomerLabel=[
+  const headCustomerLabel = [
     { id: 'name', label: 'Name' },
     { id: 'email', label: 'Email' },
     { id: 'mobile', label: 'Mobile' },
@@ -65,7 +61,7 @@ function CustomerView(): React.ReactElement {
     { id: 'hasItemInShoppingCart', label: 'Cart Has Item', align: 'center' },
     { id: 'membership', label: 'Membership' },
     { id: '' },
-  ]
+  ];
 
   return (
     <>
@@ -114,7 +110,6 @@ function CustomerView(): React.ReactElement {
               />
               <TableBody>
                 {dataFiltered
-                  // {customers
                   .slice(
                     table.page * table.rowsPerPage,
                     table.page * table.rowsPerPage + table.rowsPerPage
