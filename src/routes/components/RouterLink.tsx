@@ -4,16 +4,17 @@ import React from 'react';
 
 // ----------------------------------------------------------------------
 
-interface RouterLinkProps extends MuiLinkProps, Omit<NextLinkProps, 'href'> {
+interface RouterLinkProps extends Omit<MuiLinkProps, 'href'>, Omit<NextLinkProps, 'href' | 'as'> {
   href: string;
+  as?: string;
 }
 
 function RouterLinkComponent(
-  { href, children, ...other }: RouterLinkProps,
+  { href, as, children, ...other }: RouterLinkProps,
   ref: React.Ref<HTMLAnchorElement>
 ): React.ReactElement {
   return (
-    <NextLink href={href} passHref legacyBehavior>
+    <NextLink href={href} as={as} passHref legacyBehavior>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <MuiLink ref={ref} {...other}>
         {children}
