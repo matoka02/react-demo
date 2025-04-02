@@ -49,7 +49,9 @@ function CustomerTableRow({
 
   const handleEditing = useCallback(() => {
     setOpenPopover(null);
-    router.push(`/edit-customer/${customerId}`);
+    // router.push(`/edit-customer/${customerId}`);
+    // href={`/${model}/form?id=${data.id}`}
+    router.push(`/customers/form?id=${customerId}`)
   }, [customerId, setOpenPopover, router]);
 
   const handleDelete = useCallback(async () => {
