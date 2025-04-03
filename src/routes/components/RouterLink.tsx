@@ -23,6 +23,10 @@ function RouterLinkComponent(
   );
 }
 
+RouterLinkComponent.defaultProps = {
+  as: undefined,
+};
+
 RouterLinkComponent.displayName = 'RouterLink';
 
 export default React.forwardRef(RouterLinkComponent);
