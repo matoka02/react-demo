@@ -1,19 +1,26 @@
-import { FormControl, FormControlLabel, Checkbox } from '@mui/material';
+import { FormControl, FormControlLabel, Checkbox as MuiCheckbox } from '@mui/material';
 
-const checkedToValue = (evt: React.SyntheticEvent & TODO) => ({
-  target: {
-    name: evt.target.name,
-    value: evt.target.checked,
-  },
-});
+interface CheckboxGeneratorProps {
+  name: string;
+  label: string;
+  value: boolean;
+  onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-function CheckboxGenerator({ name, label, value, onChange }: any): React.ReactElement {
+function CheckboxGenerator({
+  name,
+  label,
+  value,
+  onChange,
+}: CheckboxGeneratorProps): React.ReactElement {
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(evt);
+  };
+
   return (
     <FormControl>
       <FormControlLabel
-        control={
-          <Checkbox checked={value} onChange={(evt) => onChange(checkedToValue(evt))} name={name} />
-        }
+        control={<MuiCheckbox name={name} checked={Boolean(value)} onChange={handleChange} />}
         label={label}
       />
     </FormControl>

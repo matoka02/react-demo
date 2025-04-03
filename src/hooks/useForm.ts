@@ -1,5 +1,5 @@
 // import { useTheme } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // const getStyles = (theme: TODO) => ({
 //   root: {
@@ -13,25 +13,33 @@ import { useState } from 'react';
 function useForm(initialFieldValues: TODO, selectedData: TODO) {
   const [values, setValues] = useState(selectedData || initialFieldValues);
   const [errors, setErrors] = useState({});
-  const [currentField, setCurrentField] = useState('');
+  const [currentField, setCurrentField] = useState<string>('');
 
   // const theme = useTheme();
   // const classes = getStyles(theme);
 
-  const handleInputChange = (evt: TODO) => {
-    const { name, value } = evt.target;
+  const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    // const { name, value } = evt.target;
+    const { name, value, type, checked } = evt.target;
     setValues({
       ...values,
-      [name]: value,
+      // [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     });
     // console.log("inputChange");
     setCurrentField(name);
   };
 
-  const resetForm = () => {
-    setValues(initialFieldValues);
+  const resetForm = (newValues?: TODO) => {
+    setValues(newValues ?? initialFieldValues);
     setErrors({});
   };
+
+  useEffect(() => {
+    if (selectedData) {
+      setValues(selectedData);
+    }
+  }, [selectedData]);
 
   return {
     values,
