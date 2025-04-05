@@ -225,7 +225,7 @@ function CustomerForm(): React.ReactElement {
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
             <FormControl fullWidth>
               <RadioGroupGenerator
-                name="status"
+                name="membership"
                 label="Status"
                 value={values.membership}
                 onChange={handleInputChange}
@@ -233,7 +233,6 @@ function CustomerForm(): React.ReactElement {
               />
             </FormControl>
           </Grid>
-
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
             <FormControl fullWidth>
               <CheckboxGenerator
