@@ -45,7 +45,7 @@ const initialFieldValues: INewCustomer = {
   city: '',
   state: '',
   country: '',
-  membership: '',
+  membership: 'standard',
   hasItemInShoppingCart: false,
 };
 
@@ -59,11 +59,10 @@ function CustomerForm(): React.ReactElement {
   const id = params?.id;
   const isNew = id === 'new';
   const dispatch = useAppDispatch();
-  const appRouter=useAppRouter();
+  const appRouter = useAppRouter();
   console.log(id);
 
-
-  const customers = useAppSelector((state) => state.customers.customers);
+  const customers = useAppSelector((state: RootState) => state.customers.customers);
   const existingCustomer = customers.find((c) => c.id === id);
   const customer = existingCustomer ?? initialFieldValues;
 
@@ -247,7 +246,7 @@ function CustomerForm(): React.ReactElement {
           </Grid>
         </Grid>
         <Stack direction="row" spacing={2} sx={{ justifyContent: 'flex-end', px: 10 }}>
-          <ButtonGenerator text={customer.id ? 'Update' : 'Submit'} type="submit" />
+          <ButtonGenerator text={isNew ? 'Update' : 'Submit'} type="submit" />
           <ButtonGenerator text="Reset" color="default" onClick={resetForm} />
         </Stack>
       </form>
