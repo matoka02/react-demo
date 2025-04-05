@@ -25,7 +25,7 @@ function RadioGroupGenerator({ name, label, value, onChange, items }: RadioGroup
         row
         name={name}
         // label={label}
-        value={value ?? ''}
+        value={value}
         onChange={onChange}
       >
         {items.map((item: TODO) => (

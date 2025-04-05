@@ -10,9 +10,9 @@ import { useEffect, useState } from 'react';
 //   },
 // });
 
-function useForm(initialFieldValues: TODO, selectedData: TODO) {
-  const [values, setValues] = useState(selectedData || initialFieldValues);
-  const [errors, setErrors] = useState({});
+function useForm<T extends object>(initialFieldValues: T, selectedData: T) {
+  const [values, setValues] = useState<T>(selectedData || initialFieldValues);
+  const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
   const [currentField, setCurrentField] = useState<string>('');
 
   // const theme = useTheme();

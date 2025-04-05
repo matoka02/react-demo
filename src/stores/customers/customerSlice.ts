@@ -21,11 +21,6 @@ interface CustomerState {
     message: string;
     severity: 'success' | 'error' | 'warning' | 'info';
   };
-  // searchOpen: boolean;
-  // search: {
-  //   firstName: string;
-  //   lastName: string;
-  // };
 }
 
 const initialState: CustomerState = {
@@ -37,11 +32,6 @@ const initialState: CustomerState = {
     message: '',
     severity: 'info',
   },
-  // searchOpen: false,
-  // search: {
-  //   firstName: '',
-  //   lastName: '',
-  // },
 };
 
 // pending
@@ -248,11 +238,5 @@ const customerSlice = createSlice({
 });
 
 export const CUSTOMER_DURATION = 3000;
-export const {
-  // clearError,
-  // setSearchOpen,
-  // setSearch,
-  showSnackbar,
-  hideSnackbar,
-} = customerSlice.actions;
+export const { showSnackbar, hideSnackbar } = customerSlice.actions;
 export default customerSlice.reducer;

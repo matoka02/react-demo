@@ -88,6 +88,8 @@ export const addCustomer = createAsyncThunk<ICustomer, INewCustomer, { rejectVal
   'customer/addCustomer',
   async (newCustomer: INewCustomer, { rejectWithValue }: any) => {
     try {
+      console.log('newCustomer: ', newCustomer);
+
       const response = await fetch(`/api/customers`, {
         method: HttpMethod.POST,
         headers: { 'Content-Type': 'application/json' },
@@ -108,6 +110,7 @@ export const updateCustomer = createAsyncThunk<ICustomer, ICustomer, { rejectVal
   'customer/updateCustomer',
   async (updatedCustomer: ICustomer, { rejectWithValue }: any) => {
     try {
+      console.log('updatedCustomer: ', updatedCustomer);
       const response = await fetch(`/api/customers/${updatedCustomer.id}`, {
         method: HttpMethod.PUT,
         headers: { 'Content-Type': 'application/json' },

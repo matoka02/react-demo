@@ -246,7 +246,7 @@ function CustomerForm(): React.ReactElement {
           </Grid>
         </Grid>
         <Stack direction="row" spacing={2} sx={{ justifyContent: 'flex-end', px: 10 }}>
-          <ButtonGenerator text={isNew ? 'Update' : 'Submit'} type="submit" />
+          <ButtonGenerator text={isNew ? 'Create' : 'Update'} type="submit" />
           <ButtonGenerator text="Reset" color="default" onClick={resetForm} />
         </Stack>
       </form>
