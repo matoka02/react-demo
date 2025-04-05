@@ -9,7 +9,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { useState, useCallback } from 'react';
 
-import { useRouter } from '@/routes/hooks';
+import { useAppRouter } from '@/routes/hooks';
 import { CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
 import { deleteCustomer } from '@/stores/customers/customerThunk';
 import { useAppDispatch } from '@/stores/hooks';
@@ -37,7 +37,7 @@ function CustomerTableRow({
   const dispatch = useAppDispatch();
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
   const [customerId, setCustomerId] = useState('');
-  const router = useRouter();
+  const appRouter = useAppRouter();
 
   const handleOpenPopover = useCallback(
     (evt: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,10 +49,8 @@ function CustomerTableRow({
 
   const handleEditing = useCallback(() => {
     setOpenPopover(null);
-    // router.push(`/edit-customer/${customerId}`);
-    // href={`/${model}/form?id=${data.id}`}
-    router.push(`/customers/form?id=${customerId}`)
-  }, [customerId, setOpenPopover, router]);
+    appRouter.push(`/customers/form/${customerId}`);
+  }, [customerId, setOpenPopover, appRouter]);
 
   const handleDelete = useCallback(async () => {
     const deleteConfirmed = await onDialogConfirm();
@@ -60,11 +58,11 @@ function CustomerTableRow({
       dispatch(deleteCustomer(customerId));
 
       setTimeout(() => {
-        router.push('/customers');
+        appRouter.push('/customers');
       }, CUSTOMER_DURATION);
     }
     setOpenPopover(null);
-  }, [customerId, dispatch, router, onDialogConfirm]);
+  }, [customerId, dispatch, appRouter, onDialogConfirm]);
 
   return (
     <>
@@ -112,7 +110,7 @@ function CustomerTableRow({
       <Popover
         open={!!openPopover}
         anchorEl={openPopover}
-        onClose={handleEditing}
+        onClose={() => setOpenPopover(null)}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >

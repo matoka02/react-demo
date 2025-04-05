@@ -73,7 +73,7 @@ function CustomerView(): React.ReactElement {
           color="primary"
           startIcon={<Iconify icon="mingcute:add-line" />}
           component={RouterLink}
-          href="/customers/form"
+          href="/customers/form/new"
         >
           New customer
         </Button>

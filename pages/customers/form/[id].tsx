@@ -5,6 +5,7 @@ import Paper from '@mui/material/Paper';
 import Slide, { SlideProps } from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { useParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 
@@ -14,13 +15,12 @@ import Input from '@/components/controls/Input';
 import RadioGroupGenerator from '@/components/controls/RadioGroup';
 import SnapNotice from '@/components/controls/SnapNotice';
 import useForm from '@/hooks/useForm';
-import { useRouter } from '@/routes/hooks';
+import { useAppRouter } from '@/routes/hooks';
 import { hideSnackbar, CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
 import { addCustomer, updateCustomer } from '@/stores/customers/customerThunk';
 import { useAppDispatch, useAppSelector } from '@/stores/hooks';
 import { RootState } from '@/stores/store';
-import { ICustomer } from '@/stores/types/newModelTypes';
-
+import { ICustomer, INewCustomer } from '@/stores/types/newModelTypes';
 
 const customerSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -37,8 +37,7 @@ const customerSchema = Yup.object().shape({
   membership: Yup.string().required('Mandatory Field'),
 });
 
-const initialFieldValues = {
-  id: '',
+const initialFieldValues: INewCustomer = {
   firstName: '',
   lastName: '',
   email: '',
@@ -56,21 +55,30 @@ const membershipArray = [
 ];
 
 function CustomerForm(): React.ReactElement {
-  const router = useRouter();
+  const params = useParams();
+  const id = params?.id;
+  const isNew = id === 'new';
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+  const appRouter=useAppRouter();
+  console.log(id);
 
-  const customer = useAppSelector((state) => state.customers.customer);
-  // const customer = customers.find((c) => c.id === id) || initialFieldValues;
+
+  const customers = useAppSelector((state) => state.customers.customers);
+  const existingCustomer = customers.find((c) => c.id === id);
+  const customer = existingCustomer ?? initialFieldValues;
 
   const { values, errors, setErrors, handleInputChange, resetForm, currentField } = useForm(
     initialFieldValues,
     customer
   );
 
+  // useEffect(() => {
+  //   if (customer) resetForm(customer);
+  // }, [customer, resetForm]);
+
   useEffect(() => {
-    if (customer) resetForm(customer);
-  }, [customer, resetForm]);
+    resetForm(customer);
+  }, [customer]);
 
   const validateOnSubmit = async () => {
     try {
@@ -90,21 +98,31 @@ function CustomerForm(): React.ReactElement {
     }
   };
 
-  const handleSubmit = async (evt:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (await validateOnSubmit()) {
-      values.name = `${values.firstName} ${values.lastName}`;
-      values.location = `${values.city} ${values.state}`;
-      dispatch(addCustomer(values));
-      router.push('/customers');
+      // values.name = `${values.firstName} ${values.lastName}`;
+      // values.location = `${values.city} ${values.state}`;
+      const newCustomer: INewCustomer = {
+        ...values,
+        name: `${values.firstName} ${values.lastName}`,
+        location: `${values.city} ${values.state}`,
+      };
+      dispatch(addCustomer(newCustomer));
+      appRouter.push('/customers');
     }
   };
 
-  const handleUpdate = async (evt:React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (await validateOnSubmit()) {
-      dispatch(updateCustomer(values));
-      router.push('/customers');
+      const updatedCustomer: ICustomer = {
+        ...values,
+        name: `${values.firstName} ${values.lastName}`,
+        location: `${values.city} ${values.state}`,
+      };
+      dispatch(updateCustomer(updatedCustomer));
+      appRouter.push('/customers');
     }
   };
 
@@ -113,7 +131,7 @@ function CustomerForm(): React.ReactElement {
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
         Customer Form
       </Typography>
-      <form onSubmit={customer.id ? handleUpdate : handleSubmit}>
+      <form onSubmit={existingCustomer ? handleUpdate : handleSubmit}>
         <Grid container rowSpacing={2} columnSpacing={4}>
           {/** Name */}
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
@@ -222,7 +240,7 @@ function CustomerForm(): React.ReactElement {
               <CheckboxGenerator
                 name="hasItemInShoppingCart"
                 label="Has item in shopping cart"
-                value={values.hasItemInShoppingCart}
+                value={values.hasItemInShoppingCart ?? false}
                 onChange={handleInputChange}
               />{' '}
             </FormControl>
