@@ -157,7 +157,7 @@ const handleUpdateAgentFulfilled = (state: AgentState, action: PayloadAction<IAg
   agents: state.agents.map((agent) => (agent.id === action.payload.id ? action.payload : agent)),
   snackbar: {
     open: true,
-    message: `Agent id:${action.payload.id} updated successfully!`,
+    message: `Agent updated successfully!`,
     severity: 'success' as const,
   },
 });

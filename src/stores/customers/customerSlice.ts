@@ -168,7 +168,7 @@ const handleUpdateCustomerFulfilled = (state: CustomerState, action: PayloadActi
   ),
   snackbar: {
     open: true,
-    message: `Customer id:${action.payload.id} updated successfully!`,
+    message: `Customer updated successfully!`,
     severity: 'success' as const,
   },
 });
