@@ -8,20 +8,19 @@ import type ScrollbarProps from './types';
 // ----------------------------------------------------------------------
 
 function ScrollbarComponent(
-  props: ScrollbarProps,
-  ref: React.Ref<HTMLDivElement>
-): React.ReactElement {
-  const {
+  {
     // slotProps,
     children,
     // fillContent,
     sx,
     ...other
-  } = props;
+  }: ScrollbarProps,
+  ref: React.Ref<HTMLDivElement>
+): React.ReactElement {
   return (
     <Box
-      scrollableNodeProps={{ ref }}
-      clickOnTrack={false}
+      ref={ref}
+      // clickOnTrack={false}
       className={scrollbarClasses.root}
       sx={{
         minWidth: 0,
@@ -41,6 +40,7 @@ function ScrollbarComponent(
   );
 }
 
-ScrollbarComponent.displayName = 'Scrollbar';
+const Scrollbar = React.forwardRef(ScrollbarComponent);
+Scrollbar.displayName = 'Scrollbar';
 
-export default React.forwardRef(ScrollbarComponent);
+export default Scrollbar;

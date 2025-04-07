@@ -4,13 +4,14 @@ import React, { useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 import { createTheme } from '@mui/material';
 import { AppProvider } from '@toolpad/core';
-import { Image } from 'next/image';
+import Image from 'next/image';
 import i18n from '../i18n';
 import 'dotenv/config';
 
 import { store } from '@/stores/store';
 
 import logoMidPng from '../src/assets/it-logo-mid.png';
+import { SessionProvider } from '@/SessionContext';
 
 const logo = <Image src={logoMidPng} className="logo" alt="" />;
 const BRANDING = {
@@ -42,10 +43,12 @@ function MyApp({ Component, pageProps }) {
   // eslint-disable-next-line react/jsx-props-no-spreading
   return (
     <Provider store={store}>
-      <AppProvider theme={theme} branding={BRANDING}>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...pageProps} />
-      </AppProvider>
+      <SessionProvider>
+        <AppProvider theme={theme} branding={BRANDING}>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Component {...pageProps} />
+        </AppProvider>
+      </SessionProvider>
     </Provider>
   );
 }

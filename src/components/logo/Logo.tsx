@@ -17,8 +17,8 @@ import type LogoProps from './types';
 
 // ----------------------------------------------------------------------
 
-function LogoComponent(props: LogoProps, ref: React.Ref<HTMLDivElement>): React.ReactElement {
-  const {
+function LogoComponent(
+  {
     width,
     href = '/',
     height,
@@ -27,8 +27,9 @@ function LogoComponent(props: LogoProps, ref: React.Ref<HTMLDivElement>): React.
     className,
     sx,
     // ...other
-  } = props;
-
+  }: LogoProps,
+  ref: React.Ref<HTMLDivElement>
+): React.ReactElement {
   const theme = useTheme();
   const gradientId = useId();
 

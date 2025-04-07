@@ -15,11 +15,17 @@ import type { ColorPickerProps } from './types';
 // ----------------------------------------------------------------------
 
 function ColorPickerComponent(
-  props: BoxProps & ColorPickerProps,
+  {
+    colors,
+    selected,
+    onSelectColor,
+    limit = 'auto',
+    sx,
+    slotProps,
+    ...other
+  }: BoxProps & ColorPickerProps,
   ref: React.Ref<HTMLDivElement>
 ): React.ReactElement {
-  const { colors, selected, onSelectColor, limit = 'auto', sx, slotProps, ...other } = props;
-
   const singleSelect = typeof selected === 'string';
 
   const handleSelect = useCallback(

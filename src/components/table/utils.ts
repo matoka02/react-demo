@@ -2,6 +2,10 @@ import { useDialogs } from '@toolpad/core';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 
+import { CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
+import { deleteCustomer } from '@/stores/customers/customerThunk';
+import { useAppDispatch } from '@/stores/hooks';
+
 // ----------------------------------------------------------------------
 
 export const visuallyHidden = {
@@ -69,8 +73,7 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
     return a[1] - b[1];
   });
 
-  // inputData = stabilizedThis.map((el) => el[0]) as TODO;
-  let filteredData = stabilizedThis.map((el) => el[0]) as typeof inputData;
+  let filteredData = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
     filteredData = filteredData.filter((user: TODO) =>
@@ -85,8 +88,6 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
 
 export type useTableProps = {
   postDeleteRoute: string | undefined;
-  service: TODO;
-  toggleNotice: TODO;
 };
 
 export function useTable(props?: useTableProps) {
@@ -95,10 +96,11 @@ export function useTable(props?: useTableProps) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selected, setSelected] = useState<string[]>([]);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+
   const dialogs = useDialogs();
   const router = useRouter();
-  const { postDeleteRoute, service, toggleNotice } = props || {};
-  // const { handleDialogOpen } = props;
+  const { postDeleteRoute } = props || {};
+  const dispatch = useAppDispatch();
 
   const onSort = useCallback(
     (id: string) => {
@@ -144,31 +146,32 @@ export function useTable(props?: useTableProps) {
     [onResetPage]
   );
 
-  const onDialogConfirm = async (message = '') => {
-    try {
-      return await dialogs.confirm(message || 'Are you sure to continue this DELETE operation?');
-    } catch {
-      // console.error(e);
-      return false;
-    }
-  };
+  const onDialogConfirm = useCallback(
+    async (message = '') => {
+      try {
+        return await dialogs.confirm(message || 'Are you sure to continue this DELETE operation?');
+      } catch {
+        // console.error(e);
+        return false;
+      }
+    },
+    [dialogs]
+  );
 
   const onMultipleDelete = useCallback(
     async (event: React.MouseEvent<HTMLInputElement>) => {
       const deleteConfirmed = await onDialogConfirm();
-      // console.log(' deleteConfirmed ' + deleteConfirmed)
       if (deleteConfirmed) {
         if (selected.length > 0) {
-          selected.map((s) => service.deleteItemById(s));
+          selected.forEach((id) => dispatch(deleteCustomer(id)));
         }
-        toggleNotice(true);
+        setSelected([]);
         setTimeout(() => {
           router.push(postDeleteRoute || '/');
-          toggleNotice(false);
-        }, 1000);
+        }, CUSTOMER_DURATION);
       }
     },
-    [selected, setPage]
+    [dispatch, onDialogConfirm, selected, router, postDeleteRoute]
   );
 
   return {

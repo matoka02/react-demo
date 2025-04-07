@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 // ----------------------------------------------------------------------
 
-function useRouter() {
+function useAppRouter() {
   const router = useNextRouter();
 
   return useMemo(
@@ -18,4 +18,4 @@ function useRouter() {
   );
 }
 
-export default useRouter;
+export default useAppRouter;

@@ -7,9 +7,10 @@ import { IconifyProps } from './types';
 
 // ----------------------------------------------------------------------
 
-function IconifyComponent(props: IconifyProps, ref: React.Ref<SVGElement>): React.ReactElement {
-  const { className, width = 20, sx, ...other } = props;
-
+function IconifyComponent(
+  { className, width = 20, sx, ...other }: IconifyProps,
+  ref: React.Ref<SVGElement>
+): React.ReactElement {
   return (
     <Box
       ssr
