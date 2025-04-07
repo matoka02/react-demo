@@ -1,11 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, FormControl, Snackbar, Stack, Typography } from '@mui/material';
-import Fade from '@mui/material/Fade';
+import { Box, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
-import Slide, { SlideProps } from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
 import { useParams } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -62,9 +59,10 @@ function CustomerForm(): React.ReactElement {
   const isNew = id === 'new';
   const dispatch = useAppDispatch();
   const appRouter = useAppRouter();
-  console.log(id);
+  // console.log(id);
 
   const customers = useAppSelector((state: RootState) => state.customers.customers);
+  const { snackbar } = useAppSelector((state: RootState) => state.customers);
   const existingCustomer = customers.find((c) => c.id === id);
   // const customer = existingCustomer ?? initialFieldValues;
 
@@ -97,6 +95,10 @@ function CustomerForm(): React.ReactElement {
     appRouter.push('/customers');
   };
 
+  const handleClose = () => {
+    dispatch(hideSnackbar());
+  };
+
   return (
     <Paper sx={{ px: 5, py: 5 }}>
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
@@ -116,6 +118,7 @@ function CustomerForm(): React.ReactElement {
                   label="First Name"
                   value={field.value}
                   error={errors.firstName?.message}
+                  required
                 />
               )}
             />
@@ -132,6 +135,7 @@ function CustomerForm(): React.ReactElement {
                   value={field.value}
                   error={errors.lastName?.message}
                   variant="outlined"
+                  required
                 />
               )}
             />
@@ -150,6 +154,7 @@ function CustomerForm(): React.ReactElement {
                   value={field.value}
                   error={errors.email?.message}
                   variant="outlined"
+                  required
                 />
               )}
             />
@@ -166,6 +171,7 @@ function CustomerForm(): React.ReactElement {
                   value={field.value}
                   error={errors.mobile?.message}
                   variant="outlined"
+                  required
                 />
               )}
             />
@@ -182,6 +188,7 @@ function CustomerForm(): React.ReactElement {
                   value={field.value}
                   error={errors.phone?.message}
                   variant="outlined"
+                  required
                 />
               )}
             />
@@ -200,6 +207,7 @@ function CustomerForm(): React.ReactElement {
                   value={field.value}
                   error={errors.city?.message}
                   variant="outlined"
+                  required
                 />
               )}
             />
@@ -216,6 +224,7 @@ function CustomerForm(): React.ReactElement {
                   value={field.value}
                   error={errors.state?.message}
                   variant="outlined"
+                  required
                 />
               )}
             />
@@ -232,6 +241,7 @@ function CustomerForm(): React.ReactElement {
                   value={field.value}
                   error={errors.country?.message}
                   variant="outlined"
+                  required
                 />
               )}
             />
@@ -243,12 +253,25 @@ function CustomerForm(): React.ReactElement {
               name="membership"
               control={control}
               render={({ field }) => (
-                <RadioGroupGenerator
-                  {...field}
-                  control={control}
-                  label="Status"
-                  items={membershipArray}
-                />
+                <Box
+                  sx={{
+                    border: '1px solid',
+                    borderColor: 'grey.300',
+                    borderRadius: 1,
+                    p: 2,
+                    backgroundColor: 'white',
+                    '&:focus-within': {
+                      borderColor: 'primary.main',
+                    },
+                  }}
+                >
+                  <RadioGroupGenerator
+                    {...field}
+                    control={control}
+                    label="Status"
+                    items={membershipArray}
+                  />
+                </Box>
               )}
             />
           </Grid>
@@ -257,20 +280,42 @@ function CustomerForm(): React.ReactElement {
               name="hasItemInShoppingCart"
               control={control}
               render={({ field }) => (
-                <CheckboxGenerator
-                  {...field}
-                  label="Has item in shopping cart"
-                  checked={field.value}
-                />
+                <Box
+                  sx={{
+                    border: '1px solid',
+                    borderColor: 'grey.300',
+                    borderRadius: 1,
+                    p: 2,
+                    backgroundColor: 'white',
+                    '&:focus-within': {
+                      borderColor: 'primary.main',
+                    },
+                  }}
+                >
+                  <CheckboxGenerator
+                    {...field}
+                    label="Has item in shopping cart"
+                    checked={field.value}
+                  />
+                </Box>
               )}
             />
           </Grid>
         </Grid>
-        <Stack direction="row" spacing={2} sx={{ justifyContent: 'flex-end', px: 10 }}>
+
+        <Stack direction="row" spacing={2} sx={{ justifyContent: 'center', px: 10 }}>
           <ButtonGenerator text={isNew ? 'Create' : 'Update'} type="submit" />
           <ButtonGenerator text="Reset" color="default" onClick={reset} />
         </Stack>
       </form>
+
+      <SnapNotice
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        autoHideDuration={CUSTOMER_DURATION}
+        onClose={handleClose}
+      />
     </Paper>
   );
 }

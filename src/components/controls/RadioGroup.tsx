@@ -26,10 +26,7 @@ function RadioGroupGenerator({ name, label, control, items }: RadioGroupGenerato
         name={name}
         control={control}
         render={({ field }) => (
-          <RadioGroup
-            row
-            {...field}
-          >
+          <RadioGroup row {...field}>
             {items.map((item: TODO) => (
               <RadioItem key={item.id} value={item.id} label={item.title} />
             ))}

@@ -13,7 +13,7 @@ function useForm<T extends object>(initialFieldValues: T, selectedData: T) {
       // [name]: value,
       [name]: type === 'checkbox' ? checked : value,
     });
-    console.log("inputChange: ", value);
+    console.log('inputChange: ', value);
     setCurrentField(name);
   };
 

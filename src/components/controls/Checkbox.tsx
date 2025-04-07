@@ -12,16 +12,10 @@ function CheckboxGenerator({
   checked,
   onChange,
 }: CheckboxGeneratorProps): React.ReactElement {
-
   return (
     <FormControl>
       <FormControlLabel
-        control={
-          <MuiCheckbox
-            checked={checked}
-            onChange={onChange}
-          />
-        }
+        control={<MuiCheckbox checked={checked} onChange={onChange} />}
         label={label}
       />
     </FormControl>
