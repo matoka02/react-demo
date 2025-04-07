@@ -229,7 +229,7 @@ function CustomerForm(): React.ReactElement {
             <Controller
               name="membership"
               control={control}
-              render={({ field }) => <RadioGroupGenerator label="Status" items={membershipArray} />}
+              render={({ field }) => <RadioGroupGenerator {...field} control={control} label="Status" items={membershipArray} />}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
@@ -237,7 +237,7 @@ function CustomerForm(): React.ReactElement {
               name="hasItemInShoppingCart"
               control={control}
               render={({ field }) => (
-                <CheckboxGenerator label="Has item in shopping cart" checked={field.value} />
+                <CheckboxGenerator {...field} label="Has item in shopping cart" checked={field.value} />
               )}
             />
           </Grid>

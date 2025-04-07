@@ -1,4 +1,5 @@
 import { FormControl, FormLabel, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { Controller } from 'react-hook-form';
 
 interface RadioItemType {
   id: string;
@@ -8,8 +9,9 @@ interface RadioItemType {
 interface RadioGroupGeneratorProps {
   name: string;
   label: string;
-  value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  control:TODO;
+  // value: string;
+  // onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   items: RadioItemType[];
 }
 
@@ -17,21 +19,24 @@ function RadioItem({ value, label }: { value: string; label: string }): React.Re
   return <FormControlLabel value={value} control={<Radio />} label={label} />;
 }
 
-function RadioGroupGenerator({ name, label, value, onChange, items }: RadioGroupGeneratorProps) {
+function RadioGroupGenerator({ name, label, control, items }: RadioGroupGeneratorProps) {
   return (
     <FormControl>
       <FormLabel>{label}</FormLabel>
-      <RadioGroup
+      <Controller name={name} control={control} render={({field})=>(
+        <RadioGroup
         row
-        name={name}
+        {...field}
+        // name={name}
         // label={label}
-        value={value}
-        onChange={onChange}
+        // value={value}
+        // onChange={onChange}
       >
         {items.map((item: TODO) => (
           <RadioItem key={item.id} value={item.id} label={item.title} />
         ))}
       </RadioGroup>
+      )} />
     </FormControl>
   );
 }
