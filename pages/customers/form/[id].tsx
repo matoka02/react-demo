@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack, Typography, useTheme } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'next/navigation';
@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 
 import ButtonGenerator from '@/components/controls/Button';
 import CheckboxGenerator from '@/components/controls/Checkbox';
+import ControllerBox from '@/components/controls/ContollerBox';
 import Input from '@/components/controls/Input';
 import RadioGroupGenerator from '@/components/controls/RadioGroup';
 import SnapNotice from '@/components/controls/SnapNotice';
@@ -76,6 +77,8 @@ function CustomerForm(): React.ReactElement {
     resolver: yupResolver(customerSchema),
     defaultValues: existingCustomer || initialFieldValues,
   });
+
+  const theme = useTheme();
 
   useEffect(() => {
     reset(existingCustomer || initialFieldValues);
@@ -249,65 +252,47 @@ function CustomerForm(): React.ReactElement {
           </Grid>
 
           {/** Account */}
-          <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 6 }} sx={{ display: 'flex', alignItems: 'flexStart' }}>
             <Controller
               name="membership"
               control={control}
               render={({ field }) => (
-                <Box
-                  sx={{
-                    border: '1px solid',
-                    borderColor: 'grey.300',
-                    borderRadius: 1,
-                    p: 2,
-                    backgroundColor: 'white',
-                    '&:focus-within': {
-                      borderColor: 'primary.main',
-                    },
-                  }}
-                >
+                <ControllerBox>
                   <RadioGroupGenerator
                     {...field}
                     control={control}
                     label="Status"
                     items={membershipArray}
                   />
-                </Box>
+                </ControllerBox>
               )}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 6 }} sx={{ display: 'flex', alignItems: 'flexStart' }}>
             <Controller
               name="hasItemInShoppingCart"
               control={control}
               render={({ field }) => (
-                <Box
-                  sx={{
-                    border: '1px solid',
-                    borderColor: 'grey.300',
-                    borderRadius: 1,
-                    p: 2,
-                    backgroundColor: 'white',
-                    '&:focus-within': {
-                      borderColor: 'primary.main',
-                    },
-                  }}
-                >
+                <ControllerBox>
                   <CheckboxGenerator
                     {...field}
                     label="Has item in shopping cart"
                     checked={field.value}
                   />
-                </Box>
+                </ControllerBox>
               )}
             />
           </Grid>
         </Grid>
 
-        <Stack direction="row" spacing={2} sx={{ justifyContent: 'center', px: 10 }}>
+        <Stack direction="row" spacing={2} sx={{ justifyContent: 'center', px: 10, pt: 5 }}>
           <ButtonGenerator text={isNew ? 'Create' : 'Update'} type="submit" />
           <ButtonGenerator text="Reset" color="default" onClick={reset} />
-          <ButtonGenerator text="Back" color="info" onClick={() => appRouter.back()} />
+          <ButtonGenerator
+            text="Back"
+            sx={{ background: theme.palette.common.black }}
+            onClick={() => appRouter.back()}
+          />
         </Stack>
       </form>
 

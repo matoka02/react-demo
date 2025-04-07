@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { Stack, Typography, useTheme } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'next/navigation';
@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 
 import ButtonGenerator from '@/components/controls/Button';
 import CheckboxGenerator from '@/components/controls/Checkbox';
+import ControllerBox from '@/components/controls/ContollerBox';
 import Input from '@/components/controls/Input';
 import RadioGroupGenerator from '@/components/controls/RadioGroup';
 import SelectDropdown from '@/components/controls/Select';
@@ -238,73 +239,53 @@ function AgentForm(): React.ReactElement {
           </Grid>
 
           {/** Account */}
-          <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex', alignItems: 'flexStart' }}>
             <Controller
               name="role"
               control={control}
               render={({ field }) => (
-                <SelectDropdown
-                  label="Role"
-                  value={field.value}
-                  options={roleArray()}
-                  onChange={field.onChange}
-                  error={errors.role?.message}
-                />
+                <ControllerBox>
+                  <SelectDropdown
+                    label="Role"
+                    value={field.value}
+                    options={roleArray()}
+                    onChange={field.onChange}
+                    error={errors.role?.message}
+                  />
+                </ControllerBox>
               )}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex', alignItems: 'flexStart' }}>
             <Controller
               name="status"
               control={control}
               render={({ field }) => (
-                <Box
-                  sx={{
-                    border: '1px solid',
-                    borderColor: 'grey.300',
-                    borderRadius: 1,
-                    p: 2,
-                    backgroundColor: 'white',
-                    '&:focus-within': {
-                      borderColor: 'primary.main',
-                    },
-                  }}
-                >
+                <ControllerBox>
                   <RadioGroupGenerator
                     {...field}
                     control={control}
                     label="Status"
                     items={statusArray}
                   />
-                </Box>
+                </ControllerBox>
               )}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex', alignItems: 'flexStart' }}>
             <Controller
               name="isVerified"
               control={control}
               render={({ field }) => (
-                <Box
-                  sx={{
-                    border: '1px solid',
-                    borderColor: 'grey.300',
-                    borderRadius: 1,
-                    p: 2,
-                    backgroundColor: 'white',
-                    '&:focus-within': {
-                      borderColor: 'primary.main',
-                    },
-                  }}
-                >
+                <ControllerBox>
                   <CheckboxGenerator {...field} label="Is Verified" checked={field.value} />
-                </Box>
+                </ControllerBox>
               )}
             />
           </Grid>
         </Grid>
 
-        <Stack direction="row" spacing={2} sx={{ justifyContent: 'center', px: 10 }}>
+        <Stack direction="row" spacing={2} sx={{ justifyContent: 'center', px: 10, pt: 5 }}>
           <ButtonGenerator text={isNew ? 'Create' : 'Update'} type="submit" />
           <ButtonGenerator text="Reset" color="default" onClick={reset} />
           <ButtonGenerator
