@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import agentReducer from './agents/agentSlice';
 import customerReducer from './customers/customerSlice';
 
 export const store = configureStore({
   reducer: {
+    agents: agentReducer,
     customers: customerReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
