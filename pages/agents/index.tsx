@@ -8,37 +8,37 @@ import TablePagination from '@mui/material/TablePagination';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 
+import AgentTableHead from '@/components/agent/AgentTableHead';
+import AgentTableRow from '@/components/agent/AgentTableRows';
+import AgentTableToolbar from '@/components/agent/AgentTableToolbar';
 import SnapNotice from '@/components/controls/SnapNotice';
-import CustomerTableHead from '@/components/customer/CustomerTableHead';
-import CustomerTableRow from '@/components/customer/CustomerTableRows';
-import CustomerTableToolbar from '@/components/customer/CustomerTableToolbar';
 import { Iconify } from '@/components/iconify';
 import { Scrollbar } from '@/components/scrollbar';
 import TableEmptyRows from '@/components/table/TableEmptyRows';
 import TableNoData from '@/components/table/TableNoData';
 import { applyFilter, emptyRows, getComparator, useTable } from '@/components/table/utils';
 import { RouterLink } from '@/routes/components';
-import { hideSnackbar, CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
-import { fetchAllCustomers } from '@/stores/customers/customerThunk';
+import { hideSnackbar, AGENT_DURATION } from '@/stores/agents/agentSlice';
+import { fetchAllAgents } from '@/stores/agents/agentThunk';
 import { useAppDispatch, useAppSelector } from '@/stores/hooks';
 import { RootState } from '@/stores/store';
 
 // ----------------------------------------------------------------------
 
-function CustomerView(): React.ReactElement {
+function AgentView(): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { customers, snackbar } = useAppSelector((state: RootState) => state.customers);
-  // console.table(customers);
+  const { agents, snackbar } = useAppSelector((state: RootState) => state.agents);
+  // console.table(agents);
   const [filterName, setFilterName] = useState('');
 
   useEffect(() => {
-    dispatch(fetchAllCustomers());
+    dispatch(fetchAllAgents());
   }, [dispatch]);
 
   const table = useTable({
-    postDeleteRoute: '/customers',
-    entityType: 'customer',
-    duration: CUSTOMER_DURATION,
+    postDeleteRoute: '/agents',
+    entityType: 'agent',
+    duration: AGENT_DURATION,
   });
 
   const handleClose = () => {
@@ -46,21 +46,21 @@ function CustomerView(): React.ReactElement {
   };
 
   const dataFiltered: TODO = applyFilter({
-    inputData: customers,
+    inputData: agents,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
 
   const notFound = !dataFiltered.length && !!filterName;
 
-  const headCustomerLabel = [
+  const headAgentLabel = [
     { id: 'name', label: 'Name' },
+    { id: 'company', label: 'Company' },
+    { id: 'role', label: 'Role' },
     { id: 'email', label: 'Email' },
     { id: 'mobile', label: 'Mobile' },
-    { id: 'phone', label: 'Phone' },
-    // { id: 'billingAddress', label: 'Billing Address' },
-    { id: 'hasItemInShoppingCart', label: 'Cart Has Item', align: 'center' },
-    { id: 'membership', label: 'Membership' },
+    { id: 'isVerified', label: 'Verified', align: 'center' },
+    { id: 'status', label: 'Status' },
     { id: '' },
   ];
 
@@ -68,21 +68,21 @@ function CustomerView(): React.ReactElement {
     <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Customers
+          Agents
         </Typography>
         <Button
           variant="contained"
           color="primary"
           startIcon={<Iconify icon="mingcute:add-line" />}
           component={RouterLink}
-          href="/customers/form/new"
+          href="/agents/form/new"
         >
-          New customer
+          New agent
         </Button>
       </Box>
 
       <Card>
-        <CustomerTableToolbar
+        <AgentTableToolbar
           numSelected={table.selected.length}
           filterName={filterName}
           onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,19 +95,19 @@ function CustomerView(): React.ReactElement {
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
-              <CustomerTableHead
+              <AgentTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={customers.length}
+                rowCount={agents.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    customers.map((customer) => customer.id)
+                    agents.map((agent) => agent.id)
                   )
                 }
-                headLabel={headCustomerLabel}
+                headLabel={headAgentLabel}
               />
               <TableBody>
                 {dataFiltered
@@ -116,7 +116,7 @@ function CustomerView(): React.ReactElement {
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
                   .map((row: TODO) => (
-                    <CustomerTableRow
+                    <AgentTableRow
                       key={row.id}
                       row={row}
                       selected={table.selected.includes(row.id)}
@@ -127,7 +127,7 @@ function CustomerView(): React.ReactElement {
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, customers.length)}
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, agents.length)}
                 />
 
                 {notFound && <TableNoData searchQuery={filterName} />}
@@ -139,7 +139,7 @@ function CustomerView(): React.ReactElement {
         <TablePagination
           component="div"
           page={table.page}
-          count={customers.length}
+          count={agents.length}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
           rowsPerPageOptions={[5, 10, 25]}
@@ -150,11 +150,11 @@ function CustomerView(): React.ReactElement {
         open={snackbar.open}
         message={snackbar.message}
         severity={snackbar.severity}
-        autoHideDuration={CUSTOMER_DURATION}
+        autoHideDuration={AGENT_DURATION}
         onClose={handleClose}
       />
     </>
   );
 }
 
-export default CustomerView;
+export default AgentView;

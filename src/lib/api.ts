@@ -3,9 +3,10 @@
 // import DB from '@/lib/demo-db';
 // import { DBType } from '@/types/DBModel';
 
-import { mock_customers, mock_orders, mock_products } from './_mock';
+import { mock_agents, mock_customers, mock_orders, mock_products } from './_mock';
 
 const mockDB = {
+  agents: mock_agents,
   customers: mock_customers,
   products: mock_products,
   orders: mock_orders,

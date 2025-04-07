@@ -13,15 +13,18 @@ import CheckboxGenerator from '@/components/controls/Checkbox';
 import ControllerBox from '@/components/controls/ContollerBox';
 import Input from '@/components/controls/Input';
 import RadioGroupGenerator from '@/components/controls/RadioGroup';
+import SelectDropdown from '@/components/controls/Select';
 import SnapNotice from '@/components/controls/SnapNotice';
+import { roleArray } from '@/lib/_mock';
 import { useAppRouter } from '@/routes/hooks';
-import { hideSnackbar, CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
-import { addCustomer, updateCustomer } from '@/stores/customers/customerThunk';
+import { hideSnackbar, AGENT_DURATION } from '@/stores/agents/agentSlice';
+import { addAgent, updateAgent } from '@/stores/agents/agentThunk';
 import { useAppDispatch, useAppSelector } from '@/stores/hooks';
 import { RootState } from '@/stores/store';
-import { ICustomer, INewCustomer } from '@/stores/types/newModelTypes';
+import { IAgent, INewAgent } from '@/stores/types/newModelTypes';
 
-const customerSchema = Yup.object().shape({
+const agentSchema = Yup.object().shape({
+  company: Yup.string().min(4, 'Company must be at least 4 characters').required('Mandatory Field'),
   firstName: Yup.string()
     .min(2, 'First name must be at least 2 characters')
     .required('Mandatory Field'),
@@ -30,32 +33,32 @@ const customerSchema = Yup.object().shape({
     .required('Mandatory Field'),
   email: Yup.string().email('Email is not Valid').required('Mandatory Field'),
   mobile: Yup.string().min(10, 'Min 10 numbers required').required('Mandatory Field'),
-  phone: Yup.string().min(10, 'Min 10 numbers required').required('Mandatory Field'),
   city: Yup.string().required('Mandatory Field'),
   state: Yup.string().required('Mandatory Field'),
-  country: Yup.string().required('Mandatory Field'),
-  membership: Yup.string().required('Mandatory Field'),
-  hasItemInShoppingCart: Yup.boolean().required('Mandatory Field'),
+  role: Yup.string().required('Mandatory Field'),
+  status: Yup.string().required('Mandatory Field'),
+  isVerified: Yup.boolean().required('Mandatory Field'),
 });
 
-const initialFieldValues: INewCustomer = {
+const initialFieldValues: INewAgent = {
+  company: '',
   firstName: '',
   lastName: '',
   email: '',
   mobile: '',
   city: '',
   state: '',
-  country: '',
-  membership: 'standard',
-  hasItemInShoppingCart: false,
+  role: '',
+  status: 'locked',
+  isVerified: false,
 };
 
-const membershipArray = [
-  { id: 'vip', title: 'VIP' },
-  { id: 'standard', title: 'Standard' },
+const statusArray = [
+  { id: 'active', title: 'Active' },
+  { id: 'locked', title: 'Locked' },
 ];
 
-function CustomerForm(): React.ReactElement {
+function AgentForm(): React.ReactElement {
   const params = useParams();
   const id = params?.id;
   const isNew = id === 'new';
@@ -63,10 +66,10 @@ function CustomerForm(): React.ReactElement {
   const appRouter = useAppRouter();
   // console.log(id);
 
-  const customers = useAppSelector((state: RootState) => state.customers.customers);
-  const { snackbar } = useAppSelector((state: RootState) => state.customers);
-  const existingCustomer = customers.find((c) => c.id === id);
-  // const customer = existingCustomer ?? initialFieldValues;
+  const agents = useAppSelector((state: RootState) => state.agents.agents);
+  const { snackbar } = useAppSelector((state: RootState) => state.agents);
+  const existingAgent = agents.find((c) => c.id === id);
+  // const agent = existingAgent ?? initialFieldValues;
 
   const {
     control,
@@ -74,29 +77,29 @@ function CustomerForm(): React.ReactElement {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(customerSchema),
-    defaultValues: existingCustomer || initialFieldValues,
+    resolver: yupResolver(agentSchema),
+    defaultValues: existingAgent || initialFieldValues,
   });
 
   const theme = useTheme();
 
   useEffect(() => {
-    reset(existingCustomer || initialFieldValues);
-  }, [existingCustomer, reset]);
+    reset(existingAgent || initialFieldValues);
+  }, [existingAgent, reset]);
 
-  const onSubmit = (data: INewCustomer | Customer) => {
+  const onSubmit = (data: INewAgent | Agent) => {
     const processedData = {
       ...data,
       name: `${data.firstName} ${data.lastName}`,
     };
 
     if (isNew) {
-      dispatch(addCustomer(processedData as INewCustomer));
+      dispatch(addAgent(processedData as INewAgent));
     } else if (id && typeof id === 'string') {
-      dispatch(updateCustomer({ ...processedData } as ICustomer));
+      dispatch(updateAgent({ ...processedData } as IAgent));
     }
 
-    appRouter.push('/customers');
+    appRouter.push('/agents');
   };
 
   const handleClose = () => {
@@ -106,12 +109,30 @@ function CustomerForm(): React.ReactElement {
   return (
     <Paper sx={{ px: 5, py: 5 }}>
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Customer Form
+        Agent Form
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container rowSpacing={2} columnSpacing={4}>
+          {/** Company */}
+          <Grid size={{ xs: 12, md: 6, lg: 6 }}>
+            <Controller
+              name="company"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  fullWidth
+                  {...field}
+                  label="Company"
+                  value={field.value}
+                  error={errors.company?.message}
+                  required
+                />
+              )}
+            />
+          </Grid>
+
           {/** Name */}
-          <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, md: 3, lg: 3 }}>
             <Controller
               name="firstName"
               control={control}
@@ -127,7 +148,7 @@ function CustomerForm(): React.ReactElement {
               )}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, md: 3, lg: 3 }}>
             <Controller
               name="lastName"
               control={control}
@@ -180,23 +201,6 @@ function CustomerForm(): React.ReactElement {
               )}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-            <Controller
-              name="phone"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  fullWidth
-                  {...field}
-                  label="Phone"
-                  value={field.value}
-                  error={errors.phone?.message}
-                  variant="outlined"
-                  required
-                />
-              )}
-            />
-          </Grid>
 
           {/** Address */}
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
@@ -233,28 +237,28 @@ function CustomerForm(): React.ReactElement {
               )}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+
+          {/** Account */}
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex', alignItems: 'flexStart' }}>
             <Controller
-              name="country"
+              name="role"
               control={control}
               render={({ field }) => (
-                <Input
-                  fullWidth
-                  {...field}
-                  label="Country"
-                  value={field.value}
-                  error={errors.country?.message}
-                  variant="outlined"
-                  required
-                />
+                <ControllerBox>
+                  <SelectDropdown
+                    label="Role"
+                    value={field.value}
+                    options={roleArray()}
+                    onChange={field.onChange}
+                    error={errors.role?.message}
+                  />
+                </ControllerBox>
               )}
             />
           </Grid>
-
-          {/** Account */}
-          <Grid size={{ xs: 12, md: 6, lg: 6 }} sx={{ display: 'flex', alignItems: 'flexStart' }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex', alignItems: 'flexStart' }}>
             <Controller
-              name="membership"
+              name="status"
               control={control}
               render={({ field }) => (
                 <ControllerBox>
@@ -262,23 +266,19 @@ function CustomerForm(): React.ReactElement {
                     {...field}
                     control={control}
                     label="Status"
-                    items={membershipArray}
+                    items={statusArray}
                   />
                 </ControllerBox>
               )}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 6 }} sx={{ display: 'flex', alignItems: 'flexStart' }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex', alignItems: 'flexStart' }}>
             <Controller
-              name="hasItemInShoppingCart"
+              name="isVerified"
               control={control}
               render={({ field }) => (
                 <ControllerBox>
-                  <CheckboxGenerator
-                    {...field}
-                    label="Has item in shopping cart"
-                    checked={field.value}
-                  />
+                  <CheckboxGenerator {...field} label="Is Verified" checked={field.value} />
                 </ControllerBox>
               )}
             />
@@ -300,11 +300,11 @@ function CustomerForm(): React.ReactElement {
         open={snackbar.open}
         message={snackbar.message}
         severity={snackbar.severity}
-        autoHideDuration={CUSTOMER_DURATION}
+        autoHideDuration={AGENT_DURATION}
         onClose={handleClose}
       />
     </Paper>
   );
 }
 
-export default CustomerForm;
+export default AgentForm;
