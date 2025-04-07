@@ -48,7 +48,7 @@ export const mock_agents = [...Array(24)].map((_, index) => {
   };
 });
 
-export const roleArray = () => [
+export const roleArray = (): Array<{ id: string; title: string }> => [
   { id: '1', title: 'Sales Leader' },
   { id: '2', title: 'Hr Manager' },
   { id: '3', title: 'Sales Agent' },

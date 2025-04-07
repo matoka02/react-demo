@@ -12,11 +12,7 @@ function SelectDropdown({
     // eslint-disable-next-line react/jsx-props-no-spreading
     <FormControl fullWidth variant="outlined" {...(error && { error: true })}>
       <InputLabel>{label}</InputLabel>
-      <Select
-        label={label}
-        onChange={onChange}
-        value={value}
-      >
+      <Select label={label} onChange={onChange} value={value}>
         <MenuItem value="">None</MenuItem>
         {options.map((item: any) => (
           <MenuItem key={item.id} value={item.title}>

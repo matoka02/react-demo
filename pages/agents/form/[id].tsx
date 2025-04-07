@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'next/navigation';
@@ -79,6 +79,8 @@ function AgentForm(): React.ReactElement {
     resolver: yupResolver(agentSchema),
     defaultValues: existingAgent || initialFieldValues,
   });
+
+  const theme = useTheme();
 
   useEffect(() => {
     reset(existingAgent || initialFieldValues);
@@ -305,7 +307,11 @@ function AgentForm(): React.ReactElement {
         <Stack direction="row" spacing={2} sx={{ justifyContent: 'center', px: 10 }}>
           <ButtonGenerator text={isNew ? 'Create' : 'Update'} type="submit" />
           <ButtonGenerator text="Reset" color="default" onClick={reset} />
-          <ButtonGenerator text="Back" color="info" onClick={() => appRouter.back()} />
+          <ButtonGenerator
+            text="Back"
+            sx={{ background: theme.palette.common.black }}
+            onClick={() => appRouter.back()}
+          />
         </Stack>
       </form>
 
