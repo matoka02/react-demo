@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { TextField } from '@mui/material';
 
-function Input({ label, variant, error = null, ...others }: any): React.ReactElement {
+function Input({ label, variant, value = '', error = null, ...others }: any): React.ReactElement {
   return (
     <TextField
-      variant={variant}
       label={label}
+      value={value}
+      variant={variant}
       {...(error && { error: true, helperText: error })}
       {...others}
     />

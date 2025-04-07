@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { FormControl, FormLabel, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import { Controller } from 'react-hook-form';
 
@@ -9,9 +10,7 @@ interface RadioItemType {
 interface RadioGroupGeneratorProps {
   name: string;
   label: string;
-  control:TODO;
-  // value: string;
-  // onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  control: TODO;
   items: RadioItemType[];
 }
 
@@ -23,20 +22,20 @@ function RadioGroupGenerator({ name, label, control, items }: RadioGroupGenerato
   return (
     <FormControl>
       <FormLabel>{label}</FormLabel>
-      <Controller name={name} control={control} render={({field})=>(
-        <RadioGroup
-        row
-        {...field}
-        // name={name}
-        // label={label}
-        // value={value}
-        // onChange={onChange}
-      >
-        {items.map((item: TODO) => (
-          <RadioItem key={item.id} value={item.id} label={item.title} />
-        ))}
-      </RadioGroup>
-      )} />
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <RadioGroup
+            row
+            {...field}
+          >
+            {items.map((item: TODO) => (
+              <RadioItem key={item.id} value={item.id} label={item.title} />
+            ))}
+          </RadioGroup>
+        )}
+      />
     </FormControl>
   );
 }

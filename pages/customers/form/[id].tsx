@@ -66,7 +66,7 @@ function CustomerForm(): React.ReactElement {
 
   const customers = useAppSelector((state: RootState) => state.customers.customers);
   const existingCustomer = customers.find((c) => c.id === id);
-  const customer = existingCustomer ?? initialFieldValues;
+  // const customer = existingCustomer ?? initialFieldValues;
 
   const {
     control,
@@ -80,7 +80,7 @@ function CustomerForm(): React.ReactElement {
 
   useEffect(() => {
     reset(existingCustomer || initialFieldValues);
-  }, [existingCustomer, initialFieldValues, reset]);
+  }, [existingCustomer, reset]);
 
   const onSubmit = (data: INewCustomer | Customer) => {
     const processedData = {
@@ -110,7 +110,13 @@ function CustomerForm(): React.ReactElement {
               name="firstName"
               control={control}
               render={({ field }) => (
-                <Input fullWidth {...field} label="First Name" error={errors.firstName?.message} />
+                <Input
+                  fullWidth
+                  {...field}
+                  label="First Name"
+                  value={field.value}
+                  error={errors.firstName?.message}
+                />
               )}
             />
           </Grid>
@@ -123,6 +129,7 @@ function CustomerForm(): React.ReactElement {
                   fullWidth
                   {...field}
                   label="Last Name"
+                  value={field.value}
                   error={errors.lastName?.message}
                   variant="outlined"
                 />
@@ -140,6 +147,7 @@ function CustomerForm(): React.ReactElement {
                   fullWidth
                   {...field}
                   label="E-mail"
+                  value={field.value}
                   error={errors.email?.message}
                   variant="outlined"
                 />
@@ -155,6 +163,7 @@ function CustomerForm(): React.ReactElement {
                   fullWidth
                   {...field}
                   label="Mobile"
+                  value={field.value}
                   error={errors.mobile?.message}
                   variant="outlined"
                 />
@@ -170,6 +179,7 @@ function CustomerForm(): React.ReactElement {
                   fullWidth
                   {...field}
                   label="Phone"
+                  value={field.value}
                   error={errors.phone?.message}
                   variant="outlined"
                 />
@@ -187,6 +197,7 @@ function CustomerForm(): React.ReactElement {
                   fullWidth
                   {...field}
                   label="City"
+                  value={field.value}
                   error={errors.city?.message}
                   variant="outlined"
                 />
@@ -202,6 +213,7 @@ function CustomerForm(): React.ReactElement {
                   fullWidth
                   {...field}
                   label="State"
+                  value={field.value}
                   error={errors.state?.message}
                   variant="outlined"
                 />
@@ -217,6 +229,7 @@ function CustomerForm(): React.ReactElement {
                   fullWidth
                   {...field}
                   label="Country"
+                  value={field.value}
                   error={errors.country?.message}
                   variant="outlined"
                 />
@@ -229,7 +242,14 @@ function CustomerForm(): React.ReactElement {
             <Controller
               name="membership"
               control={control}
-              render={({ field }) => <RadioGroupGenerator {...field} control={control} label="Status" items={membershipArray} />}
+              render={({ field }) => (
+                <RadioGroupGenerator
+                  {...field}
+                  control={control}
+                  label="Status"
+                  items={membershipArray}
+                />
+              )}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
@@ -237,7 +257,11 @@ function CustomerForm(): React.ReactElement {
               name="hasItemInShoppingCart"
               control={control}
               render={({ field }) => (
-                <CheckboxGenerator {...field} label="Has item in shopping cart" checked={field.value} />
+                <CheckboxGenerator
+                  {...field}
+                  label="Has item in shopping cart"
+                  checked={field.value}
+                />
               )}
             />
           </Grid>
