@@ -42,27 +42,24 @@ export const fetchAgentById = createAsyncThunk<IAgent, string, { rejectValue: st
 
 export const fetchFilteredAgents = createAsyncThunk<
   IAgent[],
-  { firstName: string; lastName: string },
+  { name: string },
   { rejectValue: string }
->(
-  'agent/fetchFilteredAgents',
-  async (filters: { firstName: string; lastName: string }, { rejectWithValue }: any) => {
-    try {
-      const query = new URLSearchParams(filters).toString();
+>('agent/fetchFilteredAgents', async (filters: { name: string }, { rejectWithValue }: any) => {
+  try {
+    const query = new URLSearchParams(filters).toString();
 
-      const response = await fetch(`/api/agents?${query}`, { method: HttpMethod.GET });
+    const response = await fetch(`/api/agents?${query}`, { method: HttpMethod.GET });
 
-      const data: IAgent[] = await response.json();
+    const data: IAgent[] = await response.json();
 
-      if (data.length === 0) return rejectWithValue('No agents found');
+    if (data.length === 0) return rejectWithValue('No agents found');
 
-      return data;
-    } catch (error: any) {
-      // console.error(error.message);
-      return rejectWithValue('Error fetching filtered agents');
-    }
+    return data;
+  } catch (error: any) {
+    // console.error(error.message);
+    return rejectWithValue('Error fetching filtered agents');
   }
-);
+});
 
 export const deleteAgent = createAsyncThunk<string, string, { rejectValue: string }>(
   'agent/deleteAgent',
