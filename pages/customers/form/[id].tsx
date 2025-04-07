@@ -34,6 +34,7 @@ const customerSchema = Yup.object().shape({
   state: Yup.string().required('Mandatory Field'),
   country: Yup.string().required('Mandatory Field'),
   membership: Yup.string().required('Mandatory Field'),
+  hasItemInShoppingCart: Yup.boolean().required('Mandatory Field'),
 });
 
 const initialFieldValues: INewCustomer = {
@@ -306,6 +307,7 @@ function CustomerForm(): React.ReactElement {
         <Stack direction="row" spacing={2} sx={{ justifyContent: 'center', px: 10 }}>
           <ButtonGenerator text={isNew ? 'Create' : 'Update'} type="submit" />
           <ButtonGenerator text="Reset" color="default" onClick={reset} />
+          <ButtonGenerator text="Back" color="info" onClick={() => appRouter.back()} />
         </Stack>
       </form>
 
