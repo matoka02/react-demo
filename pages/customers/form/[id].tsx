@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, FormControl, Snackbar, Stack, Typography } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid2';
@@ -5,8 +7,8 @@ import Paper from '@mui/material/Paper';
 import Slide, { SlideProps } from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { useParams } from 'next/navigation';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
 
 import ButtonGenerator from '@/components/controls/Button';
@@ -14,7 +16,6 @@ import CheckboxGenerator from '@/components/controls/Checkbox';
 import Input from '@/components/controls/Input';
 import RadioGroupGenerator from '@/components/controls/RadioGroup';
 import SnapNotice from '@/components/controls/SnapNotice';
-import useForm from '@/hooks/useForm';
 import { useAppRouter } from '@/routes/hooks';
 import { hideSnackbar, CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
 import { addCustomer, updateCustomer } from '@/stores/customers/customerThunk';
@@ -31,6 +32,7 @@ const customerSchema = Yup.object().shape({
     .required('Mandatory Field'),
   email: Yup.string().email('Email is not Valid').required('Mandatory Field'),
   mobile: Yup.string().min(10, 'Min 10 numbers required').required('Mandatory Field'),
+  phone: Yup.string().min(10, 'Min 10 numbers required').required('Mandatory Field'),
   city: Yup.string().required('Mandatory Field'),
   state: Yup.string().required('Mandatory Field'),
   country: Yup.string().required('Mandatory Field'),
@@ -66,63 +68,33 @@ function CustomerForm(): React.ReactElement {
   const existingCustomer = customers.find((c) => c.id === id);
   const customer = existingCustomer ?? initialFieldValues;
 
-  const { values, errors, setErrors, handleInputChange, resetForm, currentField } = useForm(
-    initialFieldValues,
-    customer
-  );
-
-  // useEffect(() => {
-  //   if (customer) resetForm(customer);
-  // }, [customer, resetForm]);
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(customerSchema),
+    defaultValues: existingCustomer || initialFieldValues,
+  });
 
   useEffect(() => {
-    resetForm(customer);
-  }, [customer]);
+    reset(existingCustomer || initialFieldValues);
+  }, [existingCustomer, initialFieldValues, reset]);
 
-  const validateOnSubmit = async () => {
-    try {
-      await customerSchema.validate(values, { abortEarly: false });
-      return true;
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const formattedErrors: Record<string, string> = {};
-        err.inner.forEach((error) => {
-          if (error.path) {
-            formattedErrors[error.path] = error.message;
-          }
-        });
-        setErrors(formattedErrors);
-      }
-      return false;
-    }
-  };
+  const onSubmit = (data: INewCustomer | Customer) => {
+    const processedData = {
+      ...data,
+      name: `${data.firstName} ${data.lastName}`,
+    };
 
-  const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    if (await validateOnSubmit()) {
-      // values.name = `${values.firstName} ${values.lastName}`;
-      // values.location = `${values.city} ${values.state}`;
-      const newCustomer: INewCustomer = {
-        ...values,
-        name: `${values.firstName} ${values.lastName}`,
-        location: `${values.city} ${values.state}`,
-      };
-      dispatch(addCustomer(newCustomer));
-      appRouter.push('/customers');
+    if (isNew) {
+      dispatch(addCustomer(processedData as INewCustomer));
+    } else if (id && typeof id === 'string') {
+      dispatch(updateCustomer({ ...processedData } as ICustomer));
     }
-  };
 
-  const handleUpdate = async (evt: React.FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    if (await validateOnSubmit()) {
-      const updatedCustomer: ICustomer = {
-        ...values,
-        name: `${values.firstName} ${values.lastName}`,
-        location: `${values.city} ${values.state}`,
-      };
-      dispatch(updateCustomer(updatedCustomer));
-      appRouter.push('/customers');
-    }
+    appRouter.push('/customers');
   };
 
   return (
@@ -130,123 +102,149 @@ function CustomerForm(): React.ReactElement {
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
         Customer Form
       </Typography>
-      <form onSubmit={existingCustomer ? handleUpdate : handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container rowSpacing={2} columnSpacing={4}>
           {/** Name */}
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-            <FormControl fullWidth>
-              <Input
-                label="First Name"
-                name="firstName"
-                value={values.firstName}
-                onChange={handleInputChange}
-                error={errors.firstName}
-                required
-              />
-            </FormControl>
+            <Controller
+              name="firstName"
+              control={control}
+              render={({ field }) => (
+                <Input fullWidth {...field} label="First Name" error={errors.firstName?.message} />
+              )}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-            <FormControl fullWidth>
-              <Input
-                variant="outlined"
-                label="Last Name"
-                name="lastName"
-                value={values.lastName}
-                onChange={handleInputChange}
-                error={errors.lastName}
-                required
-              />
-            </FormControl>
+            <Controller
+              name="lastName"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  fullWidth
+                  {...field}
+                  label="Last Name"
+                  error={errors.lastName?.message}
+                  variant="outlined"
+                />
+              )}
+            />
           </Grid>
 
           {/** Contacts */}
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-            <FormControl fullWidth>
-              <Input
-                label="E-mail"
-                name="email"
-                value={values.email}
-                type="email"
-                onChange={handleInputChange}
-                error={errors.email}
-                required
-              />
-            </FormControl>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  fullWidth
+                  {...field}
+                  label="E-mail"
+                  error={errors.email?.message}
+                  variant="outlined"
+                />
+              )}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-            <FormControl fullWidth>
-              <Input
-                label="Mobile"
-                name="mobile"
-                value={values.mobile}
-                onChange={handleInputChange}
-                error={errors.mobile}
-              />
-            </FormControl>
+            <Controller
+              name="mobile"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  fullWidth
+                  {...field}
+                  label="Mobile"
+                  error={errors.mobile?.message}
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+            <Controller
+              name="phone"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  fullWidth
+                  {...field}
+                  label="Phone"
+                  error={errors.phone?.message}
+                  variant="outlined"
+                />
+              )}
+            />
           </Grid>
 
           {/** Address */}
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-            <FormControl fullWidth>
-              <Input
-                required
-                variant="outlined"
-                label="city"
-                name="city"
-                value={values.city}
-                onChange={handleInputChange}
-              />{' '}
-            </FormControl>
+            <Controller
+              name="city"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  fullWidth
+                  {...field}
+                  label="City"
+                  error={errors.city?.message}
+                  variant="outlined"
+                />
+              )}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-            <FormControl fullWidth>
-              <Input
-                variant="outlined"
-                label="State"
-                name="state"
-                value={values.state}
-                onChange={handleInputChange}
-              />{' '}
-            </FormControl>
+            <Controller
+              name="state"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  fullWidth
+                  {...field}
+                  label="State"
+                  error={errors.state?.message}
+                  variant="outlined"
+                />
+              )}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-            <FormControl fullWidth>
-              <Input
-                variant="outlined"
-                label="Country"
-                name="country"
-                value={values.country}
-                onChange={handleInputChange}
-              />{' '}
-            </FormControl>
+            <Controller
+              name="country"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  fullWidth
+                  {...field}
+                  label="Country"
+                  error={errors.country?.message}
+                  variant="outlined"
+                />
+              )}
+            />
           </Grid>
 
           {/** Account */}
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-            <FormControl fullWidth>
-              <RadioGroupGenerator
-                name="membership"
-                label="Status"
-                value={values.membership}
-                onChange={handleInputChange}
-                items={membershipArray}
-              />
-            </FormControl>
+            <Controller
+              name="membership"
+              control={control}
+              render={({ field }) => <RadioGroupGenerator label="Status" items={membershipArray} />}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-            <FormControl fullWidth>
-              <CheckboxGenerator
-                name="hasItemInShoppingCart"
-                label="Has item in shopping cart"
-                value={values.hasItemInShoppingCart ?? false}
-                onChange={handleInputChange}
-              />{' '}
-            </FormControl>
+            <Controller
+              name="hasItemInShoppingCart"
+              control={control}
+              render={({ field }) => (
+                <CheckboxGenerator label="Has item in shopping cart" checked={field.value} />
+              )}
+            />
           </Grid>
         </Grid>
         <Stack direction="row" spacing={2} sx={{ justifyContent: 'flex-end', px: 10 }}>
           <ButtonGenerator text={isNew ? 'Create' : 'Update'} type="submit" />
-          <ButtonGenerator text="Reset" color="default" onClick={resetForm} />
+          <ButtonGenerator text="Reset" color="default" onClick={reset} />
         </Stack>
       </form>
     </Paper>

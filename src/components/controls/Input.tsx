@@ -1,25 +1,12 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { TextField } from '@mui/material';
 
-function Input({
-  name,
-  label,
-  variant,
-  value,
-  error = null,
-  onChange,
-  ...others
-}: any): React.ReactElement {
-  // console.log(JSON.stringify(others))
+function Input({ label, variant, error = null, ...others }: any): React.ReactElement {
   return (
     <TextField
       variant={variant}
       label={label}
-      name={name}
-      value={value}
-      onChange={onChange}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...(error && { error: true, helperText: error })}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...others}
     />
   );
