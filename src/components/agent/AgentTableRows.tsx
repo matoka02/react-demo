@@ -23,7 +23,6 @@ type AgentTableRowProps = {
   row: Agent;
   selected: boolean;
   onSelectRow: () => void;
-  // toggleNotice: (open: boolean) => void;
   onDialogConfirm: (message?: string) => Promise<boolean>;
 };
 
@@ -31,7 +30,6 @@ function AgentTableRow({
   row,
   selected,
   onSelectRow,
-  // toggleNotice,
   onDialogConfirm,
 }: AgentTableRowProps): React.ReactElement {
   const dispatch = useAppDispatch();

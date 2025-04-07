@@ -23,7 +23,6 @@ type CustomerTableRowProps = {
   row: Customer;
   selected: boolean;
   onSelectRow: () => void;
-  // toggleNotice: (open: boolean) => void;
   onDialogConfirm: (message?: string) => Promise<boolean>;
 };
 
@@ -31,7 +30,6 @@ function CustomerTableRow({
   row,
   selected,
   onSelectRow,
-  // toggleNotice,
   onDialogConfirm,
 }: CustomerTableRowProps): React.ReactElement {
   const dispatch = useAppDispatch();
