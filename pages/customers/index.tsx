@@ -37,6 +37,8 @@ function CustomerView(): React.ReactElement {
 
   const table = useTable({
     postDeleteRoute: '/customers',
+    entityType: 'customer',
+    duration: CUSTOMER_DURATION,
   });
 
   const handleClose = () => {

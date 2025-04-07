@@ -2,7 +2,7 @@ import { useDialogs } from '@toolpad/core';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 
-import { CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
+import { deleteAgent } from '@/stores/agents/agentThunk';
 import { deleteCustomer } from '@/stores/customers/customerThunk';
 import { useAppDispatch } from '@/stores/hooks';
 
@@ -88,6 +88,8 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
 
 export type useTableProps = {
   postDeleteRoute: string | undefined;
+  entityType: 'customer' | 'agent' | string;
+  duration: number;
 };
 
 export function useTable(props?: useTableProps) {
@@ -99,7 +101,7 @@ export function useTable(props?: useTableProps) {
 
   const dialogs = useDialogs();
   const router = useRouter();
-  const { postDeleteRoute } = props || {};
+  const { postDeleteRoute, entityType, duration } = props || {};
   const dispatch = useAppDispatch();
 
   const onSort = useCallback(
@@ -163,15 +165,22 @@ export function useTable(props?: useTableProps) {
       const deleteConfirmed = await onDialogConfirm();
       if (deleteConfirmed) {
         if (selected.length > 0) {
-          selected.forEach((id) => dispatch(deleteCustomer(id)));
+          // selected.forEach((id) => dispatch(deleteCustomer(id)));
+          selected.forEach((id) => {
+            if (entityType === 'customer') {
+              dispatch(deleteCustomer(id));
+            } else if (entityType === 'agent') {
+              dispatch(deleteAgent(id));
+            }
+          });
         }
         setSelected([]);
         setTimeout(() => {
           router.push(postDeleteRoute || '/');
-        }, CUSTOMER_DURATION);
+        }, duration);
       }
     },
-    [dispatch, onDialogConfirm, selected, router, postDeleteRoute]
+    [dispatch, onDialogConfirm, selected, router, postDeleteRoute, entityType, duration]
   );
 
   return {

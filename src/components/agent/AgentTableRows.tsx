@@ -94,9 +94,7 @@ function AgentTableRow({
         </TableCell>
 
         <TableCell>
-          <Label color={(row.status === 'locked' && 'error') || 'info'}>
-            {row.status}
-          </Label>
+          <Label color={(row.status === 'locked' && 'error') || 'info'}>{row.status}</Label>
         </TableCell>
 
         <TableCell align="right">
