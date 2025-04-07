@@ -1,8 +1,17 @@
-import type { Customer, Order, Product } from '@/index.d';
+import type { Agent, Customer, Order, Product } from '@/index.d';
 
 /**
  * The ID is generated on the backend. In the project, the backend imitation is performed on API routers.
  */
+
+/* ====== AGENTS ====== */
+
+export interface IAgent extends Agent {
+  _extendsBaseType?: never;
+}
+export interface INewAgent extends Omit<Agent, 'id'> {
+  id?: string;
+}
 
 /* ====== CUSTOMERS ====== */
 
