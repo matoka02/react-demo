@@ -1,4 +1,3 @@
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
@@ -10,57 +9,65 @@ import TableRow from '@mui/material/TableRow';
 import { useState, useCallback } from 'react';
 
 import { useAppRouter } from '@/routes/hooks';
-import { AGENT_DURATION } from '@/stores/agents/agentSlice';
-import { deleteAgent } from '@/stores/agents/agentThunk';
 import { useAppDispatch } from '@/stores/hooks';
+import { ORDER_DURATION } from '@/stores/orders/orderSlice';
+import { deleteOrder } from '@/stores/orders/orderThunk';
 
 import { Iconify } from '../iconify';
 import { Label } from '../label';
 
 // ----------------------------------------------------------------------
 
-type AgentTableRowProps = {
-  row: Agent;
+const OrderStatus: { [k: string]: string } = {
+  packing: 'Packing',
+  shipping: 'Shipping',
+  'customs-clearance': 'Customs Clearance',
+  delivered: 'Delivered',
+};
+
+type OrderTableRowProps = {
+  row: Order;
   selected: boolean;
   onSelectRow: () => void;
   onDialogConfirm: (message?: string) => Promise<boolean>;
 };
 
-function AgentTableRow({
+function OrderTableRow({
   row,
   selected,
   onSelectRow,
+  // toggleNotice,
   onDialogConfirm,
-}: AgentTableRowProps): React.ReactElement {
+}: OrderTableRowProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
-  const [agentId, setAgentId] = useState('');
+  const [orderId, setOrderId] = useState('');
   const appRouter = useAppRouter();
 
   const handleOpenPopover = useCallback(
     (evt: React.MouseEvent<HTMLButtonElement>) => {
       setOpenPopover(evt.currentTarget);
-      setAgentId(evt.currentTarget.value);
+      setOrderId(evt.currentTarget.value);
     },
-    [setOpenPopover, setAgentId]
+    [setOpenPopover, setOrderId]
   );
 
   const handleEditing = useCallback(() => {
     setOpenPopover(null);
-    appRouter.push(`/agents/form/${agentId}`);
-  }, [agentId, setOpenPopover, appRouter]);
+    appRouter.push(`/orders/form/${orderId}`);
+  }, [orderId, setOpenPopover, appRouter]);
 
   const handleDelete = useCallback(async () => {
     const deleteConfirmed = await onDialogConfirm();
     if (deleteConfirmed) {
-      dispatch(deleteAgent(agentId));
+      dispatch(deleteOrder(orderId));
 
       setTimeout(() => {
-        appRouter.push('/agents');
-      }, AGENT_DURATION);
+        appRouter.push('/orders');
+      }, ORDER_DURATION);
     }
     setOpenPopover(null);
-  }, [agentId, dispatch, appRouter, onDialogConfirm]);
+  }, [orderId, dispatch, appRouter, onDialogConfirm]);
 
   return (
     <>
@@ -72,27 +79,37 @@ function AgentTableRow({
 
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
-            <Avatar alt={row.name} src={row.avatarUrl} />
-            {row.name}
+            {row.orderId}
           </Box>
         </TableCell>
 
-        <TableCell>{row.company}</TableCell>
-        <TableCell>{row.role}</TableCell>
-        <TableCell>{row.email}</TableCell>
-        <TableCell>{row.mobile}</TableCell>
-        {/* <TableCell>{row.billingAddress}</TableCell> */}
+        <TableCell>{row.itemSummary}</TableCell>
+
+        <TableCell>$ {row.totalPrice}</TableCell>
+        {/* <TableCell>$ {row.discount}</TableCell> */}
+
+        <TableCell> {row.promoteCode}</TableCell>
+        <TableCell> {row.customer}</TableCell>
 
         <TableCell align="center">
-          {row.isVerified ? (
-            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
+          {row.isDelayed ? (
+            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'error.main' }} />
           ) : (
             '-'
           )}
         </TableCell>
 
         <TableCell>
-          <Label color={(row.status === 'locked' && 'error') || 'info'}>{row.status}</Label>
+          <Label
+            color={
+              (row.status === 'customs-clearance' && 'error') ||
+              (row.status === 'packing' && 'warning') ||
+              (row.status === 'shipping' && 'info') ||
+              'success'
+            }
+          >
+            {OrderStatus[row.status]}
+          </Label>
         </TableCell>
 
         <TableCell align="right">
@@ -139,4 +156,4 @@ function AgentTableRow({
   );
 }
 
-export default AgentTableRow;
+export default OrderTableRow;

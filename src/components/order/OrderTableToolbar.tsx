@@ -10,19 +10,19 @@ import { Iconify } from '../iconify';
 
 // ----------------------------------------------------------------------
 
-type AgentTableToolbarProps = {
+type OrderTableToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (evt: React.ChangeEvent<HTMLInputElement>) => void;
   onMultipleDelete: (evt: React.MouseEvent<HTMLInputElement>) => void;
 };
 
-function AgentTableToolbar({
+function OrderTableToolbar({
   numSelected,
   filterName,
   onFilterName,
   onMultipleDelete,
-}: AgentTableToolbarProps): React.ReactElement {
+}: OrderTableToolbarProps): React.ReactElement {
   return (
     <Toolbar
       sx={{
@@ -45,7 +45,7 @@ function AgentTableToolbar({
           fullWidth
           value={filterName}
           onChange={onFilterName}
-          placeholder="Search name..."
+          placeholder="Search customer..."
           startAdornment={
             <InputAdornment position="start">
               <Iconify width={20} icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
@@ -72,4 +72,4 @@ function AgentTableToolbar({
   );
 }
 
-export default AgentTableToolbar;
+export default OrderTableToolbar;

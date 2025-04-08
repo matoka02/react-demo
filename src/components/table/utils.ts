@@ -76,9 +76,17 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
   let filteredData = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    filteredData = filteredData.filter((user: TODO) =>
-      user.name.toLowerCase().includes(filterName.toLowerCase())
-    ) as TODO;
+    filteredData = filteredData.filter((item: any) => {
+      let valueToSearch = '';
+
+      if ('name' in item) {
+        valueToSearch = item.name;
+      } else if ('customer' in item && typeof item.customer === 'string') {
+        valueToSearch = item.customer;
+      }
+
+      return valueToSearch?.toLowerCase().includes(filterName.toLowerCase());
+    });
   }
 
   return filteredData;
