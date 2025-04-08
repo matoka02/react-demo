@@ -44,16 +44,25 @@ export function getById<T extends keyof typeof mockDB>(
 // Adding an element
 export function postData<T extends keyof typeof mockDB>(
   model: T,
-  data: (typeof mockDB)[T] extends (infer U)[] ? Omit<U, 'id'> : never
+  data: (typeof mockDB)[T] extends (infer U)[]
+    ? T extends 'orders'
+      ? Omit<U, 'id' | 'orderId'>
+      : Omit<U, 'id'>
+    : never
 ) {
   if (!(model in mockDB)) return null;
 
   const collection = mockDB[model];
   if (!Array.isArray(collection)) return null;
 
-  const newItem = { id: `mock-${Date.now()}`, ...data } as any;
-  collection.push(newItem);
-  return newItem;
+  // const newItem = { id: `mock-${Date.now()}`, ...data } as any;
+  const id = `mock-${Date.now()}`;
+  const baseData = { id, ...(data as object) };
+
+  const newItem = model === 'orders' ? { ...baseData, orderId: `ORD-${Date.now()}` } : baseData;
+
+  (collection as any[]).push(newItem);
+  return newItem as (typeof mockDB)[T][number];
 }
 
 // Update element
