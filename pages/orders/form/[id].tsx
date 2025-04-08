@@ -23,7 +23,7 @@ import { IOrder, INewOrder } from '@/stores/types/newModelTypes';
 export const PRICE_REGEX = /^\d+(\.\d{1,2})?$/;
 
 const orderSchema = Yup.object().shape({
-  orderId: Yup.string().min(2).required('Mandatory Field'),
+  // orderId: Yup.string().min(2).required('Mandatory Field'),
   itemSummary: Yup.string().min(2).required('Mandatory Field'),
   totalPrice: Yup.number()
     .positive('Price cannot be negative')
@@ -32,29 +32,29 @@ const orderSchema = Yup.object().shape({
       return PRICE_REGEX.test(value.toString());
     })
     .required('Mandatory Field'),
-  discount: Yup.number()
-    .positive('Discount cannot be negative')
-    .integer()
-    .required('Mandatory Field'),
+  // discount: Yup.number()
+  //   .positive('Discount cannot be negative')
+  //   .integer()
+  //   .required('Mandatory Field'),
+  promoteCode: Yup.string(),
   shippingAddress: Yup.string()
     .min(10, 'Address must be at least 2 characters')
     .required('Mandatory Field'),
-  billingAddress: Yup.string()
-    .min(10, 'Address must be at least 2 characters')
-    .required('Mandatory Field'),
+  // billingAddress: Yup.string()
+  //   .min(10, 'Address must be at least 2 characters'),
   status: Yup.string().required('Mandatory Field'),
   isDelayed: Yup.boolean().required('Mandatory Field'),
   customer: Yup.string().required('Mandatory Field'),
 });
 
 const initialFieldValues: INewOrder = {
-  orderId: '',
   itemSummary: '',
   totalPrice: 0,
-  discount: 0,
+  // discount: 0,
+  promoteCode: '',
   shippingAddress: '',
-  billingAddress: '',
-  status: '',
+  // billingAddress: '',
+  status: 'packing',
   isDelayed: false,
   customer: '',
 };
@@ -95,10 +95,11 @@ function OrderForm(): React.ReactElement {
     reset(existingOrder || initialFieldValues);
   }, [existingOrder, reset]);
 
+  // console.log('Form errors:', errors);
+
   const onSubmit = (data: INewOrder | Order) => {
     const processedData = {
       ...data,
-      // location: `${data.city} ${data.state}`,
     };
 
     if (isNew) {
@@ -181,7 +182,6 @@ function OrderForm(): React.ReactElement {
                   error={errors.promoteCode?.message}
                   variant="outlined"
                   disabled={!isNewItem}
-                  required
                 />
               )}
             />
