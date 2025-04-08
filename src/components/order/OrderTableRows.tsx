@@ -93,7 +93,7 @@ function OrderTableRow({
 
         <TableCell align="center">
           {row.isDelayed ? (
-            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
+            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'error.main' }} />
           ) : (
             '-'
           )}
