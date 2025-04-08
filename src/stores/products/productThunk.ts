@@ -15,6 +15,7 @@ export const fetchAllProducts = createAsyncThunk<IProduct[], void, { rejectValue
       const products: IProduct[] = await response.json();
 
       if (!products) throw new Error('Invalid product data from API');
+      console.log('fetchAllProducts:', products);
 
       return products;
     } catch (error: any) {
