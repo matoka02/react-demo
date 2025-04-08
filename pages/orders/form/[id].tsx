@@ -86,8 +86,8 @@ function OrderForm(): React.ReactElement {
     defaultValues: existingOrder || initialFieldValues,
   });
 
-  const step = !existingOrder.id ? 0 : Steps.indexOf(existingOrder.status) + 1;
-  const isNewItem = !existingOrder.id ? true : false;
+  const step = !existingOrder?.id ? 0 : Steps.indexOf(existingOrder.status) + 1;
+  const isNewItem = !existingOrder?.id;
 
   const theme = useTheme();
 
