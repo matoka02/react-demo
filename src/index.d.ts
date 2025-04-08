@@ -23,6 +23,22 @@ declare module '@emotion/styled' {
   // export default styled;
 }
 
+declare type Agent = {
+  id: string;
+  name: string;
+  firstName?: string;
+  lastName?: string;
+  role: string;
+  status: string;
+  company: string;
+  email: string;
+  mobile: string;
+  avatarUrl?: string;
+  isVerified: boolean;
+  city?: string;
+  state?: string;
+};
+
 declare type Customer = {
   id: string;
   name: string;
@@ -42,20 +58,15 @@ declare type Customer = {
   membership: string;
 };
 
-declare type Agent = {
+declare type Product = {
   id: string;
   name: string;
-  firstName?: string;
-  lastName?: string;
-  role: string;
+  coverUrl?: string;
+  colors: string[];
+  price: number;
+  priceSale: number;
   status: string;
-  company: string;
-  email: string;
-  mobile: string;
-  avatarUrl?: string;
-  isVerified: boolean;
-  city?: string;
-  state?: string;
+  category: string;
 };
 
 declare type Order = {
