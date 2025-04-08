@@ -77,7 +77,13 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
 
   if (filterName) {
     filteredData = filteredData.filter((item: any) => {
-      const valueToSearch = 'name' in item ? item.name : 'customer' in item ? item.customer : '';
+      let valueToSearch = '';
+
+      if ('name' in item) {
+        valueToSearch = item.name;
+      } else if ('customer' in item && typeof item.customer === 'string') {
+        valueToSearch = item.customer;
+      }
 
       return valueToSearch?.toLowerCase().includes(filterName.toLowerCase());
     });
