@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack, Step, StepLabel, Stepper, Typography, useTheme } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'next/navigation';
 import React, { useEffect } from 'react';
