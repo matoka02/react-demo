@@ -168,8 +168,9 @@ export function useTable(props?: useTableProps) {
     [dialogs]
   );
 
-  const onMultipleDelete = useCallback(
-    async (event: React.MouseEvent<HTMLInputElement>) => {
+  const onMultipleDelete = useCallback(async () =>
+    // event: React.MouseEvent<HTMLInputElement>
+    {
       const deleteConfirmed = await onDialogConfirm();
       if (deleteConfirmed) {
         if (selected.length > 0) {
@@ -187,9 +188,7 @@ export function useTable(props?: useTableProps) {
           router.push(postDeleteRoute || '/');
         }, duration);
       }
-    },
-    [dispatch, onDialogConfirm, selected, router, postDeleteRoute, entityType, duration]
-  );
+    }, [dispatch, onDialogConfirm, selected, router, postDeleteRoute, entityType, duration]);
 
   return {
     page,
