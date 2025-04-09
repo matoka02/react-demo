@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction, ActionReducerMapBuilder, Action } from '@reduxjs/toolkit';
 
+import { IOrder, INewOrder } from '@/stores/types/newModelTypes';
+
 import {
   addOrder,
   deleteOrder,
@@ -8,8 +10,6 @@ import {
   // fetchFilteredOrders,
   updateOrder,
 } from './orderThunk';
-
-import { IOrder, INewOrder } from '@/stores/types/modelTypes';
 
 interface OrderState {
   orders: IOrder[];

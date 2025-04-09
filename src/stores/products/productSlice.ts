@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction, ActionReducerMapBuilder, Action } from '@reduxjs/toolkit';
 
+import { IProduct, INewProduct } from '@/stores/types/newModelTypes';
+
 import {
   addProduct,
   deleteProduct,
@@ -8,8 +10,6 @@ import {
   // fetchFilteredProducts,
   updateProduct,
 } from './productThunk';
-
-import { IProduct, INewProduct } from '@/stores/types/modelTypes';
 
 interface ProductState {
   products: IProduct[];

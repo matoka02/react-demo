@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction, ActionReducerMapBuilder, Action } from '@reduxjs/toolkit';
 
+import { ICustomer, INewCustomer } from '@/stores/types/newModelTypes';
+
 import {
   addCustomer,
   deleteCustomer,
@@ -8,8 +10,6 @@ import {
   // fetchFilteredCustomers,
   updateCustomer,
 } from './customerThunk';
-
-import { ICustomer, INewCustomer } from '@/stores/types/modelTypes';
 
 interface CustomerState {
   customers: ICustomer[];

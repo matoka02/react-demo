@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction, ActionReducerMapBuilder, Action } from '@reduxjs/toolkit';
 
+import { IAgent, INewAgent } from '@/stores/types/newModelTypes';
+
 import {
   addAgent,
   deleteAgent,
@@ -8,8 +10,6 @@ import {
   // fetchFilteredAgents,
   updateAgent,
 } from './agentThunk';
-
-import { IAgent, INewAgent } from '@/stores/types/modelTypes';
 
 interface AgentState {
   agents: IAgent[];
