@@ -9,11 +9,6 @@ import { fnNumber } from '@/utils/format-number';
 
 import { Chart, useChart, type ChartOptions } from '../chart';
 
-// import type { ChartOptions } from '../chart';
-// import { fnNumber } from '../../utils/format-number';
-
-// import { Chart, useChart } from '../chart';
-
 // ----------------------------------------------------------------------
 
 type Props = CardProps & {
