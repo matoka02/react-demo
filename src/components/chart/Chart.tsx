@@ -7,7 +7,7 @@ import chartClasses from './classes';
 import type { ChartProps } from './types';
 
 const ApexChart = dynamic(() => import('react-apexcharts'), {
-  ssr: false // Disable SSR for this component
+  ssr: false, // Disable SSR for this component
 });
 
 // ----------------------------------------------------------------------
