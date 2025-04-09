@@ -58,6 +58,8 @@ const defaultFilters = {
 const PAGE_SIZE = 12;
 const PAGE_COUNT = 10;
 
+// ----------------------------------------------------------------------
+
 function ProductView(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { products: allProducts } = useAppSelector((state: RootState) => state.products);

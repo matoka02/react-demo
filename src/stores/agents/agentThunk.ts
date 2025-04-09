@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { HttpMethod } from '../types/httpTypes';
+import { IAgent, INewAgent } from '@/stores/types/newModelTypes';
 
-import { IAgent, INewAgent } from '@/stores/types/modelTypes';
+import { HttpMethod } from '../types/httpTypes';
 
 export const fetchAllAgents = createAsyncThunk<IAgent[], void, { rejectValue: string }>(
   'agent/fetchAllAgents',
@@ -55,6 +55,7 @@ export const fetchFilteredAgents = createAsyncThunk<
     if (data.length === 0) return rejectWithValue('No agents found');
 
     return data;
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
   } catch (error: any) {
     // console.error(error.message);
     return rejectWithValue('Error fetching filtered agents');

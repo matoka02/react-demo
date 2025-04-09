@@ -1,0 +1,89 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import type { CardProps } from '@mui/material/Card';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import { useTheme, alpha as hexAlpha } from '@mui/material/styles';
+import React from 'react';
+
+import { fnNumber } from '@/utils/format-number';
+
+import { Chart, useChart, type ChartOptions } from '../chart';
+
+// ----------------------------------------------------------------------
+
+type Props = CardProps & {
+  title?: string;
+  subheader?: string;
+  chart: {
+    colors?: string[];
+    categories?: string[];
+    series: {
+      name: string;
+      data: number[];
+    }[];
+    options?: ChartOptions;
+  };
+};
+
+function AnalyticsConversionRates({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props): React.ReactElement {
+  const theme = useTheme();
+
+  const chartColors = chart.colors ?? [
+    theme.palette.primary.dark,
+    hexAlpha(theme.palette.primary.dark, 0.24),
+  ];
+
+  const chartOptions = useChart({
+    colors: chartColors,
+    stroke: { width: 0, colors: ['transparent'] },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      y: {
+        formatter: (value: number) => fnNumber(value),
+        title: { formatter: (seriesName: string) => `${seriesName}: ` },
+      },
+    },
+    xaxis: { categories: chart.categories },
+    dataLabels: {
+      enabled: true,
+      offsetX: -6,
+      style: { fontSize: '12px', colors: ['#FFFFFF', theme.palette.text.primary] },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        borderRadius: 2,
+        barHeight: '48%',
+        dataLabels: { position: 'top' },
+      },
+    },
+    ...chart.options,
+  });
+
+  return (
+    <Card {...other}>
+      <CardHeader title={title} subheader={subheader} />
+
+      <Chart
+        type="bar"
+        series={chart.series}
+        options={chartOptions}
+        height={360}
+        sx={{ py: 2.5, pl: 1, pr: 2.5 }}
+      />
+    </Card>
+  );
+}
+
+AnalyticsConversionRates.defaultProps = {
+  title: '',
+  subheader: '',
+};
+
+export default AnalyticsConversionRates;

@@ -6,7 +6,7 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import React from 'react';
 
-import { visuallyHidden } from '../table/utils';
+import { visuallyHidden } from '../table/useTable';
 
 // ----------------------------------------------------------------------
 

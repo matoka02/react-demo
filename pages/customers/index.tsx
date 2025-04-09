@@ -16,7 +16,7 @@ import { Iconify } from '@/components/iconify';
 import { Scrollbar } from '@/components/scrollbar';
 import TableEmptyRows from '@/components/table/TableEmptyRows';
 import TableNoData from '@/components/table/TableNoData';
-import { applyFilter, emptyRows, getComparator, useTable } from '@/components/table/utils';
+import { applyFilter, emptyRows, getComparator, useTable } from '@/components/table/useTable';
 import { RouterLink } from '@/routes/components';
 import { hideSnackbar, CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
 import { fetchAllCustomers } from '@/stores/customers/customerThunk';

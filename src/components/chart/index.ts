@@ -1,6 +1,8 @@
-export { default as chart } from './Chart';
+export { default as Chart } from './Chart';
 
-export * from './ChartLegent';
+export { default as ChartLegend } from './ChartLegend';
+
+export { default as useChart } from './useChart';
 
 export type * from './types';
 

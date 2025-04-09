@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
-export const StyledLegend = styled(Box)(({ theme }) => ({
+const StyledLegend = styled(Box)(({ theme }) => ({
   gap: 6,
   alignItems: 'center',
   display: 'inline-flex',
@@ -14,7 +14,7 @@ export const StyledLegend = styled(Box)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightMedium,
 }));
 
-export const StyledDot = styled(Box)(() => ({
+const StyledDot = styled(Box)(() => ({
   width: 12,
   height: 12,
   flexShrink: 0,
@@ -36,7 +36,7 @@ type Props = BoxProps & {
   icons?: React.ReactNode[];
 };
 
-function ChartLegends({ icons, values, sublabels, labels = [], colors = [], ...other }: Props) {
+function ChartLegend({ icons, values, sublabels, labels = [], colors = [], ...other }: Props) {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <Box gap={2} display="flex" flexWrap="wrap" {...other}>
@@ -70,7 +70,7 @@ function ChartLegends({ icons, values, sublabels, labels = [], colors = [], ...o
   );
 }
 
-ChartLegends.defaultProps = {
+ChartLegend.defaultProps = {
   labels: [],
   colors: [],
   values: [],
@@ -78,4 +78,4 @@ ChartLegends.defaultProps = {
   icons: [],
 };
 
-export default ChartLegends;
+export default ChartLegend;

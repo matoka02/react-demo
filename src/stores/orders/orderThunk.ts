@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { HttpMethod } from '../types/httpTypes';
+import { IOrder, INewOrder } from '@/stores/types/newModelTypes';
 
-import { IOrder, INewOrder } from '@/stores/types/modelTypes';
+import { HttpMethod } from '../types/httpTypes';
 
 export const fetchAllOrders = createAsyncThunk<IOrder[], void, { rejectValue: string }>(
   'order/fetchAllOrders',
@@ -55,6 +55,7 @@ export const fetchFilteredOrders = createAsyncThunk<
     if (data.length === 0) return rejectWithValue('No orders found');
 
     return data;
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
   } catch (error: any) {
     // console.error(error.message);
     return rejectWithValue('Error fetching filtered orders');

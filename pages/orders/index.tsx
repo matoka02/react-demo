@@ -16,7 +16,7 @@ import OrderTableToolbar from '@/components/order/OrderTableToolbar';
 import { Scrollbar } from '@/components/scrollbar';
 import TableEmptyRows from '@/components/table/TableEmptyRows';
 import TableNoData from '@/components/table/TableNoData';
-import { applyFilter, emptyRows, getComparator, useTable } from '@/components/table/utils';
+import { applyFilter, emptyRows, getComparator, useTable } from '@/components/table/useTable';
 import { RouterLink } from '@/routes/components';
 import { useAppDispatch, useAppSelector } from '@/stores/hooks';
 import { hideSnackbar, ORDER_DURATION } from '@/stores/orders/orderSlice';
