@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import React from 'react';
