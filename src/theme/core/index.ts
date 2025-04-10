@@ -1,4 +1,4 @@
-export { default as shadow } from './shadows';
+export { default as shadows } from './shadows';
 
 export * from './palette';
 
