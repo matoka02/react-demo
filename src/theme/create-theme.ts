@@ -1,8 +1,7 @@
 import type { Theme } from '@mui/material/styles';
 import { extendTheme } from '@mui/material/styles';
 
-import { typography, components, colorSchemes, customShadows } from './core';
-import shadows from './core/shadows';
+import { typography, components, colorSchemes, customShadows, shadows } from './core';
 
 // ----------------------------------------------------------------------
 
