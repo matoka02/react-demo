@@ -70,6 +70,9 @@ importers:
       next:
         specifier: ^15.3.0
         version: 15.3.0(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      next-fonts:
+        specifier: ^1.5.1
+        version: 1.5.1(webpack@5.99.5(esbuild@0.25.1))
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -7225,6 +7228,15 @@ packages:
       }
     engines: { node: '>=16.0.0' }
 
+  file-loader@6.2.0:
+    resolution:
+      {
+        integrity: sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==,
+      }
+    engines: { node: '>= 10.13.0' }
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
+
   filelist@1.0.4:
     resolution:
       {
@@ -9586,6 +9598,14 @@ packages:
         integrity: sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==,
       }
     engines: { node: '>= 0.4.0' }
+
+  next-fonts@1.5.1:
+    resolution:
+      {
+        integrity: sha512-pgEJ40xO1oRhM6RqhQJ9CzuZOFp6Zq+aAD/V1P9sq/wdepvLzhFxDm3lCZNoE7+78NSuMKgT6b1qeXSsqWuUMQ==,
+      }
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
 
   next@15.3.0:
     resolution:
@@ -12168,6 +12188,19 @@ packages:
       {
         integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==,
       }
+
+  url-loader@4.1.1:
+    resolution:
+      {
+        integrity: sha512-3BTV812+AVHHOJQO8O5MkWgZ5aosP7GnROJwvzLS9hWDj00lZ6Z0wNak423Lp9PBZN05N+Jk/N5Si8jRAlGyWA==,
+      }
+    engines: { node: '>= 10.13.0' }
+    peerDependencies:
+      file-loader: '*'
+      webpack: ^4.0.0 || ^5.0.0
+    peerDependenciesMeta:
+      file-loader:
+        optional: true
 
   url@0.11.4:
     resolution:
@@ -17930,6 +17963,12 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
+  file-loader@6.2.0(webpack@5.99.5(esbuild@0.25.1)):
+    dependencies:
+      loader-utils: 2.0.4
+      schema-utils: 3.3.0
+      webpack: 5.99.5(esbuild@0.25.1)
+
   filelist@1.0.4:
     dependencies:
       minimatch: 5.1.6
@@ -19591,6 +19630,12 @@ snapshots:
   neo-async@2.6.2: {}
 
   netmask@2.0.2: {}
+
+  next-fonts@1.5.1(webpack@5.99.5(esbuild@0.25.1)):
+    dependencies:
+      file-loader: 6.2.0(webpack@5.99.5(esbuild@0.25.1))
+      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.99.5(esbuild@0.25.1)))(webpack@5.99.5(esbuild@0.25.1))
+      webpack: 5.99.5(esbuild@0.25.1)
 
   next@15.3.0(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
@@ -21268,6 +21313,15 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  url-loader@4.1.1(file-loader@6.2.0(webpack@5.99.5(esbuild@0.25.1)))(webpack@5.99.5(esbuild@0.25.1)):
+    dependencies:
+      loader-utils: 2.0.4
+      mime-types: 2.1.35
+      schema-utils: 3.3.0
+      webpack: 5.99.5(esbuild@0.25.1)
+    optionalDependencies:
+      file-loader: 6.2.0(webpack@5.99.5(esbuild@0.25.1))
 
   url@0.11.4:
     dependencies:
