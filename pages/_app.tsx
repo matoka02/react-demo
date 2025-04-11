@@ -1,17 +1,16 @@
 import '../styles/globals.css';
-import { Provider } from 'react-redux';
-import React, { useEffect } from 'react';
-import * as Sentry from '@sentry/react';
 import { createTheme } from '@mui/material';
-import { AppProvider } from '@toolpad/core';
+import * as Sentry from '@sentry/react';
+import { AppProvider, Session, SessionContext } from '@toolpad/core';
 import Image from 'next/image';
-import i18n from '../i18n';
-import 'dotenv/config';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Provider } from 'react-redux';
 
 import { store } from '@/stores/store';
 
+import i18n from '../i18n';
+import 'dotenv/config';
 import logoMidPng from '../src/assets/it-logo-mid.png';
-import { SessionProvider } from '@/SessionContext';
 
 const logo = <Image src={logoMidPng} className="logo" alt="" />;
 const BRANDING = {
@@ -36,6 +35,9 @@ Sentry.init({
 
 // eslint-disable-next-line react/prop-types
 function MyApp({ Component, pageProps }) {
+  const [session, setSession] = useState<Session | null>(null);
+  const sessionContextValue = useMemo(() => ({ session, setSession }), [session, setSession]);
+
   useEffect(() => {
     document.documentElement.dir = i18n.dir();
   }, []);
@@ -43,12 +45,12 @@ function MyApp({ Component, pageProps }) {
   // eslint-disable-next-line react/jsx-props-no-spreading
   return (
     <Provider store={store}>
-      <SessionProvider>
-        <AppProvider theme={theme} branding={BRANDING}>
+      <SessionContext.Provider value={sessionContextValue}>
+        <AppProvider theme={theme} branding={BRANDING} session={session}>
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Component {...pageProps} />
         </AppProvider>
-      </SessionProvider>
+      </SessionContext.Provider>
     </Provider>
   );
 }
