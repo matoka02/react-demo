@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import { createTheme } from '@mui/material';
 import * as Sentry from '@sentry/react';
+import { Session } from '@toolpad/core/AppProvider';
 import { AppProvider, Session, SessionContext } from '@toolpad/core';
 import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
