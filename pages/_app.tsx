@@ -1,12 +1,14 @@
-import '../styles/globals.css';
+// import '../styles/globals.css';
 import { createTheme } from '@mui/material';
 import * as Sentry from '@sentry/react';
-import { Session } from '@toolpad/core/AppProvider';
-import { AppProvider, Session, SessionContext } from '@toolpad/core';
+// import { Session } from '@toolpad/core/AppProvider';
+import { AppProvider, Session } from '@toolpad/core';
+import { AppProps } from 'next/app';
 import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Provider } from 'react-redux';
 
+import { SessionContext } from '@/SessionContext';
 import { store } from '@/stores/store';
 
 import i18n from '../i18n';
@@ -28,14 +30,14 @@ const theme = createTheme({
 Sentry.init({
   dsn: process.env.SENTRY_DSN_KEY,
   integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
-  tracePropagationTargets: [process.env.LOCALHOST, /^https:\/\/yourserver\.io\/api/],
+  tracePropagationTargets: [process.env.LOCALHOST as string, /^https:\/\/yourserver\.io\/api/],
   tracesSampleRate: 1.0,
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
 });
 
 // eslint-disable-next-line react/prop-types
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   const [session, setSession] = useState<Session | null>(null);
   const sessionContextValue = useMemo(() => ({ session, setSession }), [session, setSession]);
 
@@ -43,7 +45,6 @@ function MyApp({ Component, pageProps }) {
     document.documentElement.dir = i18n.dir();
   }, []);
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
   return (
     <Provider store={store}>
       <SessionContext.Provider value={sessionContextValue}>

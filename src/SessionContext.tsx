@@ -8,6 +8,7 @@ export interface SessionContextValue {
 
 export const SessionContext = React.createContext<SessionContextValue>({
   session: {},
+  // session: null,
   setSession: () => {},
 });
 
