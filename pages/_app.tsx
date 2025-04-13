@@ -10,6 +10,8 @@ import { Provider } from 'react-redux';
 
 import { SessionContext } from '@/SessionContext';
 import { store } from '@/stores/store';
+// import { createTheme2 } from '@/theme/create-theme';
+// import ThemeProvider from '@/theme/theme-provider';
 
 import i18n from '../i18n';
 import 'dotenv/config';
@@ -26,6 +28,7 @@ const theme = createTheme({
   colorSchemes: { light: true, dark: true },
   breakpoints: { values: { xs: 0, sm: 600, md: 600, lg: 1408, xl: 1530 } },
 });
+// const combinedTheme = createTheme2();
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN_KEY,
@@ -48,7 +51,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <SessionContext.Provider value={sessionContextValue}>
-        <AppProvider theme={theme} branding={BRANDING} session={session}>
+        <AppProvider
+          theme={theme}
+          // theme={combinedTheme}
+          branding={BRANDING}
+          session={session}
+        >
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Component {...pageProps} />
         </AppProvider>
