@@ -1,5 +1,4 @@
-import type { Agent, Customer, Order, Product } from '@/index.d';
-
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 /**
  * The ID is generated on the backend. In the project, the backend imitation is performed on API routers.
  */
@@ -15,9 +14,7 @@ export interface INewAgent extends Omit<Agent, 'id'> {
 
 /* ====== CUSTOMERS ====== */
 
-export interface ICustomer extends Customer {
-  _extendsBaseType?: never;
-}
+export interface ICustomer extends Customer {}
 export interface INewCustomer extends Omit<Customer, 'id'> {
   id?: never;
 }
