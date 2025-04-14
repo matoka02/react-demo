@@ -15,8 +15,9 @@ export interface INewAgent extends Omit<Agent, 'id'> {
 /* ====== CUSTOMERS ====== */
 
 export interface ICustomer extends Customer {}
-export interface INewCustomer extends Omit<Customer, 'id'> {
+export interface INewCustomer extends Omit<Customer, 'id' | 'name'> {
   id?: never;
+  name?: string;
 }
 
 /* ====== PRODUCTS ====== */

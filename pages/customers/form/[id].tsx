@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack, Typography, useTheme } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'next/navigation';
 import React, { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import * as Yup from 'yup';
+import { Controller } from 'react-hook-form';
 
 import ButtonGenerator from '@/components/controls/Button';
 import CheckboxGenerator from '@/components/controls/Checkbox';
@@ -14,41 +12,17 @@ import ControllerBox from '@/components/controls/ContollerBox';
 import Input from '@/components/controls/Input';
 import RadioGroupGenerator from '@/components/controls/RadioGroup';
 import SnapNotice from '@/components/controls/SnapNotice';
+import {
+  initialFieldValues,
+  toFormCustomer,
+  useCustomerForm,
+} from '@/components/form/useCustomerForm';
 import { useAppRouter } from '@/routes/hooks';
 import { hideSnackbar, CUSTOMER_DURATION } from '@/stores/customers/customerSlice';
 import { addCustomer, updateCustomer } from '@/stores/customers/customerThunk';
 import { useAppDispatch, useAppSelector } from '@/stores/hooks';
 import { RootState } from '@/stores/store';
 import { ICustomer, INewCustomer } from '@/stores/types/newModelTypes';
-
-const customerSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, 'First name must be at least 2 characters')
-    .required('Mandatory Field'),
-  lastName: Yup.string()
-    .min(2, 'Last name must be at least 2 characters')
-    .required('Mandatory Field'),
-  email: Yup.string().email('Email is not Valid').required('Mandatory Field'),
-  mobile: Yup.string().min(10, 'Min 10 numbers required').required('Mandatory Field'),
-  phone: Yup.string().min(10, 'Min 10 numbers required').required('Mandatory Field'),
-  city: Yup.string().required('Mandatory Field'),
-  state: Yup.string().required('Mandatory Field'),
-  country: Yup.string().required('Mandatory Field'),
-  membership: Yup.string().required('Mandatory Field'),
-  hasItemInShoppingCart: Yup.boolean().required('Mandatory Field'),
-});
-
-const initialFieldValues: INewCustomer = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  mobile: '',
-  city: '',
-  state: '',
-  country: '',
-  membership: 'standard',
-  hasItemInShoppingCart: false,
-};
 
 const membershipArray = [
   { id: 'vip', title: 'VIP' },
@@ -66,37 +40,46 @@ function CustomerForm(): React.ReactElement {
   const customers = useAppSelector((state: RootState) => state.customers.customers);
   const { snackbar } = useAppSelector((state: RootState) => state.customers);
   const existingCustomer = customers.find((c) => c.id === id);
-  // const customer = existingCustomer ?? initialFieldValues;
+
+  // const {
+  //   control,
+  //   handleSubmit,
+  //   reset,
+  //   formState: { errors },
+  // } = useForm<INewCustomer>({
+  //   resolver: yupResolver(customerSchema) as Resolver<INewCustomer>,
+  //   defaultValues: existingCustomer ? toFormCustomer(existingCustomer) : initialFieldValues,
+  // });
 
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(customerSchema),
-    defaultValues: existingCustomer || initialFieldValues,
-  });
+  } = useCustomerForm(existingCustomer);
 
   const theme = useTheme();
 
   useEffect(() => {
-    reset(existingCustomer || initialFieldValues);
+    reset(existingCustomer ? toFormCustomer(existingCustomer) : initialFieldValues);
   }, [existingCustomer, reset]);
 
-  const onSubmit = (data: INewCustomer | Customer) => {
+  const onSubmit = (data: INewCustomer) => {
     const processedData = {
       ...data,
       name: `${data.firstName} ${data.lastName}`,
     };
 
     if (isNew) {
-      dispatch(addCustomer(processedData as INewCustomer));
+      dispatch(addCustomer(processedData));
     } else if (id && typeof id === 'string') {
-      dispatch(updateCustomer({ ...processedData } as ICustomer));
+      dispatch(updateCustomer({ ...(processedData as Omit<ICustomer, 'id'>), id }));
     }
 
     appRouter.push('/customers');
+    // setTimeout(() => {
+    //   appRouter.push('/customers');
+    // }, CUSTOMER_DURATION);
   };
 
   const handleClose = () => {
