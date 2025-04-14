@@ -5,11 +5,10 @@
 
 /* ====== AGENTS ====== */
 
-export interface IAgent extends Agent {
-  _extendsBaseType?: never;
-}
-export interface INewAgent extends Omit<Agent, 'id'> {
+export interface IAgent extends Agent {}
+export interface INewAgent extends Omit<Agent, 'id' | 'name'> {
   id?: never;
+  name?: string;
 }
 
 /* ====== CUSTOMERS ====== */
