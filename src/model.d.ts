@@ -51,9 +51,9 @@ declare type Order = {
   orderId: string;
   itemSummary: string;
   customer: string;
-  totalPrice: string;
+  totalPrice: number;
   status: string;
-  discount: string;
+  discount?: number;
   promoteCode?: string;
   couponCode?: string;
 

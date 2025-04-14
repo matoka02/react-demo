@@ -28,9 +28,7 @@ export interface INewProduct extends Omit<Product, 'id'> {
 
 /* ====== ORDERS ====== */
 
-export interface IOrder extends Order {
-  _extendsBaseType?: never;
-}
+export interface IOrder extends Order {}
 export interface INewOrder extends Omit<Order, 'id' | 'orderId'> {
   id?: never;
   orderId?: never;
