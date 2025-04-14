@@ -21,7 +21,7 @@ import {
 // ----------------------------------------------------------------------
 
 export const mock_myAccount = {
-  displayName: 'Harry Potter',
+  displayName: 'Tessa',
   email: 'harrypotter@test.com',
   photoURL: '/assets/images/avatar/avatar-25.webp',
 };
