@@ -43,7 +43,7 @@ export function shouldSkipGeneratingVar(
 // ----------------------------------------------------------------------
 
 export function createTheme2(): Theme {
-// baseTheme?:Theme
+  // baseTheme?:Theme
   const initialTheme = {
     colorSchemes,
     shadows: shadows(),
