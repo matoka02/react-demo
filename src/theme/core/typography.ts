@@ -1,4 +1,4 @@
-import type { TypographyOptions } from '@mui/material/styles/createTypography';
+import type { TypographyVariantsOptions as MuiTypographyVariantsOptions } from '@mui/material/styles';
 
 import { pxToRem, responsiveFontSizes, setFont } from '../styles';
 
@@ -28,7 +28,7 @@ export const secondaryFont = setFont('Barlow');
 
 // ----------------------------------------------------------------------
 
-export const typography: TypographyOptions = {
+export const typography: MuiTypographyVariantsOptions = {
   fontFamily: primaryFont,
   fontSecondaryFamily: secondaryFont,
   fontWeightLight: '300',

@@ -12,12 +12,14 @@ import { Label } from '../label';
 
 // ----------------------------------------------------------------------
 
+const DEFAULT_COVER = '/assets/images/product/istockphoto-1093292834-612x612.jpg';
+
 export type ProductItemProps = {
   id: string;
   name: string;
   price: number;
   status: string;
-  coverUrl: string;
+  coverUrl?: string;
   colors: string[];
   priceSale: number | null;
 };
@@ -44,7 +46,7 @@ function ProductItem({ product }: { product: ProductItemProps }): React.ReactEle
     <Box
       component="img"
       alt={product.name}
-      src={product.coverUrl}
+      src={product.coverUrl || DEFAULT_COVER}
       sx={{
         top: 0,
         width: 1,

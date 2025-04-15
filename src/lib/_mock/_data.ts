@@ -22,7 +22,7 @@ import {
 
 export const mock_myAccount = {
   displayName: 'Tessa',
-  email: 'harrypotter@test.com',
+  email: 'kurama.sama.024@gmail.com',
   photoURL: '/assets/images/avatar/avatar-25.webp',
 };
 
