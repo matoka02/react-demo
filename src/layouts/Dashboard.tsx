@@ -14,7 +14,7 @@ interface DashboardProps {
 function Layout({ children }: DashboardProps): React.ReactElement {
   return (
     <DashboardLayout
-      sx={{ backgroundClip: varAlpha(palette.grey['500Channel'], 0.08) }}
+      sx={{ backgroundColor: varAlpha(palette.grey['500Channel'], 0.08) }}
       slots={{ toolbarAccount: AccountPopover } as TODO}
     >
       <PageContainer title="" breadcrumbs={[]}>
