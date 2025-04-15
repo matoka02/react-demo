@@ -13,6 +13,7 @@ import { store } from '@/stores/store';
 // import { createTheme2 } from '@/theme/create-theme';
 // import ThemeProvider from '@/theme/theme-provider';
 
+// eslint-disable-next-line import/extensions
 import i18n from '../i18n';
 import 'dotenv/config';
 import logoMidPng from '../src/assets/it-logo-mid.png';
