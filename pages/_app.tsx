@@ -1,14 +1,15 @@
 // import '../styles/globals.css';
 import { createTheme } from '@mui/material';
 import * as Sentry from '@sentry/react';
-// import { Session } from '@toolpad/core/AppProvider';
 import { AppProvider, Session } from '@toolpad/core';
 import { AppProps } from 'next/app';
-import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Provider } from 'react-redux';
 
+import { BRANDING } from '@/config/Branding';
+import NAVIGATION from '@/config/Navigation';
 import { SessionContext } from '@/config/SessionContext';
+import Layout from '@/layouts/Dashboard';
 import { store } from '@/stores/store';
 // import { createTheme2 } from '@/theme/create-theme';
 // import ThemeProvider from '@/theme/theme-provider';
@@ -16,13 +17,6 @@ import { store } from '@/stores/store';
 // eslint-disable-next-line import/extensions
 import i18n from '../i18n';
 import 'dotenv/config';
-import logoMidPng from '../src/assets/it-logo-mid.png';
-
-const logo = <Image src={logoMidPng} className="logo" alt="" />;
-const BRANDING = {
-  title: 'React Demo V6',
-  logo,
-};
 
 const theme = createTheme({
   cssVariables: { colorSchemeSelector: 'data-toolpad-color-scheme' },
@@ -55,11 +49,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         <AppProvider
           theme={theme}
           // theme={combinedTheme}
+          navigation={NAVIGATION}
           branding={BRANDING}
           session={session}
         >
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          <Component {...pageProps} />
+          <Layout>
+            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+            <Component {...pageProps} />
+          </Layout>
         </AppProvider>
       </SessionContext.Provider>
     </Provider>
