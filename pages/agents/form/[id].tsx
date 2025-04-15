@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack, Typography, useTheme } from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'next/navigation';
 import React, { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import * as Yup from 'yup';
+import { Controller } from 'react-hook-form';
 
 import ButtonGenerator from '@/components/controls/Button';
 import CheckboxGenerator from '@/components/controls/Checkbox';
@@ -15,6 +13,7 @@ import Input from '@/components/controls/Input';
 import RadioGroupGenerator from '@/components/controls/RadioGroup';
 import SelectDropdown from '@/components/controls/Select';
 import SnapNotice from '@/components/controls/SnapNotice';
+import { initialFieldValues, toFormAgent, useAgentForm } from '@/components/form/useAgentForm';
 import { roleArray } from '@/lib/_mock';
 import { useAppRouter } from '@/routes/hooks';
 import { hideSnackbar, AGENT_DURATION } from '@/stores/agents/agentSlice';
@@ -22,36 +21,6 @@ import { addAgent, updateAgent } from '@/stores/agents/agentThunk';
 import { useAppDispatch, useAppSelector } from '@/stores/hooks';
 import { RootState } from '@/stores/store';
 import { IAgent, INewAgent } from '@/stores/types/newModelTypes';
-
-const agentSchema = Yup.object().shape({
-  company: Yup.string().min(4, 'Company must be at least 4 characters').required('Mandatory Field'),
-  firstName: Yup.string()
-    .min(2, 'First name must be at least 2 characters')
-    .required('Mandatory Field'),
-  lastName: Yup.string()
-    .min(2, 'Last name must be at least 2 characters')
-    .required('Mandatory Field'),
-  email: Yup.string().email('Email is not Valid').required('Mandatory Field'),
-  mobile: Yup.string().min(10, 'Min 10 numbers required').required('Mandatory Field'),
-  city: Yup.string().required('Mandatory Field'),
-  state: Yup.string().required('Mandatory Field'),
-  role: Yup.string().required('Mandatory Field'),
-  status: Yup.string().required('Mandatory Field'),
-  isVerified: Yup.boolean().required('Mandatory Field'),
-});
-
-const initialFieldValues: INewAgent = {
-  company: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  mobile: '',
-  city: '',
-  state: '',
-  role: '',
-  status: 'locked',
-  isVerified: false,
-};
 
 const statusArray = [
   { id: 'active', title: 'Active' },
@@ -69,34 +38,40 @@ function AgentForm(): React.ReactElement {
   const agents = useAppSelector((state: RootState) => state.agents.agents);
   const { snackbar } = useAppSelector((state: RootState) => state.agents);
   const existingAgent = agents.find((c) => c.id === id);
-  // const agent = existingAgent ?? initialFieldValues;
+
+  // const {
+  //   control,
+  //   handleSubmit,
+  //   reset,
+  //   formState: { errors },
+  // } = useForm({
+  //   resolver: yupResolver(agentSchema),
+  //   defaultValues: existingAgent || initialFieldValues,
+  // });
 
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(agentSchema),
-    defaultValues: existingAgent || initialFieldValues,
-  });
+  } = useAgentForm(existingAgent);
 
   const theme = useTheme();
 
   useEffect(() => {
-    reset(existingAgent || initialFieldValues);
+    reset(existingAgent ? toFormAgent(existingAgent) : initialFieldValues);
   }, [existingAgent, reset]);
 
-  const onSubmit = (data: INewAgent | Agent) => {
+  const onSubmit = (data: INewAgent) => {
     const processedData = {
       ...data,
       name: `${data.firstName} ${data.lastName}`,
     };
 
     if (isNew) {
-      dispatch(addAgent(processedData as INewAgent));
+      dispatch(addAgent(processedData));
     } else if (id && typeof id === 'string') {
-      dispatch(updateAgent({ ...processedData } as IAgent));
+      dispatch(updateAgent({ ...(processedData as Omit<IAgent, 'id'>), id }));
     }
 
     appRouter.push('/agents');

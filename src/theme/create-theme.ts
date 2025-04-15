@@ -1,8 +1,7 @@
 import type { Theme } from '@mui/material/styles';
 import { extendTheme } from '@mui/material/styles';
 
-import { typography, components, colorSchemes, customShadows } from './core';
-import shadows from './core/shadows';
+import { typography, components, colorSchemes, customShadows, shadows } from './core';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +43,7 @@ export function shouldSkipGeneratingVar(
 // ----------------------------------------------------------------------
 
 export function createTheme2(): Theme {
+  // baseTheme?:Theme
   const initialTheme = {
     colorSchemes,
     shadows: shadows(),
@@ -57,5 +57,9 @@ export function createTheme2(): Theme {
 
   const theme = extendTheme(initialTheme);
   // console.log(theme);
+  // const theme = baseTheme
+  //   ? extendTheme(initialTheme, baseTheme)
+  //   : extendTheme(initialTheme);
+  // console.log('CustomTheme:', theme.palette.success?.main);
   return theme;
 }

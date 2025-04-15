@@ -1,63 +1,23 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack, Step, StepLabel, Stepper, Typography, useTheme } from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'next/navigation';
 import React, { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import * as Yup from 'yup';
+import { Controller } from 'react-hook-form';
 
 import ButtonGenerator from '@/components/controls/Button';
 import CheckboxGenerator from '@/components/controls/Checkbox';
 import ControllerBox from '@/components/controls/ContollerBox';
 import Input from '@/components/controls/Input';
 import SnapNotice from '@/components/controls/SnapNotice';
+import { initialFieldValues, toFormOrder, useOrderForm } from '@/components/form/useOrderForm';
 import { useAppRouter } from '@/routes/hooks';
 import { useAppDispatch, useAppSelector } from '@/stores/hooks';
 import { hideSnackbar, ORDER_DURATION } from '@/stores/orders/orderSlice';
 import { addOrder, fetchOrderById, updateOrder } from '@/stores/orders/orderThunk';
 import { RootState } from '@/stores/store';
 import { IOrder, INewOrder } from '@/stores/types/newModelTypes';
-
-export const PRICE_REGEX = /^\d+(\.\d{1,2})?$/;
-
-const orderSchema = Yup.object().shape({
-  // orderId: Yup.string().min(2).required('Mandatory Field'),
-  itemSummary: Yup.string().min(2).required('Mandatory Field'),
-  totalPrice: Yup.number()
-    .positive('Price cannot be negative')
-    .test('is-decimal', 'Amount must have up to 2 decimal places', (value) => {
-      if (!value) return true;
-      return PRICE_REGEX.test(value.toString());
-    })
-    .required('Mandatory Field'),
-  // discount: Yup.number()
-  //   .positive('Discount cannot be negative')
-  //   .integer()
-  //   .required('Mandatory Field'),
-  promoteCode: Yup.string(),
-  shippingAddress: Yup.string()
-    .min(10, 'Address must be at least 2 characters')
-    .required('Mandatory Field'),
-  // billingAddress: Yup.string()
-  //   .min(10, 'Address must be at least 2 characters'),
-  status: Yup.string().required('Mandatory Field'),
-  isDelayed: Yup.boolean().required('Mandatory Field'),
-  customer: Yup.string().required('Mandatory Field'),
-});
-
-const initialFieldValues: INewOrder = {
-  itemSummary: '',
-  totalPrice: 0,
-  // discount: 0,
-  promoteCode: '',
-  shippingAddress: '',
-  // billingAddress: '',
-  status: 'packing',
-  isDelayed: false,
-  customer: '',
-};
 
 const Steps = ['packing', 'shipping', 'customs-clearance', 'delivered'];
 
@@ -76,15 +36,22 @@ function OrderForm(): React.ReactElement {
   const existingOrder = orders.find((c) => c.id === id);
   // const order = existingOrder ?? initialFieldValues;
 
+  // const {
+  //   control,
+  //   handleSubmit,
+  //   reset,
+  //   formState: { errors },
+  // } = useForm({
+  //   resolver: yupResolver(orderSchema),
+  //   defaultValues: existingOrder || initialFieldValues,
+  // });
+
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(orderSchema),
-    defaultValues: existingOrder || initialFieldValues,
-  });
+  } = useOrderForm(existingOrder);
 
   const step = !existingOrder?.id ? 0 : Steps.indexOf(existingOrder.status) + 1;
   const isNewItem = !existingOrder?.id;
@@ -92,20 +59,27 @@ function OrderForm(): React.ReactElement {
   const theme = useTheme();
 
   useEffect(() => {
-    reset(existingOrder || initialFieldValues);
+    reset(existingOrder ? toFormOrder(existingOrder) : initialFieldValues);
   }, [existingOrder, reset]);
 
   // console.log('Form errors:', errors);
 
-  const onSubmit = (data: INewOrder | Order) => {
+  const onSubmit = (data: INewOrder) => {
     const processedData = {
       ...data,
     };
 
     if (isNew) {
-      dispatch(addOrder(processedData as INewOrder));
+      dispatch(addOrder(processedData));
     } else if (id && typeof id === 'string') {
-      dispatch(updateOrder({ ...processedData } as IOrder));
+      if (!existingOrder?.orderId) return;
+      dispatch(
+        updateOrder({
+          ...(processedData as Omit<IOrder, 'id' | 'orderId'>),
+          id,
+          orderId: existingOrder.orderId,
+        })
+      );
     }
 
     appRouter.push('/orders');

@@ -1,3 +1,4 @@
+const withFonts = require('next-fonts');
 const LocalizationGenerator = require('./scripts/localizationGenerator');
 
 /** @type {import('next').NextConfig} */
@@ -16,4 +17,5 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+// module.exports = nextConfig;
+module.exports = withFonts(nextConfig);

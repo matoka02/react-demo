@@ -206,9 +206,10 @@ const customerSlice = createSlice({
     hideSnackbar: (state) => ({
       ...state,
       snackbar: {
+        ...state.snackbar,
         open: false,
-        message: '',
-        severity: 'info',
+        // message: '',
+        // severity: 'info',
       },
     }),
   },

@@ -1,5 +1,5 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import type {} from '@mui/material/themeCssVarsAugmentation';
 
 import { createTheme2 } from './create-theme';
@@ -14,10 +14,10 @@ function ThemeProvider({ children }: Props) {
   const theme = createTheme2();
 
   return (
-    <CssVarsProvider theme={theme}>
+    <MuiThemeProvider theme={theme}>
       <CssBaseline />
       {children}
-    </CssVarsProvider>
+    </MuiThemeProvider>
   );
 }
 
