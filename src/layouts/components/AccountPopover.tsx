@@ -79,7 +79,7 @@ function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps): React
       </IconButton>
 
       <IconButton
-        onClick={() => handleNewTab('https://github.com/harryho/react-demo')}
+        onClick={() => handleNewTab(process.env.GITHUB_URL ?? 'https://github.com')}
         sx={{
           p: '1px',
           width: 40,
@@ -101,7 +101,7 @@ function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps): React
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         slotProps={{
           paper: {
-            sx: { width: 200 },
+            sx: { width: 250 },
           },
         }}
       >
@@ -155,7 +155,7 @@ function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps): React
         <Box sx={{ p: 1 }}>
           <Button
             fullWidth
-            onClick={() => handleClickItem('/sign-in')}
+            onClick={() => handleClickItem('/auth/signIn')}
             color="error"
             size="medium"
             variant="text"
