@@ -8,7 +8,7 @@ import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Provider } from 'react-redux';
 
-import { SessionContext } from '@/SessionContext';
+import { SessionContext } from '@/config/SessionContext';
 import { store } from '@/stores/store';
 // import { createTheme2 } from '@/theme/create-theme';
 // import ThemeProvider from '@/theme/theme-provider';

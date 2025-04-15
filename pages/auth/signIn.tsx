@@ -4,7 +4,7 @@ import { SignInPage } from '@toolpad/core';
 import type { Session } from '@toolpad/core/AppProvider';
 import { useRouter } from 'next/navigation';
 
-import { useSession } from '@/SessionContext';
+import { useSession } from '@/config/SessionContext';
 
 const fakeAsyncGetSession = async (formData: FormData): Promise<Session> =>
   new Promise((resolve, reject) => {

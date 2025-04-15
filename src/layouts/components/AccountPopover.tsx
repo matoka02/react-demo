@@ -13,9 +13,9 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import React, { useState, useCallback } from 'react';
 
+import { useSession } from '@/config/SessionContext';
 import { mock_myAccount } from '@/lib/_mock';
 import { useAppRouter, usePathname } from '@/routes/hooks';
-import { useSession } from '@/SessionContext';
 
 // ----------------------------------------------------------------------
 
