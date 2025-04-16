@@ -4,7 +4,7 @@ export const logo = (
   <Image
     width={40}
     height={40}
-    src="it-logo-mid.png"
+    src="/it-logo-mid.png"
     className="logo"
     alt="Company Logo"
     priority

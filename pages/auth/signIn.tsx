@@ -16,9 +16,9 @@ const fakeAsyncGetSession = async (formData: FormData): Promise<Session> =>
       if (typeof password === 'string' && password !== '') {
         resolve({
           user: {
-            name: process.env.USER_NAME,
+            name: process.env.NEXT_PUBLIC_USER_NAME,
             email,
-            image: process.env.USER_AVATAR,
+            image: process.env.NEXT_PUBLIC_USER_AVATAR,
           },
         });
       } else {

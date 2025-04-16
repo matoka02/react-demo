@@ -1,15 +1,17 @@
 // import '../styles/globals.css';
 import { createTheme } from '@mui/material';
 import * as Sentry from '@sentry/react';
-import { AppProvider, Session } from '@toolpad/core';
+import { Session } from '@toolpad/core';
+import { NextAppProvider } from '@toolpad/core/nextjs';
 import { AppProps } from 'next/app';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Provider } from 'react-redux';
 
 import { BRANDING } from '@/config/Branding';
 import NAVIGATION from '@/config/Navigation';
 import { SessionContext } from '@/config/SessionContext';
 import Layout from '@/layouts/Dashboard';
+import { useAppRouter } from '@/routes/hooks';
 import { store } from '@/stores/store';
 // import { createTheme2 } from '@/theme/create-theme';
 // import ThemeProvider from '@/theme/theme-provider';
@@ -39,6 +41,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [session, setSession] = useState<Session | null>(null);
   const sessionContextValue = useMemo(() => ({ session, setSession }), [session, setSession]);
 
+  const appRouter = useAppRouter();
+  const signIn = useCallback(() => {
+    appRouter.push('/auth/signIn');
+  }, [appRouter]);
+  const signOut = useCallback(() => {
+    appRouter.push('/auth/signOut');
+  }, [appRouter]);
+
   useEffect(() => {
     document.documentElement.dir = i18n.dir();
   }, []);
@@ -46,18 +56,19 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <SessionContext.Provider value={sessionContextValue}>
-        <AppProvider
+        <NextAppProvider
           theme={theme}
           // theme={combinedTheme}
           navigation={NAVIGATION}
           branding={BRANDING}
           session={session}
+          authentication={{ signIn, signOut }}
         >
           <Layout>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <Component {...pageProps} />
           </Layout>
-        </AppProvider>
+        </NextAppProvider>
       </SessionContext.Provider>
     </Provider>
   );
