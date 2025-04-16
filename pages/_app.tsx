@@ -1,7 +1,8 @@
 // import '../styles/globals.css';
 import { createTheme } from '@mui/material';
 import * as Sentry from '@sentry/react';
-import { AppProvider, Session } from '@toolpad/core';
+import { Session } from '@toolpad/core';
+import { NextAppProvider } from '@toolpad/core/nextjs';
 import { AppProps } from 'next/app';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Provider } from 'react-redux';
@@ -46,7 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <SessionContext.Provider value={sessionContextValue}>
-        <AppProvider
+        <NextAppProvider
           theme={theme}
           // theme={combinedTheme}
           navigation={NAVIGATION}
@@ -57,7 +58,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <Component {...pageProps} />
           </Layout>
-        </AppProvider>
+        </NextAppProvider>
       </SessionContext.Provider>
     </Provider>
   );
