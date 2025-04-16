@@ -79,12 +79,12 @@ function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps): React
       </IconButton>
 
       <IconButton
-        onClick={() => handleNewTab(process.env.GITHUB_URL ?? 'https://github.com')}
+        onClick={() => handleNewTab(process.env.NEXT_PUBLIC_GITHUB_URL ?? 'https://github.com')}
         sx={{
           p: '1px',
           width: 40,
           height: 40,
-          background: (theme) => `${theme.vars.palette.primary.light}`,
+          // background: (theme) => `${theme.vars.palette.primary.light}`,
 
           ...sx,
         }}
