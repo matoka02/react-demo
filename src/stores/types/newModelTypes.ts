@@ -33,3 +33,19 @@ export interface INewOrder extends Omit<Order, 'id' | 'orderId'> {
   id?: never;
   orderId?: never;
 }
+
+/**
+ * In the project use JSONPlaceholder.
+ */
+
+/* ====== USER TASKS ====== */
+
+export interface IUserTask {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}
+export interface INewUserTask extends Omit<IUserTask, 'id'> {
+  id?: never;
+}
