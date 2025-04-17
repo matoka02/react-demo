@@ -40,11 +40,17 @@ export interface INewOrder extends Omit<Order, 'id' | 'orderId'> {
 
 /* ====== USER TASKS ====== */
 
-export interface IUserTask {
+export interface IApiUserTask {
   userId: number;
   id: number;
   title: string;
   completed: boolean;
+}
+export interface IApiNewUserTask extends Omit<IApiUserTask, 'id'> {
+  id?: never;
+}
+export interface IUserTask extends IApiUserTask{
+  state: string;
 }
 export interface INewUserTask extends Omit<IUserTask, 'id'> {
   id?: never;

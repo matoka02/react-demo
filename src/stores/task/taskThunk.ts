@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { IUserTask } from '@/stores/types/newModelTypes';
+import { IApiUserTask, IUserTask } from '@/stores/types/newModelTypes';
 
 /*
  * Creates an asyncThunk to fetch tasks from a remote endpoint.
@@ -19,18 +19,20 @@ const fetchTasks = createAsyncThunk<IUserTask[], void, { rejectValue: string }>(
 
       if (!response.ok) throw new Error('Error loading user task');
 
-      const userTasks: IUserTask[] = await response.json();
+      const userTasks: IApiUserTask[] = await response.json();
 
       if (!userTasks) throw new Error('Invalid user tasks data from API');
 
-      // const result = userTasks.map((task: any) => ({
-      //   id: `${task.id}`,
-      //   title: task.title,
-      //   state: task.completed ? 'TASK_ARCHIVED' : 'TASK_INBOX',
-      // }));
-      // return result;
+      const result = userTasks.map((task: any) => ({
+        userId: task.userId,
+        id: task.id,
+        title: task.title,
+        completed:task.completed,
+        state: task.completed ? 'TASK_ARCHIVED' : 'TASK_INBOX',
+      }));
+      return result;
 
-      return userTasks;
+      // return userTasks;
     }
 );
 
