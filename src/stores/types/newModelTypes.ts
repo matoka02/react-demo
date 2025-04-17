@@ -49,7 +49,7 @@ export interface IApiUserTask {
 export interface IApiNewUserTask extends Omit<IApiUserTask, 'id'> {
   id?: never;
 }
-export interface IUserTask extends IApiUserTask{
+export interface IUserTask extends IApiUserTask {
   state: string;
 }
 export interface INewUserTask extends Omit<IUserTask, 'id'> {

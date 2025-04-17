@@ -15,10 +15,10 @@ interface IUserTaskState {
  * Usually, you would fetch this from a server. Let's not worry about that now
  */
 const defaultTasks: IUserTask[] = [
-  { userId: 1, id: 1, title: 'Something',completed:false, state: 'TASK_INBOX' },
-  { userId: 1, id: 2, title: 'Something more',completed:false, state: 'TASK_INBOX' },
-  { userId: 1, id: 3, title: 'Something else',completed:false, state: 'TASK_INBOX' },
-  { userId: 1, id: 4, title: 'Something again',completed:false, state: 'TASK_INBOX' },
+  { userId: 1, id: 1, title: 'Something', completed: false, state: 'TASK_INBOX' },
+  { userId: 1, id: 2, title: 'Something more', completed: false, state: 'TASK_INBOX' },
+  { userId: 1, id: 3, title: 'Something else', completed: false, state: 'TASK_INBOX' },
+  { userId: 1, id: 4, title: 'Something again', completed: false, state: 'TASK_INBOX' },
 ];
 const initialState: IUserTaskState = {
   tasks: defaultTasks,
@@ -55,7 +55,13 @@ const tasksSlice = createSlice({
   name: 'taskbox',
   initialState,
   reducers: {
-    updateTaskState: (state, action: PayloadAction<{ id: number; newTaskState: 'TASK_INBOX' | 'TASK_PINNED' | 'TASK_ARCHIVED'}>) => {
+    updateTaskState: (
+      state,
+      action: PayloadAction<{
+        id: number;
+        newTaskState: 'TASK_INBOX' | 'TASK_PINNED' | 'TASK_ARCHIVED';
+      }>
+    ) => {
       const { id, newTaskState } = action.payload;
       // const taskIndex = state.tasks.findIndex((t: any) =>t.id === id);
       // if (taskIndex >= 0) {
@@ -71,11 +77,13 @@ const tasksSlice = createSlice({
       // };
       return {
         ...state,
-        tasks: state.tasks.map(task =>
-          task.id === id ? {
-            ...task,
-            state: newTaskState // Теперь напрямую устанавливаем state
-          } : task
+        tasks: state.tasks.map((task) =>
+          task.id === id
+            ? {
+                ...task,
+                state: newTaskState,
+              }
+            : task
         ),
       };
     },

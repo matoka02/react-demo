@@ -19,20 +19,19 @@ const fetchTasks = createAsyncThunk<IUserTask[], void, { rejectValue: string }>(
 
       if (!response.ok) throw new Error('Error loading user task');
 
-      const userTasks: IApiUserTask[] = await response.json();
+      const data: IApiUserTask[] = await response.json();
 
-      if (!userTasks) throw new Error('Invalid user tasks data from API');
+      if (!data) throw new Error('Invalid user tasks data from API');
 
-      const result = userTasks.map((task: any) => ({
+      const userTasks = data.map((task: any) => ({
         userId: task.userId,
         id: task.id,
         title: task.title,
-        completed:task.completed,
+        completed: task.completed,
         state: task.completed ? 'TASK_ARCHIVED' : 'TASK_INBOX',
       }));
-      return result;
 
-      // return userTasks;
+      return userTasks;
     }
 );
 
