@@ -5,6 +5,7 @@ import { selectErrorTasks } from '@/stores/task/taskSelectors';
 import fetchTasks from '@/stores/task/taskThunk';
 
 import TaskList from './TaskList';
+import '../../../styles/storybook.globals.css';
 
 function InboxScreen(): React.ReactElement {
   const dispatch = useAppDispatch();

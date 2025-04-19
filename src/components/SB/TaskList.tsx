@@ -5,6 +5,7 @@ import { selectFilteredTasks, selectTaskStatus } from '@/stores/task/taskSelecto
 import { updateTaskState } from '@/stores/task/taskSlice';
 
 import { Task, TaskType } from './Task';
+import '../../../styles/storybook.globals.css';
 
 export interface TaskListProps {
   loading: boolean;

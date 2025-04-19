@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../../../styles/storybook.globals.css';
+
 export interface TaskType {
   id: string;
   title: string;

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import '../../../styles/storybook.globals.css';
 import './button.css';
 
 export interface ButtonProps {
