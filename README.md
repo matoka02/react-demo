@@ -1,8 +1,10 @@
-# Template for modern SSR applications
+# React MUI Demo v6
 
-[![CodeScene Code Health](https://codescene.io/projects/43861/status-badges/code-health)](https://codescene.io/projects/43861)
-[![CodeScene System Mastery](https://codescene.io/projects/43861/status-badges/system-mastery)](https://codescene.io/projects/43861)
-[![codecov](https://codecov.io/gh/VilnaCRM-Org/frontend-ssr-template/graph/badge.svg?token=MPFDUSMZ2I)](https://codecov.io/gh/VilnaCRM-Org/frontend-ssr-template)
+This react demo is built on the top of customized React boilerplate with Storybook.
+
+The boilerplate repo is available [here](https://github.com/VilnaCRM-Org/frontend-ssr-template).
+
+If you want to build something simpler from scratch, you can follow the README to build your own app step by step.
 
 ## Possibilities
 
@@ -13,12 +15,21 @@
 - This template is based on [bulletproof-react](https://github.com/alan2207/bulletproof-react/tree/master)
 - Much more!
 
-## Why you might need it
+### Live Demo
 
-Many front-end developers need to create new projects from scratch and spend a lot of time.
+[Demo](https://react-demo-tessa.netlify.app) The demo is just a proof of concept. It doesn't have back-end API and all features of master branch.
 
-We decided to simplify this exhausting process and create a public template for modern
-front-end applications. This template is used for all our microservices in VilnaCRM.
+### Screenshots
+
+![Screenshot1](screenshots/react-demo-v6-screen1.png)
+
+![Screenshot2](screenshots/react-demo-v6-screen2.png)
+
+![Screenshot3](screenshots/react-demo-v6-screen3.png)
+
+![Screenshot4](screenshots/react-demo-v6-screen4.png)
+
+<!-- ![Screenshot4](screenshots/screenshot-4.jpg) -->
 
 ## License
 
@@ -48,7 +59,8 @@ pnpm test:e2e - end-to-end testing
 pnpm test:e2e:local - open GUI with list of end-to-end test
 pnpm test:unit - unit testing
 pnpm lighthouse:desktop - lighthouse desktop testing
-pnpm lighthouse:mobile - lighthouse mobile tesitng
+pnpm lighthouse:mobile - lighthouse mobile testing
+pnpm screenshot - made screenshots of app
 ```
 
 ## Documentation
@@ -92,18 +104,6 @@ and updating translations.
 
 If you found a mistake in the docs, or want to add something, go ahead and
 amend the wiki – anyone can edit it.
-
-## Sponsorship
-
-Development time and resources for this repository are provided by
-[VilnaCRM](https://vilnacrm.com/),
-the free and opensource CRM system.
-
-Donations are very welcome, whether in beer 🍺, T-shirts 👕, or cold, hard cash 💰.
-Sponsorship through GitHub is a simple and convenient way to say "thank you" to
-maintainers and contributors – just click the "Sponsor" button
-[on the project page](https://github.com/VilnaCRM-Org/frontend-ssr-template).
-If your company uses this template, consider taking part in the VilnaCRM's enterprise support program.
 
 ## Changelog
 
