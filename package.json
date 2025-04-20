@@ -21,7 +21,8 @@
     "lighthouse:desktop": "next build && lhci autorun --config=lighthouserc.desktop.js --collect.startServerCommand=\"npx serve@latest out\"",
     "lighthouse:mobile": "next build && lhci autorun --config=lighthouserc.mobile.js --collect.startServerCommand=\"npx serve@latest out\"",
     "check-node-version": "node checkNodeVersion.js",
-    "preinstall": "pnpm run check-node-version"
+    "preinstall": "pnpm run check-node-version",
+    "screenshot": "node scripts/screenshot.js"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
@@ -107,6 +108,7 @@
     "msw": "^2.7.5",
     "msw-storybook-addon": "^2.0.4",
     "prettier": "^3.5.3",
+    "puppeteer": "^24.6.1",
     "semver": "^7.7.1",
     "ts-jest": "^29.3.2",
     "typescript": "^5.8.3"

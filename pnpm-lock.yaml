@@ -251,6 +251,9 @@ importers:
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
+      puppeteer:
+        specifier: ^24.6.1
+        version: 24.6.1(typescript@5.8.3)
       semver:
         specifier: ^7.7.1
         version: 7.7.1
@@ -3355,6 +3358,14 @@ packages:
     peerDependencies:
       '@opentelemetry/api': ^1.8
 
+  '@puppeteer/browsers@2.10.0':
+    resolution:
+      {
+        integrity: sha512-HdHF4rny4JCvIcm7V1dpvpctIGqM3/Me255CB44vW7hDG1zYMmcBMjpNqZEDxdCfXGLkx5kP0+Jz5DUS+ukqtA==,
+      }
+    engines: { node: '>=18' }
+    hasBin: true
+
   '@puppeteer/browsers@2.3.0':
     resolution:
       {
@@ -5952,6 +5963,14 @@ packages:
     peerDependencies:
       devtools-protocol: '*'
 
+  chromium-bidi@3.0.0:
+    resolution:
+      {
+        integrity: sha512-ZOGRDAhBMX1uxL2Cm2TDuhImbrsEz5A/tTcVU6RpXEWaTNUNwsHW6njUXizh51Ir6iqHbKAfhA2XK33uBcLo5A==,
+      }
+    peerDependencies:
+      devtools-protocol: '*'
+
   ci-info@3.9.0:
     resolution:
       {
@@ -6669,6 +6688,12 @@ packages:
     resolution:
       {
         integrity: sha512-DPnhUXvmvKT2dFA/j7B+riVLUt9Q6RKJlcppojL5CoRywJJKLDYnRlw0gTFKfgDPHP5E04UoB71SxoJlVZy8FA==,
+      }
+
+  devtools-protocol@0.0.1425554:
+    resolution:
+      {
+        integrity: sha512-uRfxR6Nlzdzt0ihVIkV+sLztKgs7rgquY/Mhcv1YNCWDh5IZgl5mnn2aeEnW5stYTE0wwiF4RYVz8eMEpV1SEw==,
       }
 
   diff-sequences@29.6.3:
@@ -10926,10 +10951,25 @@ packages:
       }
     engines: { node: '>=18' }
 
+  puppeteer-core@24.6.1:
+    resolution:
+      {
+        integrity: sha512-sMCxsY+OPWO2fecBrhIeCeJbWWXJ6UaN997sTid6whY0YT9XM0RnxEwLeUibluIS5/fRmuxe1efjb5RMBsky7g==,
+      }
+    engines: { node: '>=18' }
+
   puppeteer@22.15.0:
     resolution:
       {
         integrity: sha512-XjCY1SiSEi1T7iSYuxS82ft85kwDJUS7wj1Z0eGVXKdtr5g4xnVcbjwxhq5xBnpK/E7x1VZZoJDxpjAOasHT4Q==,
+      }
+    engines: { node: '>=18' }
+    hasBin: true
+
+  puppeteer@24.6.1:
+    resolution:
+      {
+        integrity: sha512-/4ocGfu8LNvDbWUqJZV2VmwEWpbOdJa69y2Jivd213tV0ekAtUh/bgT1hhW63SDN/CtrEucOPwoomZ+9M+eBEg==,
       }
     engines: { node: '>=18' }
     hasBin: true
@@ -12606,6 +12646,12 @@ packages:
       }
     engines: { node: '>= 0.4' }
 
+  typed-query-selector@2.12.0:
+    resolution:
+      {
+        integrity: sha512-SbklCd1F0EiZOyPiW192rrHZzZ5sBijB6xM+cpmrwDqObvdtunOHHIk9fCGsoK5JVIYXoyEp4iEdE3upFH3PAg==,
+      }
+
   typedarray-to-buffer@3.1.5:
     resolution:
       {
@@ -13289,6 +13335,12 @@ packages:
     resolution:
       {
         integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==,
+      }
+
+  zod@3.24.3:
+    resolution:
+      {
+        integrity: sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg==,
       }
 
 snapshots:
@@ -15720,6 +15772,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@puppeteer/browsers@2.10.0':
+    dependencies:
+      debug: 4.4.0
+      extract-zip: 2.0.1
+      progress: 2.0.3
+      proxy-agent: 6.5.0
+      semver: 7.7.1
+      tar-fs: 3.0.8
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - bare-buffer
+      - supports-color
+
   '@puppeteer/browsers@2.3.0':
     dependencies:
       debug: 4.4.0
@@ -17618,6 +17683,12 @@ snapshots:
       urlpattern-polyfill: 10.0.0
       zod: 3.23.8
 
+  chromium-bidi@3.0.0(devtools-protocol@0.0.1425554):
+    dependencies:
+      devtools-protocol: 0.0.1425554
+      mitt: 3.0.1
+      zod: 3.24.3
+
   ci-info@3.9.0: {}
 
   ci-info@4.2.0: {}
@@ -18029,6 +18100,8 @@ snapshots:
       dequal: 2.0.3
 
   devtools-protocol@0.0.1312386: {}
+
+  devtools-protocol@0.0.1425554: {}
 
   diff-sequences@29.6.3: {}
 
@@ -21082,12 +21155,41 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  puppeteer-core@24.6.1:
+    dependencies:
+      '@puppeteer/browsers': 2.10.0
+      chromium-bidi: 3.0.0(devtools-protocol@0.0.1425554)
+      debug: 4.4.0
+      devtools-protocol: 0.0.1425554
+      typed-query-selector: 2.12.0
+      ws: 8.18.1
+    transitivePeerDependencies:
+      - bare-buffer
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   puppeteer@22.15.0(typescript@5.8.3):
     dependencies:
       '@puppeteer/browsers': 2.3.0
       cosmiconfig: 9.0.0(typescript@5.8.3)
       devtools-protocol: 0.0.1312386
       puppeteer-core: 22.15.0
+    transitivePeerDependencies:
+      - bare-buffer
+      - bufferutil
+      - supports-color
+      - typescript
+      - utf-8-validate
+
+  puppeteer@24.6.1(typescript@5.8.3):
+    dependencies:
+      '@puppeteer/browsers': 2.10.0
+      chromium-bidi: 3.0.0(devtools-protocol@0.0.1425554)
+      cosmiconfig: 9.0.0(typescript@5.8.3)
+      devtools-protocol: 0.0.1425554
+      puppeteer-core: 24.6.1
+      typed-query-selector: 2.12.0
     transitivePeerDependencies:
       - bare-buffer
       - bufferutil
@@ -22192,6 +22294,8 @@ snapshots:
       possible-typed-array-names: 1.1.0
       reflect.getprototypeof: 1.0.10
 
+  typed-query-selector@2.12.0: {}
+
   typedarray-to-buffer@3.1.5:
     dependencies:
       is-typedarray: 1.0.0
@@ -22607,3 +22711,5 @@ snapshots:
       readable-stream: 3.6.2
 
   zod@3.23.8: {}
+
+  zod@3.24.3: {}
