@@ -21,13 +21,17 @@ If you want to build something simpler from scratch, you can follow the README t
 
 ### Screenshots
 
-![Screenshot1](screenshots/react-demo-v6-screen1.png)
+![Screenshot1](screenshots/react-demo-v6-screen-001-dashboard.png)
 
-![Screenshot2](screenshots/react-demo-v6-screen2.png)
+![Screenshot2](screenshots/react-demo-v6-screen-001-dashboard.png)
 
-![Screenshot3](screenshots/react-demo-v6-screen3.png)
+![Screenshot3](screenshots/react-demo-v6-screen-003-products.png)
 
-![Screenshot4](screenshots/react-demo-v6-screen4.png)
+![Screenshot3](screenshots/react-demo-v6-screen-004-customers.png)
+
+![Screenshot3](screenshots/react-demo-v6-screen-005-blogs.png)
+
+![Screenshot3](screenshots/react-demo-v6-screen-006-agents.png)
 
 <!-- ![Screenshot4](screenshots/screenshot-4.jpg) -->
 
