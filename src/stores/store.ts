@@ -4,6 +4,7 @@ import agentReducer from './agents/agentSlice';
 import customerReducer from './customers/customerSlice';
 import orderReducer from './orders/orderSlice';
 import productReducer from './products/productSlice';
+import taskReducer from './task/taskSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     customers: customerReducer,
     orders: orderReducer,
     products: productReducer,
+    userTasks: taskReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });
