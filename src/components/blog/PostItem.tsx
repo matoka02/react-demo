@@ -168,7 +168,6 @@ export function PostItem({
   );
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Card sx={{ borderRadius: '1.5em', ...sx }} {...other}>
       <Box
         sx={() => ({

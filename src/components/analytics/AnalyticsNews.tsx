@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import Avatar from '@mui/material/Avatar';
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
@@ -33,7 +32,7 @@ function PostItem({ sx, item, ...other }: BoxProps & { item: Props['list'][numbe
         gap: 2,
         display: 'flex',
         alignItems: 'center',
-        borderBottom: (theme) => `dashed 1px ${theme.vars.palette.divider}`,
+        borderBottom: (theme) => `dashed 1px ${theme.palette.divider}`,
         ...sx,
       }}
       {...other}

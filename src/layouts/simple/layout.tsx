@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 import React from 'react';

@@ -8,7 +8,6 @@ type TableNoDataProps = TableRowProps & {
 
 function TableNoData({ searchQuery, ...other }: TableNoDataProps): React.ReactElement {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <TableRow {...other}>
       <TableCell align="center" colSpan={7}>
         <Box sx={{ py: 15, textAlign: 'center' }}>

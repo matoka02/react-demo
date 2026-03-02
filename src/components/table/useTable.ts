@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { useDialogs } from '@toolpad/core';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';

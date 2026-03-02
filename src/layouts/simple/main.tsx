@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import type { Breakpoint } from '@mui/material/styles';

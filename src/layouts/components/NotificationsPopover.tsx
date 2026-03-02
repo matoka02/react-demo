@@ -164,7 +164,6 @@ function NotificationsPopover({ data = [], sx, ...other }: NotificationsPopoverP
         color={openPopover ? 'primary' : 'default'}
         onClick={handleOpenPopover}
         sx={sx}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
         <Badge badgeContent={totalUnRead} color="error">

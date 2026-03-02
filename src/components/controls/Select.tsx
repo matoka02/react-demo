@@ -9,7 +9,6 @@ function SelectDropdown({
   onChange,
 }: any): React.ReactElement {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <FormControl fullWidth variant="outlined" {...(error && { error: true })}>
       <InputLabel>{label}</InputLabel>
       <Select label={label} onChange={onChange} value={value}>

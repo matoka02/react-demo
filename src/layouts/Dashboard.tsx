@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
 import Head from 'next/head';

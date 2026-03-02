@@ -38,7 +38,6 @@ type Props = BoxProps & {
 
 function ChartLegend({ icons, values, sublabels, labels = [], colors = [], ...other }: Props) {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Box gap={2} display="flex" flexWrap="wrap" {...other}>
       {labels?.map((series, index) => (
         <Stack key={series} spacing={1}>

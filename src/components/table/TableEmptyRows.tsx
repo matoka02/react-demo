@@ -27,7 +27,6 @@ function TableEmptyRows({
         }),
         ...sx,
       }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       <TableCell colSpan={9} />

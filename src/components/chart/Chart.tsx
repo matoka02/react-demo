@@ -34,7 +34,6 @@ function Chart({
         position: 'relative',
         ...sx,
       }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       <ApexChart type={type} series={series} options={options} width="100%" height="100%" />

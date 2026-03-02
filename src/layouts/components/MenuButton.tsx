@@ -7,7 +7,6 @@ import React from 'react';
 
 function MenuButton({ sx, ...other }: IconButtonProps): React.ReactElement {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <IconButton sx={sx} {...other}>
       <SvgIcon>
         <path

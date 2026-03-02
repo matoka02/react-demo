@@ -29,10 +29,9 @@ function ScrollbarComponent(
         display: 'flex',
         flexDirection: 'column',
         '& .simplebar-placeholder': { display: 'none' },
-        // eslint-disable-next-line react/jsx-props-no-spreading
+
         ...sx,
       }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       {children}

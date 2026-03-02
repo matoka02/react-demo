@@ -56,7 +56,6 @@ function ColorPickerComponent(
         }),
         ...sx,
       }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       {colors.map((color) => {

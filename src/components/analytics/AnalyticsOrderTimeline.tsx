@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import Timeline from '@mui/lab/Timeline';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';

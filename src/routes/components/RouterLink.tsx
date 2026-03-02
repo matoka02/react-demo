@@ -21,9 +21,8 @@ function RouterLinkComponent(
   ref: React.Ref<HTMLAnchorElement>
 ): React.ReactElement {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <NextLink href={href} ref={ref} {...other}>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      {}
       {/* <MuiLink ref={ref} {...other}> */}
       {children}
       {/* </MuiLink> */}
