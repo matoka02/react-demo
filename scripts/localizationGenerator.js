@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import { readdirSync, readFileSync, writeFile } from 'fs';
+import { fileURLToPath } from 'url';
+import { join, dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 class LocalizationGenerator {
   i18nPath;
@@ -43,18 +47,14 @@ class LocalizationGenerator {
       return { ...acc, ...parsedLocalizationFromFolder };
     }, {});
 
-    const filePath = path.join(
-      path.dirname(__dirname),
-      this.pathToWriteLocalization,
-      this.localizationFile
-    );
+    const filePath = join(dirname(__dirname), this.pathToWriteLocalization, this.localizationFile);
     const fileContent = JSON.stringify(localizationObj);
 
     this.writeLocalizationFile(fileContent, filePath);
   }
 
   getFeatureFolders() {
-    const featureDirectories = fs.readdirSync(this.featurePath, { withFileTypes: true });
+    const featureDirectories = readdirSync(this.featurePath, { withFileTypes: true });
 
     return featureDirectories
       .filter((directory) => directory.isDirectory())
@@ -62,7 +62,7 @@ class LocalizationGenerator {
   }
 
   getLocalizationFromFolder(folder) {
-    const localizationFiles = fs.readdirSync(this.pathToI18nFolder.replace('{folder}', folder), {
+    const localizationFiles = readdirSync(this.pathToI18nFolder.replace('{folder}', folder), {
       withFileTypes: true,
     });
 
@@ -73,7 +73,7 @@ class LocalizationGenerator {
 
       if (fileType !== this.jsonFileType) return localizations;
 
-      const localizationContent = fs.readFileSync(
+      const localizationContent = readFileSync(
         this.pathToI18nFile.replace('{folder}', folder).replace('{file.name}', file.name),
         'utf8'
       );
@@ -89,7 +89,7 @@ class LocalizationGenerator {
   }
 
   writeLocalizationFile(fileContent, filePath) {
-    fs.writeFile(filePath, fileContent, (err) => {
+    writeFile(filePath, fileContent, (err) => {
       if (err) {
         throw new Error(err);
       }
@@ -97,4 +97,4 @@ class LocalizationGenerator {
   }
 }
 
-module.exports = LocalizationGenerator;
+export default LocalizationGenerator;

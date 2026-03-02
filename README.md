@@ -2,9 +2,10 @@
 
 This react demo is built on the top of customized React boilerplate with Storybook.
 
-The boilerplate repo is available [here](https://github.com/VilnaCRM-Org/frontend-ssr-template).
+The boilerplate repo is available [Github](https://github.com/VilnaCRM-Org/frontend-ssr-template).
 
-If you want to build something simpler from scratch, you can follow the README to build your own app step by step.
+If you want to build something simpler from scratch, you can follow the README
+to build your own app step by step.
 
 ## Possibilities
 
@@ -17,7 +18,10 @@ If you want to build something simpler from scratch, you can follow the README t
 
 ### Live Demo
 
-[Demo](https://react-demo-tessa.netlify.app) The demo is just a proof of concept. It doesn't have back-end API and all features of master branch.
+See the live demo at [Netlify](https://react-demo-tessa.netlify.app).
+
+The demo is just a proof of concept. It does not include a back-end API
+or all the features available in the master branch.
 
 ### Screenshots
 
