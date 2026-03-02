@@ -10,6 +10,16 @@ i18n.use(initReactI18next).init({
   interpolation: {
     escapeValue: false,
   },
+  debug: false,
+  initImmediate: false,
+  react: {
+    useSuspense: false,
+  },
+  logger: {
+    log: () => {},
+    warn: () => {},
+    error: () => {},
+  },
 });
 
 export default i18n;

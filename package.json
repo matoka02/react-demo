@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next build && npx serve@latest out",
+    "start": "next build && next start -p 3000", 
     "git-hooks-install": "husky install",
     "storybook-start": "storybook dev -p 6006",
     "storybook-build": "storybook build",
