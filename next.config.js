@@ -20,7 +20,7 @@
 // // module.exports = nextConfig;
 // module.exports = withFonts(nextConfig);
 
-const LocalizationGenerator = require('./scripts/localizationGenerator');
+import LocalizationGenerator from './scripts/localizationGenerator.js';
 
 try {
   const generator = new LocalizationGenerator();
@@ -40,4 +40,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
