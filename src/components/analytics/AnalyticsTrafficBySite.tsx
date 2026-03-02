@@ -27,7 +27,6 @@ function AnalyticsTrafficBySite({
   ...other
 }: Props): React.ReactElement {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Card sx={sx} {...other}>
       <CardHeader title={title} subheader={subheader} />
 

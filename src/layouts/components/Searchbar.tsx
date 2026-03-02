@@ -57,7 +57,6 @@ function Searchbar({ sx, ...other }: BoxProps): React.ReactElement {
               },
               ...sx,
             }}
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...other}
           >
             <Input

@@ -96,7 +96,6 @@ function AnalyticsWidgetSummary({
         borderRadius: '1em',
         ...sx,
       }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       <Box sx={{ width: 48, height: 48, mb: 3 }}>{icon}</Box>

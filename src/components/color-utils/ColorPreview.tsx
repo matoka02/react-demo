@@ -26,7 +26,6 @@ function ColorPreviewComponent(
         justifyContent: 'flex-end',
         ...sx,
       }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       {colorsRange.map((color, index) => (

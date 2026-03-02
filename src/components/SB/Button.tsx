@@ -42,7 +42,6 @@ function Button({
       type="button"
       className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
       style={style}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     >
       {label}

@@ -15,7 +15,6 @@ function NavUpgrade({ sx, ...other }: StackProps): React.ReactElement {
       alignItems="center"
       flexDirection="column"
       sx={{ mb: 4, textAlign: 'center', ...sx }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       <Typography

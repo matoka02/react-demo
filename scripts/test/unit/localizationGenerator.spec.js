@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs, { unlink, writeFile } from 'fs';
 
-const LocalizationGenerator = require('../../localizationGenerator');
+import LocalizationGenerator from '../../localizationGenerator';
 
 const FEATURE_FOLDERS = [
   { name: 'folder1', isDirectory: () => true },
@@ -75,12 +75,11 @@ describe('LocalizationGenerator', () => {
 
       expect(mockWriteFile).toHaveBeenCalledWith(filePath, fileContent, expect.any(Function));
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      fs.unlink(filePath, (_) => {});
+      unlink(filePath, (_) => {});
     });
 
     it('should throw an error if file write fails', () => {
-      fs.writeFile = jest.fn((filePath, fileContent, callback) => {
+      writeFile = jest.fn((filePath, fileContent, callback) => {
         const error = new Error('File write error');
         callback(error);
       });

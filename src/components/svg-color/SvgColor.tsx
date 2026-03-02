@@ -25,7 +25,6 @@ function SvgColorComponent(
         WebkitMask: `url(${src}) no-repeat center / contain`,
         ...sx,
       }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     />
   );

@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 // import DB from '@/lib/demo-db';
 // import { DBType } from '@/types/DBModel';
 
@@ -93,5 +91,3 @@ export function deleteData<T extends keyof typeof mockDB>(model: T, id: string) 
   mockDB[model] = collection.filter((item) => item.id !== id) as any;
   return id;
 }
-
-/* eslint-enable camelcase */

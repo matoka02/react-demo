@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable react/jsx-props-no-spreading */
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';

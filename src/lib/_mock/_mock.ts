@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 export const mock_guid = '82a7c7d2-ebe1-453e-9a22-cb5b204850b0';
 
 export const mock_id = (index: number) => `82a7c7d2-ebe1-453e-9a22-cb5b204850b0${index}`;
@@ -381,5 +380,3 @@ export const mock_promoCode = () => {
   const r2 = getRandomIntInclusive(1, 26) - 1;
   return `PROMO-${mock_alphabet[r1].toUpperCase()}${mock_alphabet[r2].toUpperCase()}`;
 };
-
-/* eslint-enable camelcase */

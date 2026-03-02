@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import {
   mock_id,
   mock_price,
@@ -272,5 +271,3 @@ export const mock_notifications = [
 // function mock_streetData(arg0: number) {
 //   throw new Error('Function not implemented.');
 // }
-
-/* eslint-enable camelcase */

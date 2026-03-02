@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { FormControl, FormLabel, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import { Controller } from 'react-hook-form';
 

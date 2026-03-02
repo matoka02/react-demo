@@ -85,7 +85,6 @@ function LanguagePopover({
           ...(openPopover && { bgcolor: 'action.selected' }),
           ...sx,
         }}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
         {renderFlag(currentLang?.label, currentLang?.icon)}

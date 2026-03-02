@@ -54,7 +54,6 @@ function AnalyticsWebsiteVisits({ title, subheader, chart, ...other }: Props): R
   });
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 

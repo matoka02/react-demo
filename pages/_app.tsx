@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 // import '../styles/globals.css';
 import { createTheme } from '@mui/material';
 import * as Sentry from '@sentry/react';

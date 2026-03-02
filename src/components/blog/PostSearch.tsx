@@ -37,7 +37,6 @@ function PostSearch({ posts, sx }: PostSearchProps): React.ReactElement {
       isOptionEqualToValue={(option, value) => option.id === value.id}
       renderInput={(params) => (
         <TextField
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...params}
           placeholder="Search post..."
           slotProps={{

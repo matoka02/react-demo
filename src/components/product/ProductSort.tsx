@@ -41,7 +41,6 @@ function ProductSort({
         onClick={handleOpenPopover}
         endIcon={<Iconify icon={openPopover ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />}
         sx={sx}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
         Sort By:&nbsp;

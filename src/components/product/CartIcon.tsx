@@ -38,7 +38,6 @@ function CartIcon({
         '&:hover': { opacity: 0.72 },
         ...sx,
       }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       <Badge showZero badgeContent={totalItems} color="error" max={99}>

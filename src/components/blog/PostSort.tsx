@@ -47,7 +47,6 @@ function PostSort({ options, sortBy, onSort, sx, ...other }: PostSortProps): Rea
           bgcolor: () => varAlpha(palette.grey['500Channel'], 0.08),
           ...sx,
         }}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
         {options.find((option) => option.value === sortBy)?.label}

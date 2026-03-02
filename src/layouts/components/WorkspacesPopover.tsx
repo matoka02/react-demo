@@ -75,7 +75,6 @@ function WorkspacesPopover({
           // },
           ...sx,
         }}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...other}
       >
         {renderAvatar(workspace?.name, workspace?.logo)}

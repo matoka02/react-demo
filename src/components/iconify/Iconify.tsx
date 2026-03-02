@@ -18,7 +18,6 @@ function IconifyComponent(
       component={Icon}
       className={iconifyClasses.root.concat(className ? ` ${className}` : '')}
       sx={{ width, height: width, flexShrink: 0, display: 'inline-flex', ...sx }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     />
   );

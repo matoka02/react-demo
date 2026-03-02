@@ -27,7 +27,6 @@ function ButtonGenerator({
       size={size || 'large'}
       color={color || 'primary'}
       onClick={onClick}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       {text}
